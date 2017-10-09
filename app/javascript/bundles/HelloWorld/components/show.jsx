@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Link from './link';
 
 
 export default class Show extends React.Component {
@@ -40,6 +41,7 @@ export default class Show extends React.Component {
             onChange={(e) => this.updateName(e.target.value)}
           />
         </form>
+        <Link href="/hello_world">hello_world</Link>
       </div>
     );
   }

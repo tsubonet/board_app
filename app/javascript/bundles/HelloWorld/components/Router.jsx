@@ -12,6 +12,28 @@ export default class Router extends React.Component {
     };
   }
 
+  static childContextTypes = {
+
+  }
+
+  componentDidMount() {
+    window.addEventListener("popstate", () => {
+      this.transitTo(document.location.href, { pushState: false });
+    });
+  }
+
+  onLinkClick(event) {
+    if (!event.metaKey) {
+      event.preventDefault();
+      const anchorElement = event.currentTarget.pathname ? event.currentTarget : event.currentTarget.querySelector("a");
+      this.transitTo(anchorElement.href, { pushState: true });
+    }
+  }
+
+  transitTo(url, { pushState }) {
+    console.log(url);
+  }
+
   getComponent() {
     switch (this.state.rootProps.actionPath) {
       case "hello_world#index":

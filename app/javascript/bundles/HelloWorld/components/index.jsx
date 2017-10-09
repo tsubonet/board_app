@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Link from './link';
 
 
 export default class Index extends React.Component {
@@ -40,6 +41,7 @@ export default class Index extends React.Component {
             onChange={(e) => this.updateName(e.target.value)}
           />
         </form>
+        <Link href="/hello_world/show">hello_world/show</Link>
       </div>
     );
   }
