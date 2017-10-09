@@ -3,7 +3,6 @@ import React from 'react';
 import Index from './index';
 import Show from './show';
 
-
 export default class Router extends React.Component {
 
   constructor(...args) {
@@ -15,7 +14,7 @@ export default class Router extends React.Component {
 
   static childContextTypes = {
     onLinkClick: PropTypes.func,
-    rootProps: PropTypes.object
+    rootProps: PropTypes.object,
   }
 
   getChildContext() {
@@ -40,7 +39,29 @@ export default class Router extends React.Component {
   }
 
   transitTo(url, { pushState }) {
-    console.log("url"+ url);
+
+    fetch(url, {
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.getElementsByName('csrf-token').item(0).content,
+      }
+    })
+    .then(response => response.json())
+    .then((rootProps) => {
+      console.log(rootProps);
+      if (pushState) {
+        history.pushState({}, "", url);
+      }
+      this.setState({ rootProps });
+    }).then(() => {
+      window.scrollTo(0, 0);
+
+    }).catch(() => {
+
+    });
+
   }
 
   getComponent() {

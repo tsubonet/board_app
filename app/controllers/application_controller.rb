@@ -15,7 +15,11 @@ class ApplicationController < ActionController::Base
   end
 
   def render_for_react(props: {}, status: 200)
+
     if request.format.json?
+      puts "#################"
+      puts common_props.merge(props)
+      puts "#################"
       response.headers["Cache-Control"] = "no-cache, no-store"
       response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
       response.headers["Pragma"] = "no-cache"
