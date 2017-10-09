@@ -1,46 +1,28 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Index from './index';
+import Show from './show';
 
 
 export default class Router extends React.Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired, // this is passed from the Rails view
-  };
-
-  /**
-   * @param props - Comes from your rails view.
-   */
-  constructor(props) {
-    super(props);
-
-    // How to set initial state in ES6 class syntax
-    // https://facebook.github.io/react/docs/reusable-components.html#es6-classes
-    this.state = { name: this.props.name };
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      rootProps: this.props,
+    };
   }
 
-  updateName = (name) => {
-    this.setState({ name });
-  };
+  getComponent() {
+    switch (this.state.rootProps.actionPath) {
+      case "hello_world#index":
+        return Index;
+      case "hello_world#show":
+        return Show;
+    }
+  }
 
   render() {
-    return (
-      <div>
-        <h3>
-          Hello, {this.state.name}!
-        </h3>
-        <hr />
-        <form >
-          <label htmlFor="name">
-            Say hello to:
-          </label>
-          <input
-            id="name"
-            type="text"
-            value={this.state.name}
-            onChange={(e) => this.updateName(e.target.value)}
-          />
-        </form>
-      </div>
-    );
+    const Component = this.getComponent();
+    return <Component {...this.state.rootProps}/>
   }
 }
