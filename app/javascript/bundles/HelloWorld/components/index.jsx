@@ -4,6 +4,7 @@ import Link from './link';
 
 
 export default class Index extends React.Component {
+
   static propTypes = {
     name: PropTypes.string.isRequired, // this is passed from the Rails view
   };

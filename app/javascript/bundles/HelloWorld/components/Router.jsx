@@ -5,6 +5,7 @@ import Show from './show';
 
 
 export default class Router extends React.Component {
+
   constructor(...args) {
     super(...args);
     this.state = {
@@ -13,7 +14,15 @@ export default class Router extends React.Component {
   }
 
   static childContextTypes = {
+    onLinkClick: PropTypes.func,
+    rootProps: PropTypes.object
+  }
 
+  getChildContext() {
+    return {
+      onLinkClick: this.onLinkClick.bind(this),
+      rootProps: this.state.rootProps,
+    };
   }
 
   componentDidMount() {
@@ -31,7 +40,7 @@ export default class Router extends React.Component {
   }
 
   transitTo(url, { pushState }) {
-    console.log(url);
+    console.log("url"+ url);
   }
 
   getComponent() {
