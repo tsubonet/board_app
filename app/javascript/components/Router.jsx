@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import axios from 'axios';
+import NProgress from "nprogress";
+
 import Index from './index';
 import Show from './show';
 
@@ -39,28 +42,26 @@ export default class Router extends React.Component {
   }
 
   transitTo(url, { pushState }) {
-    fetch(url, {
-      credentials: 'same-origin',
+    NProgress.start();
+    axios.get(url, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'X-CSRF-Token': document.getElementsByName('csrf-token').item(0).content,
       }
     })
-    .then(response => response.json())
+    .then(response => response.data)
     .then((rootProps) => {
-      console.log(rootProps);
       if (pushState) {
         history.pushState({}, "", url);
       }
       this.setState({ rootProps });
     }).then(() => {
       window.scrollTo(0, 0);
-
+      NProgress.done();
     }).catch(() => {
-
+      NProgress.done();
     });
-
   }
 
   getComponent() {
