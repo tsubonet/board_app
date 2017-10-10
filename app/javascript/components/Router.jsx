@@ -39,7 +39,6 @@ export default class Router extends React.Component {
   }
 
   transitTo(url, { pushState }) {
-
     fetch(url, {
       credentials: 'same-origin',
       headers: {
