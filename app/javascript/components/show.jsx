@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Helmet } from "react-helmet";
 import Link from './link';
 
 
@@ -26,6 +27,9 @@ export default class Show extends React.Component {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>Show</title>
+        </Helmet>
         <h3>
           Hello, {this.state.name}!
         </h3>

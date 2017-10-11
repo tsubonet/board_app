@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Helmet } from "react-helmet";
 import Link from './link';
 
 export default class Index extends React.Component {
@@ -26,6 +27,9 @@ export default class Index extends React.Component {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>Index</title>
+        </Helmet>
         <h3>
           Hello, {this.state.name}!
         </h3>
