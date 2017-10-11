@@ -75,6 +75,13 @@ export default class Router extends React.Component {
 
   render() {
     const Component = this.getComponent();
-    return <Component {...this.state.rootProps}/>
+    return (
+      <div>
+        <header className="navbar navbar-default navbar-fixed-top">
+          <p>完全匿名！性のお悩み相談室</p>
+        </header>
+        <Component {...this.state.rootProps}/>
+      </div>
+    )
   }
 }
