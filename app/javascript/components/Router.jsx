@@ -79,7 +79,11 @@ export default class Router extends React.Component {
     return (
       <div>
         <Header />
-        <Component {...this.state.rootProps} />
+        <section>
+          <div className="container marT70">
+            <Component {...this.state.rootProps} />
+          </div>
+        </section>
       </div>
     )
   }
