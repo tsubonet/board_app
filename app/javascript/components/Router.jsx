@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import NProgress from "nprogress";
 
+import Header from './header';
 import Index from './index';
 import Show from './show';
 
@@ -77,10 +78,8 @@ export default class Router extends React.Component {
     const Component = this.getComponent();
     return (
       <div>
-        <header className="navbar navbar-default navbar-fixed-top">
-          <p>完全匿名！性のお悩み相談室</p>
-        </header>
-        <Component {...this.state.rootProps}/>
+        <Header />
+        <Component {...this.state.rootProps} />
       </div>
     )
   }

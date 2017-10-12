@@ -1,0 +1,221 @@
+
+
+/* ************** common style ************* */
+body { background-color: #f0f0f0; }
+h1 { font-size: 14px; margin-top: 3px; margin-bottom: 3px; font-weight: bold; }
+h2 { font-size: 14px; }
+
+.marT0  { margin-top:  0px; }
+.marT5  { margin-top:  5px; }
+.marT10 { margin-top: 10px; }
+.marT15 { margin-top: 15px; }
+.marT20 { margin-top: 20px; }
+.marT25 { margin-top: 25px; }
+.marT30 { margin-top: 30px; }
+.marT40 { margin-top: 40px; }
+.marT70 { margin-top: 70px; }
+.marB0  { margin-bottom:  0px; }
+.marB5  { margin-bottom:  5px; }
+.marB10 { margin-bottom: 10px; }
+.marB15 { margin-bottom: 15px; }
+.marB20 { margin-bottom: 20px; }
+.marB25 { margin-bottom: 25px; }
+.marL30 { margin-bottom: 30px; }
+.marL0  { margin-left:  0px; }
+.marL5  { margin-left:  5px; }
+.marL10 { margin-left: 10px; }
+.marL15 { margin-left: 15px; }
+.marL20 { margin-left: 20px; }
+.marL25 { margin-left: 25px; }
+.marR30 { margin-left: 30px; }
+.marR0  { margin-right:  0px; }
+.marR5  { margin-right:  5px; }
+.marR10 { margin-right: 10px; }
+.marR15 { margin-right: 15px; }
+.marR20 { margin-right: 20px; }
+.marR25 { margin-right: 25px; }
+.marR30 { margin-right: 30px; }
+
+
+/* navbar */
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav>li>a  {
+	color: #428bca;
+}
+
+header .input-group {
+  width: 240px;
+}
+
+@media (max-width: 767px) {
+	.navbar-right { padding-bottom: 10px; }
+}
+
+@media (min-width: 768px) {
+	.navbar-right { padding-top: 7px; }
+}
+
+/* list-group */
+.list-group-item {
+	//@include transition-property(background);
+    //@include transition-duration(0.3s);
+	&:first-child { border-top: 0; }
+	&:hover .side-entry-arrow {
+	    right: 15px;
+	    //@include opacity(1);
+	}
+	&:hover .entry-arrow {
+	    right: 15px;
+	    //@include opacity(1);
+	}
+}
+
+.list-group-item-heading,
+.list-group-item-text {
+	width: 85%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	&.list-inline { color: #999999; }
+}
+
+/* side-entry-arrow */
+.side-entry-arrow {
+	font-size: 20px;
+	position: absolute;
+	z-index: 3;
+	top: 24px;
+	//@include opacity(0.2);
+	//@include transition(0.3s ease);
+}
+
+/* page-top */
+#page-top {
+	font-size: 77%;
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	overflow: hidden;
+	width: 40px;
+	height: 40px;
+	border: 1px solid #ddd;
+	text-align: center;
+	a {
+		background: #ffffff;
+		text-decoration: none;
+		display: block;
+		height: 100%;
+		&:hover { background: #f5f5f5; }
+	}
+}
+
+/* flashMessage */
+#flashMessage {
+	z-index: 10000;
+	top: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	position: fixed;
+}
+
+/* side-element */
+.side-element {
+	letter-spacing: -.40em;
+	li { letter-spacing: normal; }
+}
+
+/* ranking-area */
+.ranking-area {
+	position: relative;
+	.btn-group {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+	}
+}
+
+/* tab-content */
+.tab-content {
+  display: none;
+}
+
+/* ************** index style ************* */
+/* topic-detail */
+.topic-detail {
+	overflow: hidden;
+}
+
+/* topic-comment-count */
+.topic-comment-count {
+	float: left;
+	width: 60px;
+	margin-right: 15px;
+	text-align: center;
+	.badge {
+		font-size: 200%;
+		background-color: #428bca;
+	}
+}
+/* entry-arrow */
+.entry-arrow {
+	font-size: 40px;
+	position: absolute;
+	z-index: 3;
+	top: 10px;
+	//@include opacity(0.2);
+	//@include transition(0.3s ease);
+}
+
+.detail-element {
+	overflow: initial;
+	letter-spacing: -.40em;
+	li { letter-spacing: normal; }
+}
+
+@media (max-width: 767px) {
+	.detail-element>li:last-child { display: block; }
+	.entry-arrow { right: 15px; }
+	.side-entry-arrow { right: 15px; }
+}
+
+@media (min-width: 768px) {
+	.detail-element>li:first-child { display: none; }
+	.entry-arrow { right: 30px; }
+	.side-entry-arrow { right: 25px; }
+
+}
+
+/* ************** add style ************* */
+.wrap-checkbox {
+	display: inline-block;
+	margin-right: 5px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	&+.checkbox { margin-top: 0px; }
+}
+
+/* ************** detail style ************* */
+.h1-detail {
+	margin: 0 0 10px;
+}
+
+.link-input-wrap,
+.reply-form {
+	display: none;
+}
+
+.reply-area-wrap {
+	margin-left: 30px;
+}
+
+.reply-area {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background: #f5f5f5;
+	border-radius: 3px;
+}
+
+.reply-item {
+	padding: 10px;
+}
