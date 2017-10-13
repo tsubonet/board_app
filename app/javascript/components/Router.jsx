@@ -67,9 +67,9 @@ export default class Router extends React.Component {
 
   getComponent() {
     switch (this.state.rootProps.actionPath) {
-      case "hello_world#index":
+      case "topics#index":
         return Index;
-      case "hello_world#show":
+      case "topics#show":
         return Show;
     }
   }
