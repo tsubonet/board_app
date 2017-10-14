@@ -3,7 +3,7 @@ class TopicsController < ApplicationController
   def index
     render_for_react(
       props: {
-        name: "Strangersssssssss"
+        topics: Topic.all
       },
     )
   end

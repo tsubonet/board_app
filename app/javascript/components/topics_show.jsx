@@ -3,8 +3,8 @@ import React from 'react';
 import { Helmet } from "react-helmet";
 import Link from './link';
 
-export default class Index extends React.Component {
 
+export default class TopicsShow extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired, // this is passed from the Rails view
   };
@@ -28,7 +28,7 @@ export default class Index extends React.Component {
     return (
       <div>
         <Helmet>
-          <title>Index</title>
+          <title>Show</title>
         </Helmet>
         <h3>
           Hello, {this.state.name}!
@@ -36,7 +36,7 @@ export default class Index extends React.Component {
         <hr />
         <form >
           <label htmlFor="name">
-            Say hello to:
+            Show Say hello to:
           </label>
           <input
             id="name"
@@ -45,7 +45,7 @@ export default class Index extends React.Component {
             onChange={(e) => this.updateName(e.target.value)}
           />
         </form>
-        <Link href="/hello_world/show">hello_world/show</Link>
+        <Link href="/topics">topics</Link>
       </div>
     );
   }

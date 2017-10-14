@@ -4,8 +4,8 @@ import axios from 'axios';
 import NProgress from "nprogress";
 
 import Header from './header';
-import Index from './index';
-import Show from './show';
+import TopicsIndex from './topics_index';
+import TopicsShow from './topics_show';
 
 export default class Router extends React.Component {
 
@@ -68,9 +68,9 @@ export default class Router extends React.Component {
   getComponent() {
     switch (this.state.rootProps.actionPath) {
       case "topics#index":
-        return Index;
+        return TopicsIndex;
       case "topics#show":
-        return Show;
+        return TopicsShow;
     }
   }
 

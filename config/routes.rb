@@ -3,4 +3,6 @@ Rails.application.routes.draw do
   get '/'           => 'topics#index'
   get 'topics/show' => 'topics#show'
 
+  resources :topics
+
 end
