@@ -11,7 +11,7 @@ export default class Topic extends React.Component {
 
   render() {
     return (
-      <Link className="list-group-item" href="xx">
+      <Link className="list-group-item" href={`/topics/${this.props.topic.id}`}>
         <div className="topic-comment-count hidden-xs">
           <span className="badge">0</span><br />
           <span className="icon-comments"></span> 回答
