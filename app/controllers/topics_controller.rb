@@ -3,7 +3,7 @@ class TopicsController < ApplicationController
   def index
     render_for_react(
       props: {
-        topics: Topic.all
+        topics: Topic.page(params[:page]).per(10)
       },
     )
   end
