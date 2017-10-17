@@ -18,6 +18,14 @@ class TopicsController < ApplicationController
     )
   end
 
+  def new
+    render_for_react(
+      props: {
+        name: "AAAAAAAAAAA"
+      },
+    )
+  end
+
   def show
     render_for_react(
       props: {
@@ -25,4 +33,6 @@ class TopicsController < ApplicationController
       },
     )
   end
+
+
 end

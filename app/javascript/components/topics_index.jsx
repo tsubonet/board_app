@@ -15,7 +15,6 @@ export default class TopicsIndex extends React.Component {
       hasPrevPage: this.props.hasPrevPage,
       hasNextPage: this.props.hasNextPage,
     };
-    console.log(typeof this.state.hasPrevPage)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -27,14 +26,6 @@ export default class TopicsIndex extends React.Component {
       hasNextPage: nextProps.hasNextPage,
     });
   }
-
-  // componentDidMount() {
-  //   console.log("here");
-  // }
-
-  // updateName = (name) => {
-  //   this.setState({ name });
-  // };
 
   render() {
     return (
@@ -65,15 +56,15 @@ export default class TopicsIndex extends React.Component {
                 <nav className="pagination">
                   {(() => {
                     if (this.state.hasPrevPage) {
-                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.currentPage) - 1 }`}><i className="icon-angle-left icon-large"></i></Link>;
+                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.currentPage) - 1 }`}><i className="icon-angle-left icon-2x"></i></Link>;
                     }
                   })()}
-                  &nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <span className="pagination-position">{this.state.currentPage}&nbsp;/&nbsp;{this.state.totalPages}</span>
-                  &nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {(() => {
                     if (this.state.hasNextPage) {
-                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.currentPage) + 1 }`}><i className="icon-angle-right icon-large"></i></Link>;
+                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.currentPage) + 1 }`}><i className="icon-angle-right icon-2x"></i></Link>;
                     }
                   })()}
                 </nav>

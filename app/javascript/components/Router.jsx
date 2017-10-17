@@ -5,6 +5,7 @@ import NProgress from "nprogress";
 
 import Header from './header';
 import TopicsIndex from './topics_index';
+import TopicsNew from './topics_new';
 import TopicsShow from './topics_show';
 
 export default class Router extends React.Component {
@@ -69,6 +70,8 @@ export default class Router extends React.Component {
     switch (this.state.rootProps.actionPath) {
       case "topics#index":
         return TopicsIndex;
+      case "topics#new":
+        return TopicsNew;
       case "topics#show":
         return TopicsShow;
     }
