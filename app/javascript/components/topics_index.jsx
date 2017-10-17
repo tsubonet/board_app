@@ -8,8 +8,29 @@ export default class TopicsIndex extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { topics: this.props.topics };
+    this.state = {
+      topics: this.props.topics,
+      currentPage: this.props.currentPage,
+      totalPages: this.props.totalPages,
+      hasPrevPage: this.props.hasPrevPage,
+      hasNextPage: this.props.hasNextPage,
+    };
+    console.log(typeof this.state.hasPrevPage)
   }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      topics: nextProps.topics,
+      currentPage: nextProps.currentPage,
+      totalPages: nextProps.totalPages,
+      hasPrevPage: nextProps.hasPrevPage,
+      hasNextPage: nextProps.hasNextPage,
+    });
+  }
+
+  // componentDidMount() {
+  //   console.log("here");
+  // }
 
   // updateName = (name) => {
   //   this.setState({ name });
@@ -39,9 +60,23 @@ export default class TopicsIndex extends React.Component {
               })()}
               </div>
               <hr className="marT0 marB0" />
+
               <div className="wrap-pagination text-center">
-                <ul className="pagination">
-                </ul>
+                <nav className="pagination">
+                  {(() => {
+                    if (this.state.hasPrevPage) {
+                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.currentPage) - 1 }`}><i className="icon-angle-left icon-large"></i></Link>;
+                    }
+                  })()}
+                  &nbsp;&nbsp;&nbsp;
+                  <span className="pagination-position">{this.state.currentPage}&nbsp;/&nbsp;{this.state.totalPages}</span>
+                  &nbsp;&nbsp;&nbsp;
+                  {(() => {
+                    if (this.state.hasNextPage) {
+                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.currentPage) + 1 }`}><i className="icon-angle-right icon-large"></i></Link>;
+                    }
+                  })()}
+                </nav>
               </div>
             </div>
           </div>
