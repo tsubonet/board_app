@@ -15,17 +15,10 @@ export default class TopicsIndex extends React.Component {
       has_prev_page: this.props.has_prev_page,
       has_next_page: this.props.has_next_page,
     };
-    window.addEventListener('popstate', function(e) {
-      var state = e.state;
-      console.log(e);
-      if(state) {
-          console.log(state);
-      }
-    });
   }
 
   componentDidMount() {
-
+    console.log(history);
   }
 
   componentWillReceiveProps(nextProps) {

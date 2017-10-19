@@ -36,16 +36,16 @@ class TopicsController < ApplicationController
     @topic = Topic.new(topic_params)
     if @topic.save
       response_data = {
-        newDevice: @topic,
-        messages: ['検証機を登録しました']
+        status: 'ok',
+        messages: ['質問を投稿しました！']
       }
-      render json: response_data, status: :created
     else
       response_data = {
+        status: 'error',
         messages: @topic.errors.full_messages
       }
-      render json: response_data
     end
+    render json: response_data
   end
 
 

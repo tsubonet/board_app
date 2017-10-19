@@ -30,10 +30,16 @@ export default class TopicsNew extends React.Component {
         'X-CSRF-Token': document.getElementsByName('csrf-token').item(0).content,
       }
     })
-    .then((response) => {
-      this.context.transitTo('/', { pushState: true });
+    .then(response => response.data)
+    .then((data) => {
+      if (data.status === 'ok') {
+        this.context.transitTo('/', { pushState: true }, data.messages);
+      } else {
+        console.log(data.messages);
+      }
+    })
+    .catch((response) => {
     });
-
 
     return;
   }

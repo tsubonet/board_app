@@ -45,7 +45,7 @@ export default class Router extends React.Component {
     }
   }
 
-  transitTo(url, { pushState }) {
+  transitTo(url, { pushState }, data = {}) {
     NProgress.start();
     axios.get(url, {
       headers: {
@@ -57,7 +57,7 @@ export default class Router extends React.Component {
     .then(response => response.data)
     .then((rootProps) => {
       if (pushState) {
-        history.pushState({}, "", url);
+        history.pushState(data, "", url);
       }
       this.setState({ rootProps });
     }).then(() => {
