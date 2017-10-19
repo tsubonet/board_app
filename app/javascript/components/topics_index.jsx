@@ -3,6 +3,7 @@ import React from 'react';
 import { Helmet } from "react-helmet";
 import Link from './link';
 import Topic from './topic';
+import Messages from "./messages";
 
 export default class TopicsIndex extends React.Component {
 
@@ -14,11 +15,22 @@ export default class TopicsIndex extends React.Component {
       total_pages: this.props.total_pages,
       has_prev_page: this.props.has_prev_page,
       has_next_page: this.props.has_next_page,
+      messages: {
+        status: '',
+        txt: [],
+      }
     };
   }
 
   componentDidMount() {
-    console.log(history);
+    if (typeof history.state.messages !== 'undefined') {
+      this.setState({
+        messages: {
+          status: history.state.messages.status,
+          txt: history.state.messages.txt,
+        }
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,6 +40,10 @@ export default class TopicsIndex extends React.Component {
       total_pages: nextProps.total_pages,
       has_prev_page: nextProps.has_prev_page,
       has_next_page: nextProps.has_next_page,
+      messages: {
+        status: '',
+        txt: [],
+      }
     });
   }
 
@@ -39,6 +55,7 @@ export default class TopicsIndex extends React.Component {
         </Helmet>
         <div className="row">
           <div className="col-md-8">
+            <Messages messages={this.state.messages} />
             <div className="panel panel-default">
               <div className="panel-heading">
                 <h1><i className='icon-check-sign'></i> 性の悩みを解決する匿名Q&amp;Aサービス</h1>

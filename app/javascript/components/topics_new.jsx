@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import axios from 'axios';
 import { Helmet } from "react-helmet";
+import Messages from "./messages";
 
 export default class TopicsNew extends React.Component {
 
@@ -12,6 +13,12 @@ export default class TopicsNew extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      messages: {
+        status: '',
+        txt: [],
+      }
+    }
   }
 
   handleSubmit(e) {
@@ -32,10 +39,15 @@ export default class TopicsNew extends React.Component {
     })
     .then(response => response.data)
     .then((data) => {
-      if (data.status === 'ok') {
-        this.context.transitTo('/', { pushState: true }, data.messages);
+      if (data.status === 'success') {
+        this.context.transitTo('/', { pushState: true }, { messages: { status: 'success', txt: data.txt }});
       } else {
-        console.log(data.messages);
+        this.setState({
+          messages: {
+            status: 'error',
+            txt: data.txt,
+          }
+        });
       }
     })
     .catch((response) => {
@@ -52,6 +64,7 @@ export default class TopicsNew extends React.Component {
         </Helmet>
         <div className="row">
           <div className="col-md-8">
+            <Messages messages={this.state.messages} />
             <div className="panel panel-default">
               <div className="panel-heading"><strong><i className='icon-check-sign'></i> 性の悩みについて質問する</strong></div>
               <div className="panel-body">

@@ -36,13 +36,13 @@ class TopicsController < ApplicationController
     @topic = Topic.new(topic_params)
     if @topic.save
       response_data = {
-        status: 'ok',
-        messages: ['質問を投稿しました！']
+        status: 'success',
+        txt: ['質問を投稿しました！']
       }
     else
       response_data = {
         status: 'error',
-        messages: @topic.errors.full_messages
+        txt: @topic.errors.full_messages
       }
     end
     render json: response_data
