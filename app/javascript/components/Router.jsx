@@ -10,6 +10,12 @@ import TopicsShow from './topics_show';
 
 export default class Router extends React.Component {
 
+  static childContextTypes = {
+    onLinkClick: PropTypes.func,
+    rootProps: PropTypes.object,
+    transitTo: PropTypes.func,
+  }
+
   constructor(...args) {
     super(...args);
     this.state = {
@@ -17,15 +23,11 @@ export default class Router extends React.Component {
     };
   }
 
-  static childContextTypes = {
-    onLinkClick: PropTypes.func,
-    rootProps: PropTypes.object,
-  }
-
   getChildContext() {
     return {
       onLinkClick: this.onLinkClick.bind(this),
       rootProps: this.state.rootProps,
+      transitTo: this.transitTo.bind(this),
     };
   }
 

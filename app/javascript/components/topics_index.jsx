@@ -10,20 +10,31 @@ export default class TopicsIndex extends React.Component {
     super(props);
     this.state = {
       topics: this.props.topics,
-      currentPage: this.props.currentPage,
-      totalPages: this.props.totalPages,
-      hasPrevPage: this.props.hasPrevPage,
-      hasNextPage: this.props.hasNextPage,
+      current_page: this.props.current_page,
+      total_pages: this.props.total_pages,
+      has_prev_page: this.props.has_prev_page,
+      has_next_page: this.props.has_next_page,
     };
+    window.addEventListener('popstate', function(e) {
+      var state = e.state;
+      console.log(e);
+      if(state) {
+          console.log(state);
+      }
+    });
+  }
+
+  componentDidMount() {
+
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       topics: nextProps.topics,
-      currentPage: nextProps.currentPage,
-      totalPages: nextProps.totalPages,
-      hasPrevPage: nextProps.hasPrevPage,
-      hasNextPage: nextProps.hasNextPage,
+      current_page: nextProps.current_page,
+      total_pages: nextProps.total_pages,
+      has_prev_page: nextProps.has_prev_page,
+      has_next_page: nextProps.has_next_page,
     });
   }
 
@@ -55,16 +66,16 @@ export default class TopicsIndex extends React.Component {
               <div className="wrap-pagination text-center">
                 <nav className="pagination">
                   {(() => {
-                    if (this.state.hasPrevPage) {
-                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.currentPage) - 1 }`}><i className="icon-angle-left icon-2x"></i></Link>;
+                    if (this.state.has_prev_page) {
+                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.current_page) - 1 }`}><i className="icon-angle-left icon-2x"></i></Link>;
                     }
                   })()}
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <span className="pagination-position">{this.state.currentPage}&nbsp;/&nbsp;{this.state.totalPages}</span>
+                  <span className="pagination-position">{this.state.current_page}&nbsp;/&nbsp;{this.state.total_pages}</span>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {(() => {
-                    if (this.state.hasNextPage) {
-                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.currentPage) + 1 }`}><i className="icon-angle-right icon-2x"></i></Link>;
+                    if (this.state.has_next_page) {
+                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.current_page) + 1 }`}><i className="icon-angle-right icon-2x"></i></Link>;
                     }
                   })()}
                 </nav>

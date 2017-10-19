@@ -1,39 +1,42 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import axios from 'axios';
 import { Helmet } from "react-helmet";
-import Link from './link';
-import Topic from './topic';
 
 export default class TopicsNew extends React.Component {
 
+  static contextTypes = {
+    transitTo: PropTypes.func,
+  }
+
   constructor(props) {
     super(props);
-    this.state = {
-      topics: this.props.topics,
-      currentPage: this.props.currentPage,
-      totalPages: this.props.totalPages,
-      hasPrevPage: this.props.hasPrevPage,
-      hasNextPage: this.props.hasNextPage,
-    };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      topics: nextProps.topics,
-      currentPage: nextProps.currentPage,
-      totalPages: nextProps.totalPages,
-      hasPrevPage: nextProps.hasPrevPage,
-      hasNextPage: nextProps.hasNextPage,
+  handleSubmit(e) {
+    e.preventDefault();
+
+    const data = {
+      gender  : this.refs.gender.value.trim(),
+      title   : this.refs.title.value.trim(),
+      content : this.refs.content.value.trim(),
+    }
+
+    axios.post('/topics', data, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.getElementsByName('csrf-token').item(0).content,
+      }
+    })
+    .then((response) => {
+      this.context.transitTo('/', { pushState: true });
     });
+
+
+    return;
   }
-
-  // componentDidMount() {
-  //   console.log("here");
-  // }
-
-  // updateName = (name) => {
-  //   this.setState({ name });
-  // };
 
   render() {
     return (
@@ -46,7 +49,7 @@ export default class TopicsNew extends React.Component {
             <div className="panel panel-default">
               <div className="panel-heading"><strong><i className='icon-check-sign'></i> 性の悩みについて質問する</strong></div>
               <div className="panel-body">
-                <form>
+                <form onSubmit={this.handleSubmit}>
                   <div className="form-group">
                     <i className='icon-pencil'></i>&nbsp;<label htmlFor="form-gender">性別</label>&nbsp;<span className="label label-primary">必須</span>
                     <select className="form-control" id="form-gender" ref="gender">
@@ -79,8 +82,6 @@ export default class TopicsNew extends React.Component {
           <div className="col-md-4">
           </div>
         </div>
-
-        <Link href="/topics/show">topics/show</Link>
       </div>
     );
   }
