@@ -22,7 +22,14 @@ export default class Topic extends React.Component {
           <ul className="list-group-item-text list-inline detail-element">
             <li><small><i className="icon-comments"></i> 回答 : 0</small></li>
             <li><small><i className="icon-eye-open"></i> view : 0</small></li>
-            <li><small><i className="icon-male"></i> 男性</small></li>
+            {(() => {
+              if (this.props.topic.gender === 'male') {
+                return (<li><small><i className="icon-male"></i> 男性</small></li>);
+              } else {
+                return (<li><small><i className="icon-female"></i> 女性</small></li>);
+              }
+            })()}
+
             <li><small><i className="icon-time"></i> 1年以上前
                 &nbsp;<span className='label label-default'>更新</span>
             </small></li>
