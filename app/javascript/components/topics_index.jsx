@@ -20,6 +20,7 @@ export default class TopicsIndex extends React.Component {
         txt: [],
       }
     };
+    console.log(this.state.topics);
   }
 
   componentDidMount() {

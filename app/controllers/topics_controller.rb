@@ -25,7 +25,9 @@ class TopicsController < ApplicationController
   # GET /topics/new.json
   def new
     render_for_react(
-      props: {},
+      props: {
+        tags: Tag.all
+      },
     )
   end
 
@@ -63,7 +65,7 @@ class TopicsController < ApplicationController
   private
 
     def topic_params
-      params.permit(:gender, :title, :content)
+      params.permit(:gender, :title, :content, { :tag_ids => [] })
     end
 
 

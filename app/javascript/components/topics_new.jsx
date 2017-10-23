@@ -12,23 +12,39 @@ export default class TopicsNew extends React.Component {
 
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       messages: {
         status: '',
         txt: [],
-      }
+      },
+      tag_ids: [],
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    let tag_ids = Object.assign([], this.state.tag_ids);
+    if(e.target.checked) {
+      // 追加処理
+      tag_ids.push(e.target.value);
+    } else {
+      // 削除処理
+      const index = tag_ids.indexOf(e.target.value);
+      tag_ids.splice(index, 1);
     }
+    this.setState({tag_ids: tag_ids});
   }
 
   handleSubmit(e) {
     e.preventDefault();
-
-    const data = {
+    console.log(this.state.tag_ids);
+    let data = {
       gender  : this.refs.gender.value.trim(),
       title   : this.refs.title.value.trim(),
       content : this.refs.content.value.trim(),
     }
+    data = Object.assign(data, { tag_ids: this.state.tag_ids })
 
     axios.post('/topics', data, {
       headers: {
@@ -85,10 +101,14 @@ export default class TopicsNew extends React.Component {
                     <textarea className="form-control" placeholder="質問内容を入力して下さい" rows="5" id="form-content" ref="content"></textarea>
                   </div>
                   <div className="form-group">
-                    <i className="icon-pencil"></i>&nbsp;<label htmlFor="TagTag">カテゴリー</label> <span className="label label-default">任意</span>&nbsp;<span className="label label-default">複数可</span>
-                    {
-                      //echo $this->Form->input('Tag', array('type'=> 'select','class'=> 'checkbox wrap-checkbox', 'multiple'=> 'checkbox', 'label'=>false, 'div'=> false, 'options'=> $tag_list, 'error' => false)); ?>
-                    }
+                    <div><i className="icon-pencil"></i>&nbsp;<label htmlFor="TagTag">カテゴリー</label> <span className="label label-default">任意</span>&nbsp;<span className="label label-default">複数可</span></div>
+                    {this.props.tags.map((tag, i) => {
+                      return (
+                        <div className="checkbox wrap-checkbox" key={tag.id}>
+                          <label><input type="checkbox" value={tag.id} onChange={this.handleChange} /> {tag.name}</label>
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="form-group text-center">
                     <input className="btn btn-primary btn-lg" type="submit" value="質問する" />
