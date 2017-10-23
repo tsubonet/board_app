@@ -4,14 +4,14 @@ class TopicsController < ApplicationController
   # GET /topics.json
   def index
     page_per = 10
-    current_page = params[:page].nil? || params[:page].to_i <= 0 ? 1: params[:page]
-    total_pages  = Topic.count % page_per != 0 ? (Topic.count / page_per) + 1 : (Topic.count / page_per)
+    current_page  = params[:page].nil? || params[:page].to_i <= 0 ? 1: params[:page]
+    total_pages   = Topic.count % page_per != 0 ? (Topic.count / page_per) + 1 : (Topic.count / page_per)
     has_prev_page = !(params[:page].to_i - 1 <= 0) ? true: false
     has_next_page = params[:page].to_i + 1 <= total_pages ? true: false
 
     render_for_react(
       props: {
-        topics: Topic.page(current_page).per(10),
+        topics: Topic.page(current_page).per(page_per),
         current_page: current_page,
         total_pages: total_pages,
         has_prev_page: has_prev_page,
