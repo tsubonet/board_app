@@ -57,7 +57,7 @@ class TopicsController < ApplicationController
     topic = Topic.find(params[:id])
     render_for_react(
       props: {
-        topic: topic
+        topic: topic.as_json(:include => [:tags]),
       },
     )
   end
