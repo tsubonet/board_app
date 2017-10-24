@@ -1,3 +1,3 @@
 class Comment < ApplicationRecord
-  belongs_to :topic
+  belongs_to :topic, touch: true
 end
