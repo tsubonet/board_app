@@ -13,7 +13,7 @@ export default class Topic extends React.Component {
     return (
       <Link className="list-group-item" href={`/topics/${this.props.topic.id}`}>
         <div className="topic-comment-count hidden-xs">
-          <span className="badge">0</span><br />
+          <span className="badge">{this.props.topic.comments.length}</span><br />
           <span className="icon-comments"></span>&nbsp;回答
         </div>
         <div className="topic-detail">

@@ -11,7 +11,7 @@ class TopicsController < ApplicationController
 
     render_for_react(
       props: {
-        topics: Topic.page(current_page).per(page_per).as_json(:include => [:tags]),
+        topics: Topic.page(current_page).per(page_per).as_json(:include => [:comments]),
         current_page: current_page,
         total_pages: total_pages,
         has_prev_page: has_prev_page,
@@ -57,7 +57,7 @@ class TopicsController < ApplicationController
     topic = Topic.find(params[:id])
     render_for_react(
       props: {
-        topic: topic.as_json(:include => [:tags]),
+        topic: topic.as_json(:include => [:tags, :comments]),
       },
     )
   end

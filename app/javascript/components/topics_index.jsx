@@ -23,7 +23,7 @@ export default class TopicsIndex extends React.Component {
   }
 
   componentDidMount() {
-    if (typeof history.state.messages !== 'undefined') {
+    if (history.state !== null && typeof history.state.messages !== 'undefined') {
       this.setState({
         messages: {
           status: history.state.messages.status,
