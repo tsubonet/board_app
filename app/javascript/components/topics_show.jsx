@@ -61,6 +61,32 @@ export default class TopicsShow extends React.Component {
                   <div className="panel-body" id="comment-area">
                   </div>
                 </div>
+
+
+                <div className="panel panel-default comment-form" id="comment-form">
+                  <div className="panel-heading">
+                    <strong><i className='icon-check-sign'></i>&nbsp;回答する</strong>
+                  </div>
+                  <div className="panel-body">
+                    <form>
+                      <div className="form-group">
+                        <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" id="comment-content" ref="comment-content"></textarea>
+                      </div>
+                      <div className="form-group">
+                        <div className="link-input-wrap">
+                          <i className='icon-pencil'></i>&nbsp;<label htmlFor="comment-link">リンク</label>
+                          <input type="text" className="form-control" placeholder="http://" id="comment-link" ref="comment-link" />
+                        </div>
+                        <div className="comment-link-btn btn btn-default btn-sm">
+                          <i className='icon-link'></i>リンク追加
+                        </div>
+                      </div>
+                      <div className="form-group text-center">
+                        <input className="btn btn-primary comment-btn" type="submit" value="この質問に回答する" />
+                      </div>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
