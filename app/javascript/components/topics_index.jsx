@@ -18,7 +18,7 @@ export default class TopicsIndex extends React.Component {
       messages: {
         status: '',
         txt: [],
-      }
+      },
     };
     console.log(this.state.topics);
   }
@@ -44,7 +44,7 @@ export default class TopicsIndex extends React.Component {
       messages: {
         status: '',
         txt: [],
-      }
+      },
     });
   }
 

@@ -30,22 +30,17 @@ export default class TopicsShow extends React.Component {
         <Helmet>
           <title>Show</title>
         </Helmet>
-        <h3>
-          Hello, {this.state.name}!
-        </h3>
-        <hr />
-        <form >
-          <label htmlFor="name">
-            Show Say hello to:
-          </label>
-          <input
-            id="name"
-            type="text"
-            value={this.state.name}
-            onChange={(e) => this.updateName(e.target.value)}
-          />
-        </form>
-        <Link href="/topics">topics</Link>
+        <div class="row">
+          <div class="col-md-8">
+              <div class="panel panel-default">
+
+                
+              </div>
+          </div>
+
+          <div class="col-md-4">
+          </div>
+        </div>
       </div>
     );
   }
