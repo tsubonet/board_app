@@ -54,9 +54,10 @@ class TopicsController < ApplicationController
   # GET /topics/1
   # GET /topics/1.json
   def show
+    topic = Topic.find(params[:id])
     render_for_react(
       props: {
-        name: "test"
+        topic: topic
       },
     )
   end

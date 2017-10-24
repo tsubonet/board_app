@@ -38,13 +38,12 @@ export default class TopicsNew extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state.tag_ids);
     let data = {
       gender  : this.refs.gender.value.trim(),
       title   : this.refs.title.value.trim(),
       content : this.refs.content.value.trim(),
     }
-    data = Object.assign(data, { tag_ids: this.state.tag_ids })
+    data = Object.assign(data, { tag_ids: this.state.tag_ids });
 
     axios.post('/topics', data, {
       headers: {
@@ -68,8 +67,6 @@ export default class TopicsNew extends React.Component {
     })
     .catch((response) => {
     });
-
-    return;
   }
 
   render() {
@@ -82,7 +79,7 @@ export default class TopicsNew extends React.Component {
           <div className="col-md-8">
             <Messages messages={this.state.messages} />
             <div className="panel panel-default">
-              <div className="panel-heading"><strong><i className='icon-check-sign'></i> 性の悩みについて質問する</strong></div>
+              <div className="panel-heading"><strong><i className='icon-check-sign'></i>&nbsp;性の悩みについて質問する</strong></div>
               <div className="panel-body">
                 <form onSubmit={this.handleSubmit}>
                   <div className="form-group">
@@ -101,11 +98,11 @@ export default class TopicsNew extends React.Component {
                     <textarea className="form-control" placeholder="質問内容を入力して下さい" rows="5" id="form-content" ref="content"></textarea>
                   </div>
                   <div className="form-group">
-                    <div><i className="icon-pencil"></i>&nbsp;<label htmlFor="TagTag">カテゴリー</label> <span className="label label-default">任意</span>&nbsp;<span className="label label-default">複数可</span></div>
+                    <div><i className="icon-pencil"></i>&nbsp;<label htmlFor="TagTag">カテゴリー</label>&nbsp;<span className="label label-default">任意</span>&nbsp;<span className="label label-default">複数可</span></div>
                     {this.props.tags.map((tag, i) => {
                       return (
                         <div className="checkbox wrap-checkbox" key={tag.id}>
-                          <label><input type="checkbox" value={tag.id} onChange={this.handleChange} /> {tag.name}</label>
+                          <label><input type="checkbox" value={tag.id} onChange={this.handleChange} />&nbsp;{tag.name}</label>
                         </div>
                       );
                     })}

@@ -20,7 +20,6 @@ export default class TopicsIndex extends React.Component {
         txt: [],
       },
     };
-    console.log(this.state.topics);
   }
 
   componentDidMount() {
@@ -59,7 +58,7 @@ export default class TopicsIndex extends React.Component {
             <Messages messages={this.state.messages} />
             <div className="panel panel-default">
               <div className="panel-heading">
-                <h1><i className='icon-check-sign'></i> 性の悩みを解決する匿名Q&amp;Aサービス</h1>
+                <h1><i className='icon-check-sign'></i>&nbsp;性の悩みを解決する匿名Q&amp;Aサービス</h1>
               </div>
               <div className="list-group">
               {(() => {
@@ -73,7 +72,6 @@ export default class TopicsIndex extends React.Component {
               })()}
               </div>
               <hr className="marT0 marB0" />
-
               <div className="wrap-pagination text-center">
                 <nav className="pagination">
                   {(() => {
