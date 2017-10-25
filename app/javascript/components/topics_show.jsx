@@ -20,6 +20,22 @@ export default class TopicsShow extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  formatDate(date, format) {
+    if (!format) format = 'YYYY-MM-DD hh:mm:ss';
+    format = format.replace(/YYYY/g, date.getFullYear());
+    format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
+    format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
+    format = format.replace(/hh/g, ('0' + date.getHours()).slice(-2));
+    format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
+    format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
+    if (format.match(/S/g)) {
+      const milliSeconds = ('00' + date.getMilliseconds()).slice(-3);
+      const length = format.match(/S/g).length;
+      for (let i = 0; i < length; i++) format = format.replace(/S/, milliSeconds.substring(i, i + 1));
+    }
+    return format;
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     let data = {
@@ -59,6 +75,8 @@ export default class TopicsShow extends React.Component {
 
 
   render() {
+    const updated_at = this.formatDate(new Date(this.props.topic.updated_at));
+
     return (
       <div>
         <Helmet>
@@ -78,7 +96,7 @@ export default class TopicsShow extends React.Component {
                       return (<li className="glay"><strong><i className="icon-female"></i>&nbsp;女性</strong></li>);
                     }
                   })()}
-                  <li className="glay"><strong><i className="icon-time"></i>&nbsp;{this.props.topic.created_at}</strong></li>
+                  <li className="glay"><strong><i className="icon-time"></i>&nbsp;{updated_at}</strong></li>
                   <li className="glay"><strong className="text-right"><i className="icon-eye-open"></i>&nbsp;view&nbsp;:&nbsp;0</strong></li>
                   <li><div className="btn btn-default topic-delete-btn" data-topic-id="#"><i className="icon-remove-sign"></i>&nbsp;この質問を削除する</div></li>
                 </ul>
