@@ -48,6 +48,12 @@ export default class TopicsIndex extends React.Component {
   }
 
   render() {
+
+    if (this.props.filter_name == 'default') {
+
+    }
+
+
     return (
       <div>
         <Helmet>
@@ -77,14 +83,19 @@ export default class TopicsIndex extends React.Component {
                   {(() => {
                     if (this.state.has_prev_page) {
                       return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.current_page) - 1 }`}><i className="icon-angle-left icon-2x"></i></Link>;
+                    } else {
+                      return <i className="icon-angle-left icon-2x"></i>;
                     }
                   })()}
+                  {prev_link}
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <span className="pagination-position">{this.state.current_page}&nbsp;/&nbsp;{this.state.total_pages}</span>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {(() => {
                     if (this.state.has_next_page) {
                       return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.current_page) + 1 }`}><i className="icon-angle-right icon-2x"></i></Link>;
+                    } else {
+                      return <i className="icon-angle-left icon-2x"></i>;
                     }
                   })()}
                 </nav>

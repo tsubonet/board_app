@@ -3,19 +3,21 @@ class TopicsController < ApplicationController
   # GET /topics
   # GET /topics.json
   def index
+    target = filter_topic
     page_per = 10
     current_page  = params[:page].nil? || params[:page].to_i <= 0 ? 1: params[:page]
-    total_pages   = Topic.count % page_per != 0 ? (Topic.count / page_per) + 1 : (Topic.count / page_per)
+    total_pages   = target[:model].count % page_per != 0 ? (target[:model].count / page_per) + 1 : (target[:model].count / page_per)
     has_prev_page = !(params[:page].to_i - 1 <= 0) ? true: false
     has_next_page = params[:page].to_i + 1 <= total_pages ? true: false
 
     render_for_react(
       props: {
-        topics: Topic.page(current_page).per(page_per),
+        topics: target[:model].page(current_page).per(page_per),
         current_page: current_page,
         total_pages: total_pages,
         has_prev_page: has_prev_page,
-        has_next_page: has_next_page
+        has_next_page: has_next_page,
+        filter: target[:name],
       },
     )
   end
@@ -26,7 +28,7 @@ class TopicsController < ApplicationController
   def new
     render_for_react(
       props: {
-        tags: Tag.all
+        tags: Tag.all,
       },
     )
   end
@@ -39,12 +41,12 @@ class TopicsController < ApplicationController
     if @topic.save
       response_data = {
         status: 'success',
-        txt: ['質問を投稿しました！']
+        txt: ['質問を投稿しました！'],
       }
     else
       response_data = {
         status: 'error',
-        txt: @topic.errors.full_messages
+        txt: @topic.errors.full_messages,
       }
     end
     render json: response_data
@@ -64,6 +66,25 @@ class TopicsController < ApplicationController
 
 
   private
+
+    def filter_topic
+      if params[:order] == 'new'
+        {
+          model: Topic.where('comments_count = ?', '0'),
+          name: 'new',
+        }
+      elsif params[:tag] && tag = Tag.find_by(:id => params[:tag])
+        {
+          model: tag.topics,
+          name: 'tag' + params[:tag],
+        }
+      else
+        {
+          model: Topic,
+          name: 'default',
+        }
+      end
+    end
 
     def topic_params
       params.permit(:gender, :title, :content, { :tag_ids => [] })
