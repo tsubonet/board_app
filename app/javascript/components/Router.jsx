@@ -11,8 +11,8 @@ import TopicsShow from './topics_show';
 export default class Router extends React.Component {
 
   static childContextTypes = {
-    onLinkClick: PropTypes.func,
     rootProps: PropTypes.object,
+    onLinkClick: PropTypes.func,
     transitTo: PropTypes.func,
   }
 
@@ -25,8 +25,8 @@ export default class Router extends React.Component {
 
   getChildContext() {
     return {
-      onLinkClick: this.onLinkClick.bind(this),
       rootProps: this.state.rootProps,
+      onLinkClick: this.onLinkClick.bind(this),
       transitTo: this.transitTo.bind(this),
     };
   }

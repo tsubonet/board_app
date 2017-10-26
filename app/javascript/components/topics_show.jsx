@@ -20,8 +20,7 @@ export default class TopicsShow extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  formatDate(date, format) {
-    if (!format) format = 'YYYY-MM-DD hh:mm:ss';
+  formatDate(date, format = 'YYYY-MM-DD hh:mm:ss.SSS') {
     format = format.replace(/YYYY/g, date.getFullYear());
     format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
     format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
@@ -75,7 +74,7 @@ export default class TopicsShow extends React.Component {
 
 
   render() {
-    const updated_at = this.formatDate(new Date(this.props.topic.updated_at));
+    const updated_at = this.formatDate(new Date(this.props.topic.updated_at), 'YYYY-MM-DD hh:mm');
 
     return (
       <div>
@@ -113,7 +112,7 @@ export default class TopicsShow extends React.Component {
                   {(() => {
                     if (this.props.topic.tags.length) {
                       return this.props.topic.tags.map((tag, i) => {
-                        return <Link href={`/?tag=${tag.id}`} key={tag.id}><small className="btn btn-default btn-xs">{tag.name}</small></Link>;
+                        return <Link href={`/?tag=${tag.id}`} key={tag.id} className="marR5"><small className="btn btn-default btn-xs">{tag.name}</small></Link>;
                       });
                     }
                   })()}
