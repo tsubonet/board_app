@@ -96,7 +96,7 @@ export default class TopicsShow extends React.Component {
                     }
                   })()}
                   <li className="glay"><strong><i className="icon-time"></i>&nbsp;{updated_at}</strong></li>
-                  <li className="glay"><strong className="text-right"><i className="icon-eye-open"></i>&nbsp;view&nbsp;:&nbsp;0</strong></li>
+                  <li className="glay"><strong className="text-right"><i className="icon-eye-open"></i>&nbsp;view&nbsp;:&nbsp;{this.props.topic.view_count}</strong></li>
                   <li><div className="btn btn-default topic-delete-btn" data-topic-id="#"><i className="icon-remove-sign"></i>&nbsp;この質問を削除する</div></li>
                 </ul>
               </div>

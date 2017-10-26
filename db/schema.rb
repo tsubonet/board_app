@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20171024062125) do
     t.string "gender"
     t.string "user"
     t.integer "comments_count", default: 0, null: false
+    t.integer "view_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

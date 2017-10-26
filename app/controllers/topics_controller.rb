@@ -57,6 +57,8 @@ class TopicsController < ApplicationController
   # GET /topics/1.json
   def show
     topic = Topic.find(params[:id])
+    topic.record_timestamps = false
+    topic.update( view_count: topic.view_count + 1 )
     render_for_react(
       props: {
         topic: topic.as_json(:include => [:tags, :comments]),
