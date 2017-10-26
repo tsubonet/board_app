@@ -49,10 +49,14 @@ export default class TopicsIndex extends React.Component {
 
   render() {
 
-    if (this.props.filter_name == 'default') {
-
+    let param;
+    if (this.props.filter == 'new') {
+      param = '&order=new';
+    } else if (this.props.filter.indexOf('tag') !== -1) {
+      param = '&tag='+ this.props.filter.replace('tag', '');
+    } else {
+      param = '';
     }
-
 
     return (
       <div>
@@ -82,20 +86,19 @@ export default class TopicsIndex extends React.Component {
                 <nav className="pagination">
                   {(() => {
                     if (this.state.has_prev_page) {
-                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.current_page) - 1 }`}><i className="icon-angle-left icon-2x"></i></Link>;
+                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.current_page) - 1 }${param}`}><i className="icon-angle-left icon-2x"></i></Link>;
                     } else {
                       return <i className="icon-angle-left icon-2x"></i>;
                     }
                   })()}
-                  {prev_link}
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <span className="pagination-position">{this.state.current_page}&nbsp;/&nbsp;{this.state.total_pages}</span>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {(() => {
                     if (this.state.has_next_page) {
-                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.current_page) + 1 }`}><i className="icon-angle-right icon-2x"></i></Link>;
+                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.current_page) + 1 }${param}`}><i className="icon-angle-right icon-2x"></i></Link>;
                     } else {
-                      return <i className="icon-angle-left icon-2x"></i>;
+                      return <i className="icon-angle-right icon-2x"></i>;
                     }
                   })()}
                 </nav>

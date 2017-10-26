@@ -5,10 +5,10 @@ class TopicsController < ApplicationController
   def index
     target = filter_topic
     page_per = 10
-    current_page  = params[:page].nil? || params[:page].to_i <= 0 ? 1: params[:page]
+    current_page  = params[:page].nil? || params[:page].to_i <= 0 ? 1: params[:page].to_i
     total_pages   = target[:model].count % page_per != 0 ? (target[:model].count / page_per) + 1 : (target[:model].count / page_per)
-    has_prev_page = !(params[:page].to_i - 1 <= 0) ? true: false
-    has_next_page = params[:page].to_i + 1 <= total_pages ? true: false
+    has_prev_page = current_page > 1 ? true: false
+    has_next_page = current_page < total_pages ? true: false
 
     render_for_react(
       props: {
@@ -17,7 +17,7 @@ class TopicsController < ApplicationController
         total_pages: total_pages,
         has_prev_page: has_prev_page,
         has_next_page: has_next_page,
-        filter: target[:name],
+        filter: target[:filter],
       },
     )
   end
@@ -71,17 +71,17 @@ class TopicsController < ApplicationController
       if params[:order] == 'new'
         {
           model: Topic.where('comments_count = ?', '0'),
-          name: 'new',
+          filter: 'new',
         }
       elsif params[:tag] && tag = Tag.find_by(:id => params[:tag])
         {
           model: tag.topics,
-          name: 'tag' + params[:tag],
+          filter: 'tag' + params[:tag],
         }
       else
         {
           model: Topic,
-          name: 'default',
+          filter: 'default',
         }
       end
     end
