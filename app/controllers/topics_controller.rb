@@ -11,7 +11,7 @@ class TopicsController < ApplicationController
 
     render_for_react(
       props: {
-        topics: Topic.page(current_page).per(page_per).as_json(:include => [:comments]),
+        topics: Topic.page(current_page).per(page_per),
         current_page: current_page,
         total_pages: total_pages,
         has_prev_page: has_prev_page,

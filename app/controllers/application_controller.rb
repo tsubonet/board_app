@@ -7,9 +7,14 @@ class ApplicationController < ActionController::Base
     "#{controller_path}##{action_name}"
   end
 
+  def no_comments_count
+    Topic.where('comments_count = ?', '0').count
+  end
+
   def common_props
     {
       actionPath: action_path,
+      noCommentsCount: no_comments_count,
       #currentUser: current_user,
     }
   end

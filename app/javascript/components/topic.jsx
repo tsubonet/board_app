@@ -37,14 +37,14 @@ export default class Topic extends React.Component {
     return (
       <Link className="list-group-item" href={`/topics/${this.props.topic.id}`}>
         <div className="topic-comment-count hidden-xs">
-          <span className="badge">{this.props.topic.comments.length}</span><br />
+          <span className="badge">{this.props.topic.comments_count}</span><br />
           <span className="icon-comments"></span>&nbsp;回答
         </div>
         <div className="topic-detail">
           <h2 className="list-group-item-heading"><i className="icon-comment"></i>&nbsp;<strong>{this.props.topic.title}</strong></h2>
           <p className="list-group-item-text">{this.props.topic.content}</p>
           <ul className="list-group-item-text list-inline detail-element">
-            <li><small><i className="icon-comments"></i>&nbsp;回答&nbsp;:&nbsp;{this.props.topic.comments.length}</small></li>
+            <li><small><i className="icon-comments"></i>&nbsp;回答&nbsp;:&nbsp;{this.props.topic.comments_count}</small></li>
             <li><small><i className="icon-eye-open"></i>&nbsp;view&nbsp;:&nbsp;0</small></li>
             {(() => {
               if (this.props.topic.gender === 'male') {

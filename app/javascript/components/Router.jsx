@@ -83,7 +83,7 @@ export default class Router extends React.Component {
     const Component = this.getComponent();
     return (
       <div>
-        <Header />
+        <Header noCommentsCount={this.state.rootProps.noCommentsCount} />
         <section>
           <div className="container marT70">
             <Component {...this.state.rootProps} />
