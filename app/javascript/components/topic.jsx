@@ -26,7 +26,7 @@ export default class Topic extends React.Component {
     } else if (minutes_diff > 0) {
       return minutes_diff + "分前";
     } else {
-      return seconds_diff + "秒前";
+      return "1分前";
     }
   }
 
