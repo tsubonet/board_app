@@ -87,7 +87,7 @@ class TopicsController < ApplicationController
     end
 
     def topic_params
-      params.permit(:gender, :title, :content, { :tag_ids => [] })
+      params.permit(:user, :gender, :title, :content, { :tag_ids => [] })
     end
 
 

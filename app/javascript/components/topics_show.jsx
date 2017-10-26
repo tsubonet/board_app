@@ -87,7 +87,7 @@ export default class TopicsShow extends React.Component {
             <div className="panel panel-default">
               <div className="panel-heading">
                 <ul className="list-inline marB0">
-                  <li><strong><i className="icon-user"></i>&nbsp;○○さんの質問</strong></li>
+                  <li><strong><i className="icon-user"></i>&nbsp;{this.props.topic.user}さんの質問</strong></li>
                   {(() => {
                     if (this.props.topic.gender === 'male') {
                       return (<li className="glay"><strong><i className="icon-male"></i>&nbsp;男性</strong></li>);

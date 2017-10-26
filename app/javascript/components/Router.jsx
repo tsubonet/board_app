@@ -35,6 +35,18 @@ export default class Router extends React.Component {
     window.addEventListener("popstate", () => {
       this.transitTo(document.location.href, { pushState: false });
     });
+    this.setUserId();
+  }
+
+  setUserId() {
+    if (typeof localStorage.user_id !== 'undefined') return;
+    const str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const len = 8;
+    let result = "";
+    for (let i = 0; i < len; i++) {
+      result += str.charAt(Math.floor(Math.random() * str.length));
+    }
+    localStorage.user_id = result;
   }
 
   onLinkClick(event) {
