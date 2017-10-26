@@ -37,8 +37,8 @@ class TopicsController < ApplicationController
   # POST /topics
   # POST /topics.json
   def create
-    @topic = Topic.new(topic_params)
-    if @topic.save
+    topic = Topic.new(topic_params)
+    if topic.save
       response_data = {
         status: 'success',
         txt: ['質問を投稿しました！'],
@@ -46,7 +46,7 @@ class TopicsController < ApplicationController
     else
       response_data = {
         status: 'error',
-        txt: @topic.errors.full_messages,
+        txt: topic.errors.full_messages,
       }
     end
     render json: response_data
