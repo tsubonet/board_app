@@ -13,11 +13,13 @@ class TopicsController < ApplicationController
     render_for_react(
       props: {
         topics: target[:model].page(current_page).per(page_per),
-        current_page: current_page,
-        total_pages: total_pages,
-        has_prev_page: has_prev_page,
-        has_next_page: has_next_page,
         filter: target[:filter],
+        pager: {
+          current_page: current_page,
+          total_pages: total_pages,
+          has_prev_page: has_prev_page,
+          has_next_page: has_next_page,
+        },
       },
     )
   end

@@ -11,10 +11,7 @@ export default class TopicsIndex extends React.Component {
     super(props);
     this.state = {
       topics: this.props.topics,
-      current_page: this.props.current_page,
-      total_pages: this.props.total_pages,
-      has_prev_page: this.props.has_prev_page,
-      has_next_page: this.props.has_next_page,
+      pager: this.props.pager,
       messages: {
         status: '',
         txt: [],
@@ -36,10 +33,7 @@ export default class TopicsIndex extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       topics: nextProps.topics,
-      current_page: nextProps.current_page,
-      total_pages: nextProps.total_pages,
-      has_prev_page: nextProps.has_prev_page,
-      has_next_page: nextProps.has_next_page,
+      pager: nextProps.pager,
       messages: {
         status: '',
         txt: [],
@@ -48,7 +42,6 @@ export default class TopicsIndex extends React.Component {
   }
 
   render() {
-
     let param;
     if (this.props.filter == 'new') {
       param = '&order=new';
@@ -85,18 +78,18 @@ export default class TopicsIndex extends React.Component {
               <div className="wrap-pagination text-center">
                 <nav className="pagination">
                   {(() => {
-                    if (this.state.has_prev_page) {
-                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.current_page) - 1 }${param}`}><i className="icon-angle-left icon-2x"></i></Link>;
+                    if (this.state.pager.has_prev_page) {
+                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.pager.current_page) - 1 }${param}`}><i className="icon-angle-left icon-2x"></i></Link>;
                     } else {
                       return <i className="icon-angle-left icon-2x"></i>;
                     }
                   })()}
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <span className="pagination-position">{this.state.current_page}&nbsp;/&nbsp;{this.state.total_pages}</span>
+                  <span className="pagination-position">{this.state.pager.current_page}&nbsp;/&nbsp;{this.state.pager.total_pages}</span>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {(() => {
-                    if (this.state.has_next_page) {
-                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.current_page) + 1 }${param}`}><i className="icon-angle-right icon-2x"></i></Link>;
+                    if (this.state.pager.has_next_page) {
+                      return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.pager.current_page) + 1 }${param}`}><i className="icon-angle-right icon-2x"></i></Link>;
                     } else {
                       return <i className="icon-angle-right icon-2x"></i>;
                     }

@@ -10,14 +10,21 @@ export default class TopicsShow extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
+      topics: this.props.topics,
       messages: {
         status: '',
         txt: [],
       },
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      topics: nextProps.topics
+    });
+    console.log(props);
   }
 
   formatDate(date, format = 'YYYY-MM-DD hh:mm:ss.SSS') {
@@ -41,7 +48,6 @@ export default class TopicsShow extends React.Component {
       topic_id: this.props.topic.id,
       content : this.refs.comment_content.value.trim(),
     }
-
     axios.post('/comments', data, {
       headers: {
         'Accept': 'application/json',

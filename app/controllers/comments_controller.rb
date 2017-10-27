@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
     if @comment.save
       response_data = {
         status: 'success',
-        txt: ['質問aを投稿しました！']
+        txt: ['回答を投稿しました！']
       }
     else
       response_data = {
