@@ -48,6 +48,7 @@ export default class TopicsShow extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     let data = {
+      user: localStorage.user_id,
       topic_id: this.state.topic.id,
       content : this.refs.comment_content.value.trim(),
     }
@@ -133,6 +134,32 @@ export default class TopicsShow extends React.Component {
                     <strong><i className='icon-check-sign'></i>&nbsp;みんなの回答&nbsp;<span id="comment-count">{this.state.topic.comments.length}</span>件</strong>
                   </div>
                   <div className="panel-body" id="comment-area">
+                  {(() => {
+                    if (this.state.topic.comments.length) {
+                      return this.state.topic.comments.map((comment, i) => {
+                        const created_at = this.formatDate(new Date(comment.created_at), 'YYYY-MM-DD hh:mm');
+                        return (
+                          <div>
+                            <ul className="list-inline glay">
+                              <li><i className="icon-user"></i> { comment.user === this.state.topic.user? 'トピ主': comment.user }さんからの回答</li>
+                              <li><i className="icon-time"></i> { created_at }</li>
+                              {
+                                //<?php if($user_id == h($comment['commenter'])){ ?>
+                                //<li><a href="javascript:void(0)" className="comment-delete-btn" data-comment-id="<?php echo h($comment['id']); ?>"><i className="icon-remove-sign"></i> 削除</a></li>
+                                //<?php } ?>
+                              }
+                              {
+                                //<p><?php echo nl2br($this->text->autoLinkUrls(h($comment['link_url']), array( 'target' => '_blank'))); ?></p>
+                              }
+                            </ul>
+                            <p>{comment.content}</p>
+                          </div>
+                        )
+                      });
+                    } else {
+                      return (<p>まだコメントがありません</p>);
+                    }
+                  })()}
                   </div>
                 </div>
 
