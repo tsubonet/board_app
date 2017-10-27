@@ -8,10 +8,14 @@ import Messages from "./messages";
 
 export default class TopicsShow extends React.Component {
 
+  static contextTypes = {
+    transitTo: PropTypes.func,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      topics: this.props.topics,
+      topic: this.props.topic,
       messages: {
         status: '',
         txt: [],
@@ -22,9 +26,8 @@ export default class TopicsShow extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      topics: nextProps.topics
+      topic: nextProps.topic,
     });
-    console.log(props);
   }
 
   formatDate(date, format = 'YYYY-MM-DD hh:mm:ss.SSS') {
@@ -45,7 +48,7 @@ export default class TopicsShow extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     let data = {
-      topic_id: this.props.topic.id,
+      topic_id: this.state.topic.id,
       content : this.refs.comment_content.value.trim(),
     }
     axios.post('/comments', data, {
@@ -53,11 +56,12 @@ export default class TopicsShow extends React.Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'X-CSRF-Token': document.getElementsByName('csrf-token').item(0).content,
-      }
+      },
     })
     .then(response => response.data)
     .then((data) => {
       window.scrollTo(0, 0);
+      this.context.transitTo(location.href, { pushState: true });
       if (data.status === 'success') {
         this.setState({
           messages: {
@@ -80,7 +84,7 @@ export default class TopicsShow extends React.Component {
 
 
   render() {
-    const updated_at = this.formatDate(new Date(this.props.topic.updated_at), 'YYYY-MM-DD hh:mm');
+    const updated_at = this.formatDate(new Date(this.state.topic.updated_at), 'YYYY-MM-DD hh:mm');
 
     return (
       <div>
@@ -93,31 +97,31 @@ export default class TopicsShow extends React.Component {
             <div className="panel panel-default">
               <div className="panel-heading">
                 <ul className="list-inline marB0">
-                  <li><strong><i className="icon-user"></i>&nbsp;{this.props.topic.user}さんの質問</strong></li>
+                  <li><strong><i className="icon-user"></i>&nbsp;{this.state.topic.user}さんの質問</strong></li>
                   {(() => {
-                    if (this.props.topic.gender === 'male') {
+                    if (this.state.topic.gender === 'male') {
                       return (<li className="glay"><strong><i className="icon-male"></i>&nbsp;男性</strong></li>);
                     } else {
                       return (<li className="glay"><strong><i className="icon-female"></i>&nbsp;女性</strong></li>);
                     }
                   })()}
                   <li className="glay"><strong><i className="icon-time"></i>&nbsp;{updated_at}</strong></li>
-                  <li className="glay"><strong className="text-right"><i className="icon-eye-open"></i>&nbsp;view&nbsp;:&nbsp;{this.props.topic.view_count}</strong></li>
+                  <li className="glay"><strong className="text-right"><i className="icon-eye-open"></i>&nbsp;view&nbsp;:&nbsp;{this.state.topic.view_count}</strong></li>
                   <li><div className="btn btn-default topic-delete-btn" data-topic-id="#"><i className="icon-remove-sign"></i>&nbsp;この質問を削除する</div></li>
                 </ul>
               </div>
               <div className="panel-body">
-                <h1 className="h1-detail"><i className="icon-comment"></i>&nbsp;{this.props.topic.title}</h1>
-                <p>{this.props.topic.content}</p>
+                <h1 className="h1-detail"><i className="icon-comment"></i>&nbsp;{this.state.topic.title}</h1>
+                <p>{this.state.topic.content}</p>
                 <p className="glay">
                   {(() => {
-                    if (this.props.topic.tags.length) {
+                    if (this.state.topic.tags.length) {
                       return (<small>カテゴリー：</small>);
                     }
                   })()}
                   {(() => {
-                    if (this.props.topic.tags.length) {
-                      return this.props.topic.tags.map((tag, i) => {
+                    if (this.state.topic.tags.length) {
+                      return this.state.topic.tags.map((tag, i) => {
                         return <Link href={`/?tag=${tag.id}`} key={tag.id} className="marR5"><small className="btn btn-default btn-xs">{tag.name}</small></Link>;
                       });
                     }
@@ -126,7 +130,7 @@ export default class TopicsShow extends React.Component {
                 <p className="text-center marT20 marB20"><a className="btn btn-primary" href="#comment-form">この質問に回答する</a></p>
                 <div className="panel panel-default">
                   <div className="panel-heading">
-                    <strong><i className='icon-check-sign'></i>&nbsp;みんなの回答&nbsp;<span id="comment-count">{this.props.topic.comments.length}</span>件</strong>
+                    <strong><i className='icon-check-sign'></i>&nbsp;みんなの回答&nbsp;<span id="comment-count">{this.state.topic.comments.length}</span>件</strong>
                   </div>
                   <div className="panel-body" id="comment-area">
                   </div>
