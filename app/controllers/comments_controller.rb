@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
     comment = Comment.new(comment_params)
     if comment.save
       response_data = {
+        comment: comment,
         status: 'success',
         txt: ['回答を投稿しました！']
       }

@@ -62,9 +62,11 @@ export default class TopicsShow extends React.Component {
     .then(response => response.data)
     .then((data) => {
       window.scrollTo(0, 0);
-      this.context.transitTo(location.href, { pushState: true });
       if (data.status === 'success') {
+        let topic = Object.assign({}, this.state.topic);
+        topic.comments.push(data.comment);
         this.setState({
+          topic: topic,
           messages: {
             status: 'success',
             txt: data.txt,
@@ -139,15 +141,11 @@ export default class TopicsShow extends React.Component {
                       return this.state.topic.comments.map((comment, i) => {
                         const created_at = this.formatDate(new Date(comment.created_at), 'YYYY-MM-DD hh:mm');
                         return (
-                          <div>
+                          <div key={comment.id}>
                             <ul className="list-inline glay">
                               <li><i className="icon-user"></i> { comment.user === this.state.topic.user? 'トピ主': comment.user }さんからの回答</li>
                               <li><i className="icon-time"></i> { created_at }</li>
-                              {
-                                //<?php if($user_id == h($comment['commenter'])){ ?>
-                                //<li><a href="javascript:void(0)" className="comment-delete-btn" data-comment-id="<?php echo h($comment['id']); ?>"><i className="icon-remove-sign"></i> 削除</a></li>
-                                //<?php } ?>
-                              }
+                              { comment.user === localStorage.user_id ? <li><a href="javascript:void(0)" className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li> : ''}
                               {
                                 //<p><?php echo nl2br($this->text->autoLinkUrls(h($comment['link_url']), array( 'target' => '_blank'))); ?></p>
                               }
