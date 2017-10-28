@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import axios from 'axios';
 import NProgress from "nprogress";
 
 import Header from './header';
 import TopicsIndex from './topics_index';
 import TopicsNew from './topics_new';
 import TopicsShow from './topics_show';
+import { sendGet, setUserId } from "./utils";
 
 export default class Router extends React.Component {
 
@@ -35,18 +35,7 @@ export default class Router extends React.Component {
     window.addEventListener("popstate", () => {
       this.transitTo(document.location.href, { pushState: false });
     });
-    this.setUserId();
-  }
-
-  setUserId() {
-    if (typeof localStorage.user_id !== 'undefined') return;
-    const str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const len = 8;
-    let result = "";
-    for (let i = 0; i < len; i++) {
-      result += str.charAt(Math.floor(Math.random() * str.length));
-    }
-    localStorage.user_id = result;
+    setUserId();
   }
 
   onLinkClick(event) {
@@ -59,14 +48,7 @@ export default class Router extends React.Component {
 
   transitTo(url, { pushState }, data = {}) {
     NProgress.start();
-    axios.get(url, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.getElementsByName('csrf-token').item(0).content,
-      }
-    })
-    .then(response => response.data)
+    sendGet(url)
     .then((rootProps) => {
       if (pushState) {
         history.pushState(data, "", url);

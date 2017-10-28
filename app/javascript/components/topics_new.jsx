@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import axios from 'axios';
 import { Helmet } from "react-helmet";
 import Messages from "./messages";
+import { sendPost } from "./utils";
 
 export default class TopicsNew extends React.Component {
 
@@ -43,17 +43,9 @@ export default class TopicsNew extends React.Component {
       gender  : this.refs.gender.value.trim(),
       title   : this.refs.title.value.trim(),
       content : this.refs.content.value.trim(),
+      tag_ids : this.state.tag_ids,
     }
-    data = Object.assign(data, { tag_ids: this.state.tag_ids });
-
-    axios.post('/topics', data, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.getElementsByName('csrf-token').item(0).content,
-      }
-    })
-    .then(response => response.data)
+    sendPost('/topics', data)
     .then((data) => {
       if (data.status === 'success') {
         this.context.transitTo('/', { pushState: true }, { messages: { status: 'success', txt: data.txt }});

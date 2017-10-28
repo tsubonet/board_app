@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import axios from 'axios';
 import { Helmet } from "react-helmet";
 import Link from './link';
 import Messages from "./messages";
+import { formatDate, sendPost } from "./utils";
 
 
 export default class TopicsShow extends React.Component {
@@ -24,27 +24,6 @@ export default class TopicsShow extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      topic: nextProps.topic,
-    });
-  }
-
-  formatDate(date, format = 'YYYY-MM-DD hh:mm:ss.SSS') {
-    format = format.replace(/YYYY/g, date.getFullYear());
-    format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
-    format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
-    format = format.replace(/hh/g, ('0' + date.getHours()).slice(-2));
-    format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
-    format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
-    if (format.match(/S/g)) {
-      const milliSeconds = ('00' + date.getMilliseconds()).slice(-3);
-      const length = format.match(/S/g).length;
-      for (let i = 0; i < length; i++) format = format.replace(/S/, milliSeconds.substring(i, i + 1));
-    }
-    return format;
-  }
-
   handleSubmit(e) {
     e.preventDefault();
     let data = {
@@ -52,14 +31,7 @@ export default class TopicsShow extends React.Component {
       topic_id: this.state.topic.id,
       content : this.refs.comment_content.value.trim(),
     }
-    axios.post('/comments', data, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.getElementsByName('csrf-token').item(0).content,
-      },
-    })
-    .then(response => response.data)
+    sendPost('/comments', data)
     .then((data) => {
       window.scrollTo(0, 0);
       if (data.status === 'success') {
@@ -87,7 +59,7 @@ export default class TopicsShow extends React.Component {
 
 
   render() {
-    const updated_at = this.formatDate(new Date(this.state.topic.updated_at), 'YYYY-MM-DD hh:mm');
+    const updated_at = formatDate(new Date(this.state.topic.updated_at), 'YYYY-MM-DD hh:mm');
 
     return (
       <div>
@@ -139,7 +111,7 @@ export default class TopicsShow extends React.Component {
                   {(() => {
                     if (this.state.topic.comments.length) {
                       return this.state.topic.comments.map((comment, i) => {
-                        const created_at = this.formatDate(new Date(comment.created_at), 'YYYY-MM-DD hh:mm');
+                        const created_at = formatDate(new Date(comment.created_at), 'YYYY-MM-DD hh:mm');
                         return (
                           <div key={comment.id}>
                             <ul className="list-inline glay">
