@@ -3,6 +3,7 @@ import React from 'react';
 import NProgress from "nprogress";
 
 import Header from './header';
+import SideBar from './sidebar';
 import TopicsIndex from './topics_index';
 import TopicsNew from './topics_new';
 import TopicsShow from './topics_show';
@@ -78,10 +79,17 @@ export default class Router extends React.Component {
     const Component = this.getComponent();
     return (
       <div>
-        <Header noCommentsCount={this.state.rootProps.noCommentsCount} />
+        <Header {...this.state.rootProps} />
         <section>
-          <div className="container marT70">
-            <Component {...this.state.rootProps} />
+          <div className="container">
+            <div className="row">
+              <div className="col-md-8">
+                <Component {...this.state.rootProps} />
+              </div>
+              <div className="col-md-4">
+                <SideBar {...this.state.rootProps} />
+              </div>
+            </div>
           </div>
         </section>
       </div>
