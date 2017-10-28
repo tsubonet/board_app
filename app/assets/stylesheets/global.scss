@@ -50,6 +50,11 @@ section > .container {
   margin-right: 2px;
 }
 
+.wrap-pagination i,
+.wrap-pagination .pagination-position {
+  vertical-align: middle;
+}
+
 /* navbar */
 .navbar-default .navbar-brand,
 .navbar-default .navbar-nav>li>a  {
