@@ -40,6 +40,9 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    after_commit_action (1.1.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
     arel (8.0.0)
     bindex (0.5.0)
     builder (3.2.3)
@@ -62,6 +65,10 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
+    counter_culture (1.8.2)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      after_commit_action (~> 1.0)
     crass (1.0.2)
     dotenv (0.7.0)
     erubi (1.6.1)
@@ -214,6 +221,7 @@ DEPENDENCIES
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
+  counter_culture (~> 1.8)
   foreman
   jbuilder (~> 2.5)
   kaminari

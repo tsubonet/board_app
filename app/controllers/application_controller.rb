@@ -11,10 +11,15 @@ class ApplicationController < ActionController::Base
     Topic.where('comments_count = ?', '0').count
   end
 
+  def tags
+    Tag.all
+  end
+
   def common_props
     {
       actionPath: action_path,
       noCommentsCount: no_comments_count,
+      tags: tags,
       #currentUser: current_user,
     }
   end
