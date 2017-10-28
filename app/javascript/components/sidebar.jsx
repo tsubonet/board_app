@@ -29,7 +29,7 @@ export default class SideBar extends React.Component {
           <div className="panel-heading"><strong><i className='icon-check-sign'></i> カテゴリー一覧</strong></div>
           <div className="panel-body">
           {this.props.tags.map((tag, i) => {
-            return <Link className="tag-link" href={`/?tag=${tag.id}`}><small className="btn btn-default btn-xs"><span className="label label-primary">{tag.topic_tags_count}</span> {tag.name}</small></Link>;
+            return <Link key={tag.id} className="tag-link" href={`/?tag=${tag.id}`}><small className="btn btn-default btn-xs"><span className="label label-primary">{tag.topic_tags_count}</span> {tag.name}</small></Link>;
           })}
           </div>
         </div>

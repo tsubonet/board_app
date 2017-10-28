@@ -5,8 +5,16 @@ class TopicsController < ApplicationController
   def index
     target = filter_topic
     page_per = 10
-    current_page  = params[:page].nil? || params[:page].to_i <= 0 ? 1: params[:page].to_i
-    total_pages   = target[:model].count % page_per != 0 ? (target[:model].count / page_per) + 1 : (target[:model].count / page_per)
+    total_pages  = target[:model].count % page_per != 0 ? (target[:model].count / page_per) + 1 : (target[:model].count / page_per)
+    current_page =
+      if target[:model].count == 0
+        0
+      elsif params[:page].to_i <= 0 || params[:page].to_i > total_pages
+        1
+      else
+        params[:page].to_i
+      end
+
     has_prev_page = current_page > 1 ? true: false
     has_next_page = current_page < total_pages ? true: false
 
@@ -15,8 +23,8 @@ class TopicsController < ApplicationController
         topics: target[:model].page(current_page).per(page_per),
         filter: target[:filter],
         pager: {
-          current_page: current_page,
           total_pages: total_pages,
+          current_page: current_page,
           has_prev_page: has_prev_page,
           has_next_page: has_next_page,
         },

@@ -63,7 +63,7 @@ export default class TopicsIndex extends React.Component {
           </div>
           <div className="list-group">
           {(() => {
-            if (this.state.topics) {
+            if (this.state.topics.length) {
               return this.state.topics.map((topic, i) => {
                 return <Topic topic={topic} key={topic.id} />;
               });
