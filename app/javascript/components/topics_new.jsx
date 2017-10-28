@@ -48,7 +48,12 @@ export default class TopicsNew extends React.Component {
     sendPost('/topics', data)
     .then((data) => {
       if (data.status === 'success') {
-        this.context.transitTo('/', { pushState: true }, { messages: { status: 'success', txt: data.txt }});
+        this.context.transitTo('/', { pushState: true }, {
+          messages: {
+            status: 'success',
+            txt: data.txt
+          }
+        });
       } else {
         this.setState({
           messages: {

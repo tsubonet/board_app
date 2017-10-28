@@ -9,7 +9,7 @@ export default class Topic extends React.Component {
     super(props);
   }
 
-  get_time() {
+  getDiffTime() {
     const target_time   = new Date(this.props.topic.updated_at);
     const current_time  = new Date();
     const mseconds_diff = current_time - target_time;
@@ -31,7 +31,7 @@ export default class Topic extends React.Component {
   }
 
   render() {
-    const time_diff = this.get_time();
+    const time_diff = this.getDiffTime();
     const modified_label = (new Date(this.props.topic.updated_at) > new Date(this.props.topic.created_at))? '更新': '登録';
 
     return (
