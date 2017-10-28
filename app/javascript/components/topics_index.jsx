@@ -43,12 +43,20 @@ export default class TopicsIndex extends React.Component {
 
   render() {
     let param;
+    let heading;
     if (this.props.filter == 'new') {
       param = '&order=new';
+      heading = '回答募集中の投稿一覧 ' + this.props.noCommentsCount + '件';
     } else if (this.props.filter.indexOf('tag') !== -1) {
-      param = '&tag='+ this.props.filter.replace('tag', '');
+      const tagId = this.props.filter.replace('tag', '');
+      const tag = this.props.tags.find((tag) => {
+        return tag.id === parseInt(tagId);
+      });
+      param = '&tag='+ tagId;
+      heading = 'カテゴリー「' + tag.name + '」の投稿一覧 ' + tag.topic_tags_count + '件';
     } else {
       param = '';
+      heading = '投稿一覧';
     }
 
     return (
@@ -59,7 +67,7 @@ export default class TopicsIndex extends React.Component {
         <Messages messages={this.state.messages} />
         <div className="panel panel-default">
           <div className="panel-heading">
-            <h1><i className='icon-check-sign'></i>&nbsp;性の悩みを解決する匿名Q&amp;Aサービス</h1>
+            <h1><i className='icon-check-sign'></i>&nbsp;{heading}</h1>
           </div>
           <div className="list-group">
           {(() => {
