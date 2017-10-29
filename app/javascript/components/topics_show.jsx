@@ -24,6 +24,10 @@ export default class TopicsShow extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentWillMount() {
+    this.user_id = typeof localStorage !== 'undefined' ? localStorage.user_id: '';
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     let data = {
@@ -85,7 +89,7 @@ export default class TopicsShow extends React.Component {
           </div>
           <div className="panel-body">
             <h1 className="h1-detail"><i className="icon-comment"></i>&nbsp;{this.state.topic.title}</h1>
-            <p>{this.state.topic.content}</p>
+            <p className="pre-line">{this.state.topic.content}</p>
             <p className="glay">
               {(() => {
                 if (this.state.topic.tags.length) {
@@ -115,12 +119,14 @@ export default class TopicsShow extends React.Component {
                         <ul className="list-inline glay">
                           <li><i className="icon-user"></i> { comment.user === this.state.topic.user? 'トピ主': comment.user }さんからの回答</li>
                           <li><i className="icon-time"></i> { created_at }</li>
-                          { comment.user === localStorage.user_id ? <li><a href="javascript:void(0)" className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li> : ''}
+                          {
+                            comment.user === this.user_id ? <li><a href="javascript:void(0)" className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li> : ''
+                          }
                           {
                             //<p><?php echo nl2br($this->text->autoLinkUrls(h($comment['link_url']), array( 'target' => '_blank'))); ?></p>
                           }
                         </ul>
-                        <p>{comment.content}</p>
+                        <p className="pre-line">{comment.content}</p>
                       </div>
                     )
                   });
