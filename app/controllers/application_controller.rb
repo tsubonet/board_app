@@ -16,12 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ranking_topics
-    Topic.where('created_at > ?', 1.week.ago).order(:view_count).limit(5)
-    # {
-    #   week:  Topic.where('created_at > ?', 1.week.ago).order(:view_count).limit(5),
-    #   month: Topic.where('created_at > ?', 1.month.ago).order(:view_count).limit(5),
-    #   all:   Topic.order(:view_count).limit(5),
-    # }
+    Topic.unscoped.where('created_at > ?', 1.hours.ago).order('view_count DESC').limit(5)
   end
 
   def common_props

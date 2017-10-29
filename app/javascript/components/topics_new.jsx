@@ -17,23 +17,23 @@ export default class TopicsNew extends React.Component {
         status: '',
         txt: [],
       },
-      tag_ids: [],
+      tagIds: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e) {
-    let tag_ids = Object.assign([], this.state.tag_ids);
+    let tagIds = Object.assign([], this.state.tagIds);
     if(e.target.checked) {
       // 追加処理
-      tag_ids.push(e.target.value);
+      tagIds.push(e.target.value);
     } else {
       // 削除処理
-      const index = tag_ids.indexOf(e.target.value);
-      tag_ids.splice(index, 1);
+      const index = tagIds.indexOf(e.target.value);
+      tagIds.splice(index, 1);
     }
-    this.setState({tag_ids: tag_ids});
+    this.setState({tagIds: tagIds});
   }
 
   handleSubmit(e) {
@@ -43,7 +43,7 @@ export default class TopicsNew extends React.Component {
       gender  : this.refs.gender.value.trim(),
       title   : this.refs.title.value.trim(),
       content : this.refs.content.value.trim(),
-      tag_ids : this.state.tag_ids,
+      tag_ids : this.state.tagIds,
     }
     sendPost('/topics', data)
     .then((data) => {

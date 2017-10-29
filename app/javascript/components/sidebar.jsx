@@ -1,15 +1,28 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Link from './link';
+import { sendGet } from "./utils";
 
 export default class SideBar extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      rankingStatus: 'week',
+      rankingStatus: 'ranking_weekly',
       rankingTopics: this.props.rankingTopics,
     };
+    this.switchTab = this.switchTab.bind(this);
+  }
+
+  switchTab(e) {
+    e.preventDefault();
+    const target = e.target.getAttribute('data-role');
+    this.setState({ rankingStatus: target });
+    sendGet('/topics/'+ target)
+    .then((response) => {
+      this.setState({ rankingTopics: response });
+    });
+
   }
 
   render() {
@@ -41,9 +54,9 @@ export default class SideBar extends React.Component {
           <div className="panel-heading ranking-area">
             <strong><i className='icon-check-sign'></i> PVランキング</strong>
             <div className="btn-group btn-group-sm" id="tabs">
-              <button type="button" className="btn btn-primary" data-role="#ranking-week">週間</button>
-              <button type="button" className="btn btn-default" data-role="#ranking-month">月間</button>
-              <button type="button" className="btn btn-default" data-role="#ranking-all">すべて</button>
+              <button type="button" className={`btn ${this.state.rankingStatus === 'ranking_weekly'?  'btn-primary': 'btn-default'}`} data-role="ranking_weekly" onClick={this.switchTab}>週間</button>
+              <button type="button" className={`btn ${this.state.rankingStatus === 'ranking_monthly'? 'btn-primary': 'btn-default'}`} data-role="ranking_monthly" onClick={this.switchTab}>月間</button>
+              <button type="button" className={`btn ${this.state.rankingStatus === 'ranking_all'?     'btn-primary': 'btn-default'}`} data-role="ranking_all" onClick={this.switchTab}>すべて</button>
             </div>
           </div>
           <div className="list-group tab-content">

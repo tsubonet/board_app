@@ -84,18 +84,18 @@ export default class TopicsIndex extends React.Component {
           <div className="wrap-pagination text-center">
             <nav className="pagination">
               {(() => {
-                if (this.state.pager.has_prev_page) {
-                  return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.pager.current_page) - 1 }${param}`}><i className="icon-angle-left icon-2x"></i></Link>;
+                if (this.state.pager.hasPrevPage) {
+                  return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.pager.currentPage) - 1 }${param}`}><i className="icon-angle-left icon-2x"></i></Link>;
                 } else {
                   return <i className="icon-angle-left icon-2x"></i>;
                 }
               })()}
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <span className="pagination-position">{this.state.pager.current_page}&nbsp;/&nbsp;{this.state.pager.total_pages}</span>
+              <span className="pagination-position">{this.state.pager.currentPage}&nbsp;/&nbsp;{this.state.pager.totalPages}</span>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               {(() => {
-                if (this.state.pager.has_next_page) {
-                  return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.pager.current_page) + 1 }${param}`}><i className="icon-angle-right icon-2x"></i></Link>;
+                if (this.state.pager.hasNextPage) {
+                  return <Link className="pagination-angle" href={`?page=${ parseInt(this.state.pager.currentPage) + 1 }${param}`}><i className="icon-angle-right icon-2x"></i></Link>;
                 } else {
                   return <i className="icon-angle-right icon-2x"></i>;
                 }

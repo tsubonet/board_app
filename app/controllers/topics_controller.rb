@@ -14,7 +14,6 @@ class TopicsController < ApplicationController
       else
         params[:page].to_i
       end
-
     has_prev_page = current_page > 1 ? true: false
     has_next_page = current_page < total_pages ? true: false
 
@@ -23,10 +22,10 @@ class TopicsController < ApplicationController
         topics: target[:model].page(current_page).per(page_per),
         filter: target[:filter],
         pager: {
-          total_pages: total_pages,
-          current_page: current_page,
-          has_prev_page: has_prev_page,
-          has_next_page: has_next_page,
+          totalPages: total_pages,
+          currentPage: current_page,
+          hasPrevPage: has_prev_page,
+          hasNextPage: has_next_page,
         },
       },
     )
@@ -75,6 +74,27 @@ class TopicsController < ApplicationController
   end
 
 
+  # GET /topics/ranking_weekly.json
+  def ranking_weekly
+    @ranking_topics = Topic.unscoped.where('created_at > ?', 1.hours.ago).order('view_count DESC').limit(5)
+    render json: @ranking_topics, status: :ok
+  end
+
+
+  # GET /topics/ranking_monthly.json
+  def ranking_monthly
+    @ranking_topics = Topic.unscoped.where('created_at > ?', 1.month.ago).order('view_count DESC').limit(5)
+    render json: @ranking_topics, status: :ok
+  end
+
+
+  # GET /topics/ranking_all.json
+  def ranking_all
+    @ranking_topics = Topic.unscoped.order('view_count DESC').limit(5)
+    render json: @ranking_topics, status: :ok
+  end
+
+
   private
 
     def filter_topic
@@ -95,6 +115,7 @@ class TopicsController < ApplicationController
         }
       end
     end
+
 
     def topic_params
       params.permit(:user, :gender, :title, :content, { :tag_ids => [] })
