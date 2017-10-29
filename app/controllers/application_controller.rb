@@ -15,11 +15,21 @@ class ApplicationController < ActionController::Base
     Tag.all
   end
 
+  def ranking_topics
+    Topic.where('created_at > ?', 1.week.ago).order(:view_count).limit(5)
+    # {
+    #   week:  Topic.where('created_at > ?', 1.week.ago).order(:view_count).limit(5),
+    #   month: Topic.where('created_at > ?', 1.month.ago).order(:view_count).limit(5),
+    #   all:   Topic.order(:view_count).limit(5),
+    # }
+  end
+
   def common_props
     {
       actionPath: action_path,
       noCommentsCount: no_comments_count,
       tags: tags,
+      rankingTopics: ranking_topics,
       #currentUser: current_user,
     }
   end

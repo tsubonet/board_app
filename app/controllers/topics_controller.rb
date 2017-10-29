@@ -37,9 +37,7 @@ class TopicsController < ApplicationController
   # GET /topics/new.json
   def new
     render_for_react(
-      props: {
-        tags: Tag.all,
-      },
+      props: {}
     )
   end
 
