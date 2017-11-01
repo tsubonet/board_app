@@ -19,23 +19,26 @@ export default class Header extends React.Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      isOpen: false,
+    })
+  }
+
   judgeView() {
     const flag = (window.innerWidth < 768)? true: false;
     this.setState({spView: flag });
   }
 
   toggleDrawer() {
-    const drawer = this.refs.navbar_collapse;
-    if (this.state.isOpen) {
-      drawer.style.display = 'none';
-      this.setState({isOpen: false });
-    } else {
-      drawer.style.display = 'block';
-      this.setState({isOpen: true });
-    }
+    const flag = this.state.isOpen? false: true;
+    this.setState({isOpen: flag });
   }
 
   render() {
+    const openStyle = {
+      display: 'block'
+    }
     return (
       <header className="navbar navbar-default navbar-fixed-top">
         <div className="container">
@@ -47,7 +50,7 @@ export default class Header extends React.Component {
               <span className="icon-bar"></span>
             </button>
           </div>
-          <div className="collapse navbar-collapse target" ref='navbar_collapse'>
+          <div className="collapse navbar-collapse target" style={this.state.isOpen? openStyle: null}>
             <ul className="nav navbar-nav">
               <li><Link href='/topics/new'><i className="icon-comment"></i>&nbsp;質問する</Link></li>
               <li><Link href='/?order=new'><i className="icon-user"></i>&nbsp;回答募集&nbsp;<span className="badge">{this.props.noCommentsCount}</span></Link></li>
