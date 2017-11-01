@@ -3,7 +3,7 @@ import React from 'react';
 import { Helmet } from "react-helmet";
 import Link from './link';
 import Messages from "./messages";
-import { formatDate, sendPost } from "./utils";
+import { formatDate, formatPostString, sendPost } from "./utils";
 
 
 export default class TopicsShow extends React.Component {
@@ -64,7 +64,7 @@ export default class TopicsShow extends React.Component {
 
   render() {
     const updated_at = formatDate(new Date(this.state.topic.updated_at), 'YYYY-MM-DD hh:mm');
-
+    const formatted_content = formatPostString(this.state.topic.content);
     return (
       <div>
         <Helmet>
@@ -89,7 +89,7 @@ export default class TopicsShow extends React.Component {
           </div>
           <div className="panel-body">
             <h1 className="h1-detail"><i className="icon-comment"></i>&nbsp;{this.state.topic.title}</h1>
-            <p className="pre-line">{this.state.topic.content}</p>
+            <p className="pre-line" dangerouslySetInnerHTML={{ __html: formatted_content }}></p>
             <p className="glay">
               {(() => {
                 if (this.state.topic.tags.length) {

@@ -92,6 +92,7 @@ export default class TopicsNew extends React.Component {
               <div className="form-group">
                 <i className='icon-pencil'></i>&nbsp;<label htmlFor="form-content">質問内容</label>&nbsp;<span className="label label-primary">必須</span>&nbsp;<span className="label label-primary">全角1000文字まで</span>
                 <textarea className="form-control" placeholder="質問内容を入力して下さい" rows="5" id="form-content" ref="content"></textarea>
+                <p>リンクを貼る場合: (リンク)[テキスト]</p>
               </div>
               <div className="form-group">
                 <div><i className="icon-pencil"></i>&nbsp;<label htmlFor="TagTag">カテゴリー</label>&nbsp;<span className="label label-default">任意</span>&nbsp;<span className="label label-default">複数可</span></div>

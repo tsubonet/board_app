@@ -21,6 +21,25 @@ const formatDate = (date, format = 'YYYY-MM-DD hh:mm:ss.SSS') => {
   return format;
 }
 
+const formatPostString = (data) => {
+  if(typeof data !== 'string') {
+    return data;
+  }
+  let formatted_data = data
+    .replace(/[&'`"<>]/g, function(match) {
+      return {
+        '&': '&amp;',
+        "'": '&#x27;',
+        '`': '&#x60;',
+        '"': '&quot;',
+        '<': '&lt;',
+        '>': '&gt;',
+      }[match]
+    })
+    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">' + "$1" + '</a>');
+  return formatted_data;
+}
+
 const setUserId = () => {
   if (typeof localStorage.user_id !== 'undefined') return;
   const str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -53,4 +72,4 @@ const sendGet = (url) => {
   }).then(response => response.data);
 }
 
-export { setUserId, formatDate, sendPost, sendGet };
+export { setUserId, formatDate, formatPostString, sendPost, sendGet };
