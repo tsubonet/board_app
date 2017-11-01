@@ -21,6 +21,7 @@ const formatDate = (date, format = 'YYYY-MM-DD hh:mm:ss.SSS') => {
   return format;
 }
 
+
 const formatPostString = (data) => {
   if(typeof data !== 'string') {
     return data;
@@ -39,6 +40,7 @@ const formatPostString = (data) => {
     .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">' + "$1" + '</a>');
   return formatted_data;
 }
+
 
 const setUserId = () => {
   if (typeof localStorage.user_id !== 'undefined') return;
@@ -72,4 +74,41 @@ const sendGet = (url) => {
   }).then(response => response.data);
 }
 
-export { setUserId, formatDate, formatPostString, sendPost, sendGet };
+const ModalWindow = {
+  styles: {
+    overlay: {
+      backgroundColor: 'rgba(0,0,0,0.75)',
+      bottom: '0',
+      height: '100%',
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      right: '0',
+      width: '100%',
+      zIndex: '1',
+    },
+    contentWrapper: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'fixed',
+      left: '0',
+      right: '0',
+      top: '0',
+      bottom: '0',
+      width: '90%',
+      margin: 'auto',
+      zIndex: '3',
+    },
+    content: {
+      width: '100%',
+      maxWidth: '1140px',
+      padding: '15px 30px',
+      background: '#fff',
+      zIndex: '2',
+    },
+  },
+};
+
+
+export { setUserId, formatDate, formatPostString, ModalWindow, sendPost, sendGet };
