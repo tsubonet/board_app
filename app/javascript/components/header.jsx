@@ -5,12 +5,12 @@ export default class Header extends React.Component {
 
   constructor(props) {
     super(props);
-    this.toggleDrawer = this.toggleDrawer.bind(this);
     this.state = {
       spView: false,
       isOpen: false,
       drawerHeight: '',
     }
+    this.toggleDrawer = this.toggleDrawer.bind(this);
   }
 
   componentDidMount() {
@@ -29,7 +29,6 @@ export default class Header extends React.Component {
   calcDrawerHeight() {
     const flag = (window.innerWidth < 768)? true: false;
     this.setState({spView: flag });
-
     if (flag) {
       //################################################
       const toggleDrawer = this.refs.toggle_drawer;

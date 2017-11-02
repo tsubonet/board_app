@@ -4,6 +4,7 @@ import NProgress from "nprogress";
 
 import Header from './header';
 import SideBar from './sidebar';
+import Footer from './footer';
 import TopicsIndex from './topics_index';
 import TopicsNew from './topics_new';
 import TopicsShow from './topics_show';
@@ -92,6 +93,7 @@ export default class Router extends React.Component {
             </div>
           </div>
         </section>
+        <Footer />
       </div>
     )
   }
