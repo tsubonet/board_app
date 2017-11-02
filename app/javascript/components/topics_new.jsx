@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from "react-helmet";
 import Messages from "./messages";
-import { sendPost, ModalWindow } from "./utils";
 import AddLink from "./add_link";
+import { sendPost, ModalWindow } from "./utils";
 
 export default class TopicsNew extends React.Component {
 

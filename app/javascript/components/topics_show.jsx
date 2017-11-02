@@ -3,9 +3,8 @@ import React from 'react';
 import { Helmet } from "react-helmet";
 import Link from './link';
 import Messages from "./messages";
-import { formatDate, formatPostString, sendPost } from "./utils";
 import AddLink from "./add_link";
-
+import { formatDate, formatPostString, sendPost } from "./utils";
 
 export default class TopicsShow extends React.Component {
 
@@ -145,9 +144,6 @@ export default class TopicsShow extends React.Component {
                           <li><i className="icon-time"></i> { created_at }</li>
                           {
                             comment.user === this.user_id ? <li><a href="javascript:void(0)" className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li> : ''
-                          }
-                          {
-                            //<p><?php echo nl2br($this->text->autoLinkUrls(h($comment['link_url']), array( 'target' => '_blank'))); ?></p>
                           }
                         </ul>
                         <p className="pre-line">{comment.content}</p>
