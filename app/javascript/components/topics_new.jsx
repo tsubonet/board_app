@@ -27,6 +27,19 @@ export default class TopicsNew extends React.Component {
     this.handleTagChange = this.handleTagChange.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleContentChange = this.handleContentChange.bind(this);
+    this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
+  }
+
+  handleLinkSubmit(linkString) {
+    let content   = this.state.content;
+    const len     = content.length;
+    const pos     = this.state.selectPos;
+    const before  = content.substr(0, pos);
+    const after   = content.substr(pos, len);
+    content = before + linkString + after;
+    this.setState({
+      content: content
+    });
   }
 
   handleTitleChange(e) {
@@ -112,6 +125,7 @@ export default class TopicsNew extends React.Component {
                 <AddLink
                   content={this.state.content}
                   selectPos={this.state.selectPos}
+                  onLinkSubmit={this.handleLinkSubmit}
                 />
               </div>
               <div className="form-group">

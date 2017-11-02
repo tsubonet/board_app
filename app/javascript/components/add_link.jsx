@@ -25,21 +25,13 @@ export default class AddLink extends React.Component {
 
   handleSubmitModal() {
     this.handleCloseModal();
-    let link_text = this.refs.link_text.value;
-    let link_url = this.refs.link_url.value;
-    if (!link_url || link_url.indexOf('http') === -1) return;
-    if (!link_text) link_text = link_url;
-    const link_string = `[${link_url}](${link_text})`;
-
-    let content   = this.state.content;
-    const len      = content.length;
-    const pos      = this.state.selectPos;
-    const before   = content.substr(0, pos);
-    const after    = content.substr(pos, len);
-    content = before + link_string + after;
-    this.onContentSubmit(content);
+    let linkText = this.refs.link_text.value;
+    let linkUrl  = this.refs.link_url.value;
+    if (!linkUrl || linkUrl.indexOf('http') === -1) return;
+    if (!linkText) linkText = linkUrl;
+    const linkString = `[${linkText}](${linkUrl})`;
+    this.props.onLinkSubmit(linkString);
   }
-
 
   render() {
     return (

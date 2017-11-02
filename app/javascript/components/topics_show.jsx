@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import Link from './link';
 import Messages from "./messages";
 import { formatDate, formatPostString, sendPost } from "./utils";
+import AddLink from "./add_link";
 
 
 export default class TopicsShow extends React.Component {
@@ -16,16 +17,39 @@ export default class TopicsShow extends React.Component {
     super(props);
     this.state = {
       topic: this.props.topic,
+      commentContent: '',
+      commentSelectPos: '',
       messages: {
         status: '',
         txt: [],
       },
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCommentContentChange = this.handleCommentContentChange.bind(this);
+    this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
   }
 
   componentWillMount() {
     this.user_id = typeof localStorage !== 'undefined' ? localStorage.user_id: '';
+  }
+
+  handleCommentContentChange(e) {
+    this.setState({
+      commentContent: e.target.value,
+      commentSelectPos: e.target.selectionStart,
+    });
+  }
+
+  handleLinkSubmit(linkString) {
+    let content   = this.state.commentContent;
+    const len     = content.length;
+    const pos     = this.state.selectPos;
+    const before  = content.substr(0, pos);
+    const after   = content.substr(pos, len);
+    content = before + linkString + after;
+    this.setState({
+      commentContent: content
+    });
   }
 
   handleSubmit(e) {
@@ -33,7 +57,7 @@ export default class TopicsShow extends React.Component {
     let data = {
       user: localStorage.user_id,
       topic_id: this.state.topic.id,
-      content : this.refs.comment_content.value.trim(),
+      content : this.state.commentContent,
     }
     sendPost('/comments', data)
     .then((data) => {
@@ -145,16 +169,12 @@ export default class TopicsShow extends React.Component {
               <div className="panel-body">
                 <form onSubmit={this.handleSubmit}>
                   <div className="form-group">
-                    <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" id="comment-content" ref="comment_content"></textarea>
-                  </div>
-                  <div className="form-group">
-                    <div className="link-input-wrap">
-                      <i className='icon-pencil'></i>&nbsp;<label htmlFor="comment-link">リンク</label>
-                      <input type="text" className="form-control" placeholder="http://" id="comment-link" ref="comment-link" />
-                    </div>
-                    <div className="comment-link-btn btn btn-default btn-sm">
-                      <i className='icon-link'></i>リンク追加
-                    </div>
+                    <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" id="comment-content" value={this.state.commentContent} onChange={this.handleCommentContentChange}></textarea>
+                    <AddLink
+                      content={this.state.content}
+                      selectPos={this.state.selectPos}
+                      onLinkSubmit={this.handleLinkSubmit}
+                    />
                   </div>
                   <div className="form-group text-center">
                     <input className="btn btn-primary comment-btn" type="submit" value="この質問に回答する" />
