@@ -116,7 +116,9 @@ export default class TopicsShow extends React.Component {
             <p className="glay">
               {(() => {
                 if (this.state.topic.tags.length) {
-                  return (<small>カテゴリー：</small>);
+                  return (
+                    <small>カテゴリー：</small>
+                  );
                 }
               })()}
               {(() => {
@@ -155,21 +157,23 @@ export default class TopicsShow extends React.Component {
                     )
                   });
                 } else {
-                  return (<p>まだコメントがありません</p>);
+                  return (
+                    <p>まだコメントがありません</p>
+                  );
                 }
               })()}
               </div>
             </div>
 
 
-            <div className="panel panel-default comment-form" id="comment-content">
+            <div className="panel panel-default comment-form" id="comment-form">
               <div className="panel-heading">
                 <strong><i className='icon-check-sign'></i>&nbsp;回答する</strong>
               </div>
               <div className="panel-body">
                 <form onSubmit={this.handleSubmit}>
                   <div className="form-group">
-                    <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" id="comment-content" value={this.state.commentContent} onChange={this.handleCommentContentChange}></textarea>
+                    <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" value={this.state.commentContent} onChange={this.handleCommentContentChange}></textarea>
                     <AddLink
                       content={this.state.content}
                       selectPos={this.state.selectPos}
