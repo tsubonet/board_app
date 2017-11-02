@@ -1,5 +1,5 @@
 import React from 'react';
-import {  ModalWindow } from "./utils";
+import {  modalWindow } from "./utils";
 
 export default class AddLink extends React.Component {
 
@@ -40,9 +40,9 @@ export default class AddLink extends React.Component {
           if (this.state.isModalOpen) {
             return (
               <div>
-                <div onClick={this.handleCloseModal} style={ModalWindow.styles.overlay} />
-                <div style={ModalWindow.styles.contentWrapper} className="modal-wrapper">
-                  <div style={ModalWindow.styles.content}>
+                <div onClick={this.handleCloseModal} style={modalWindow.styles.overlay} />
+                <div style={modalWindow.styles.contentWrapper} className="modal-wrapper">
+                  <div style={modalWindow.styles.content}>
                     <div className="form-group">
                       <i className='icon-pencil'></i>&nbsp;<label htmlFor="link-url">URL</label>
                       <input type="text" className="form-control" placeholder="http://" id="link-url" ref='link_url' />

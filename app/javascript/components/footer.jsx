@@ -1,10 +1,17 @@
 import React from 'react';
 import Link from './link';
+import { smoothScroll } from "./utils";
 
 export default class Footer extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.refs.page_top.addEventListener('click', () => {
+      smoothScroll.scrollTo('container')
+    })
   }
 
   render() {
@@ -16,7 +23,7 @@ export default class Footer extends React.Component {
             <small>Copyright &copy; 2017 性のお悩み相談室 All Rights Reserved.</small>
           </p>
         </div>
-        <p id="page-top"><a href="#container"><span className="icon-chevron-up"></span><br />TOP</a></p>
+        <p id="page-top"><a ref="page_top"><span className="icon-chevron-up"></span><br />TOP</a></p>
       </footer>
     )
   }
