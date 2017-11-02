@@ -96,7 +96,7 @@ export default class TopicsShow extends React.Component {
         <Messages messages={this.state.messages} />
         <div className="panel panel-default">
           <div className="panel-heading">
-            <ul className="list-inline marB0">
+            <ul className="list-inline clearfix marB0">
               <li><strong><i className="icon-user"></i>&nbsp;{this.state.topic.user}さんの質問</strong></li>
               {(() => {
                 if (this.state.topic.gender === 'male') {
@@ -107,7 +107,7 @@ export default class TopicsShow extends React.Component {
               })()}
               <li className="glay"><strong><i className="icon-time"></i>&nbsp;{updated_at}</strong></li>
               <li className="glay"><strong className="text-right"><i className="icon-eye-open"></i>&nbsp;view&nbsp;:&nbsp;{this.state.topic.view_count}</strong></li>
-              <li><div className="btn btn-default topic-delete-btn" data-topic-id="#"><i className="icon-remove-sign"></i>&nbsp;この質問を削除する</div></li>
+              <li className="right"><div className="btn btn-default topic-delete-btn" data-topic-id="#"><i className="icon-remove-sign"></i>&nbsp;この質問を削除する</div></li>
             </ul>
           </div>
           <div className="panel-body">
@@ -147,6 +147,10 @@ export default class TopicsShow extends React.Component {
                           }
                         </ul>
                         <p className="pre-line">{comment.content}</p>
+                        <div class="reply-show-btn text-right">
+                          <a href="javascript:void(0);" class="btn btn-default btn-sm">この回答に対してコメントする</a>
+                        </div>
+                        <hr />
                       </div>
                     )
                   });

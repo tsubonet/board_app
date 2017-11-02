@@ -37,10 +37,19 @@ h2 { font-size: 14px; }
 .marR30 { margin-right: 30px; }
 .relative { position: relative; }
 .absolute { position: absolute; }
+.right { float: right; }
+.left { float: left; }
+
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
 
 section > .container {
   margin-top: 70px;
 }
+
 .glay {
   color: #999;
 }
