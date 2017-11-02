@@ -1,7 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Link from './link';
 
 export default class Header extends React.Component {
+
+  static contextTypes = {
+    transitTo: PropTypes.func,
+  }
 
   constructor(props) {
     super(props);
@@ -11,6 +16,7 @@ export default class Header extends React.Component {
       drawerHeight: '',
     }
     this.toggleDrawer = this.toggleDrawer.bind(this);
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +58,12 @@ export default class Header extends React.Component {
     this.setState({isOpen: flag });
   }
 
+  handleSearchSubmit(e) {
+    e.preventDefault();
+    this.context.transitTo(`/?query=${this.refs.search_text.value}`, { pushState: true });
+    this.refs.search_text.value = '';
+  }
+
   render() {
     const openStyle = {
       height: this.state.drawerHeight,
@@ -75,10 +87,10 @@ export default class Header extends React.Component {
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li>
-              <form action="/topics" id="TopicIndexForm" method="post">
+              <form onSubmit={this.handleSearchSubmit}>
                 <div className="input-group">
-                  <label className="sr-only control-label" htmlFor="TopicSearch">Search</label>
-                  <input name="#" className="form-control" placeholder="検索" maxLength="50" type="text" id="TopicSearch" required />
+                  <label className="sr-only control-label" htmlFor="topicSearch">Search</label>
+                  <input className="form-control" placeholder="検索" maxLength="50" type="text" id="topicSearch" ref='search_text' required />
                   <span className="input-group-btn"><button type="submit" className="btn btn-primary"><i className="icon-search"></i></button></span>
                 </div>
               </form>

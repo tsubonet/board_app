@@ -44,16 +44,21 @@ export default class TopicsIndex extends React.Component {
   render() {
     let param;
     let heading;
-    if (this.props.filter == 'new') {
+    if (this.props.filter == 'search') {
+      param = '&query='+ this.props.query;
+      heading = '検索ワード「' + this.props.query + '」の投稿一覧 ';
+
+    } else if (this.props.filter == 'tag') {
+      const tag = this.props.tags.find((tag) => {
+        return tag.id === parseInt(this.props.query);
+      });
+      param = '&tag='+ this.props.query;
+      heading = 'カテゴリー「' + tag.name + '」の投稿一覧 ' + tag.topic_tags_count + '件';
+
+    } else if (this.props.filter == 'new') {
       param = '&order=new';
       heading = '回答募集中の投稿一覧 ' + this.props.noCommentsCount + '件';
-    } else if (this.props.filter.indexOf('tag') !== -1) {
-      const tagId = this.props.filter.replace('tag', '');
-      const tag = this.props.tags.find((tag) => {
-        return tag.id === parseInt(tagId);
-      });
-      param = '&tag='+ tagId;
-      heading = 'カテゴリー「' + tag.name + '」の投稿一覧 ' + tag.topic_tags_count + '件';
+
     } else {
       param = '';
       heading = '投稿一覧';

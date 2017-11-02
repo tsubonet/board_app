@@ -4,6 +4,7 @@ class TopicsController < ApplicationController
   # GET /topics.json
   def index
     target = filter_topic
+    puts target[:filter]
     page_per = 10
     total_pages  = target[:model].count % page_per != 0 ? (target[:model].count / page_per) + 1 : (target[:model].count / page_per)
     current_page =
@@ -21,6 +22,7 @@ class TopicsController < ApplicationController
       props: {
         topics: target[:model].page(current_page).per(page_per),
         filter: target[:filter],
+        query: target[:query],
         pager: {
           totalPages: total_pages,
           currentPage: current_page,
@@ -98,15 +100,23 @@ class TopicsController < ApplicationController
   private
 
     def filter_topic
-      if params[:order] == 'new'
+
+      if params[:query]
         {
-          model: Topic.where('comments_count = ?', '0'),
-          filter: 'new',
+          model: Topic.joins(:comments).where("topics.title like :keyword or topics.content like :keyword", {keyword: "%#{params[:query]}%"}),
+          filter: 'search',
+          query: params[:query],
         }
       elsif params[:tag] && tag = Tag.find_by(:id => params[:tag])
         {
           model: tag.topics,
-          filter: 'tag' + params[:tag],
+          filter: 'tag',
+          query: params[:tag],
+        }
+      elsif params[:order] == 'new'
+        {
+          model: Topic.where('comments_count = ?', '0'),
+          filter: 'new',
         }
       else
         {
