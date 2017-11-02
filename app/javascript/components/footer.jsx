@@ -10,7 +10,7 @@ export default class Footer extends React.Component {
 
   componentDidMount() {
     this.refs.page_top.addEventListener('click', () => {
-      smoothScroll.scrollTo('container')
+      smoothScroll.scrollTo('container');
     })
   }
 

@@ -118,7 +118,7 @@ const smoothScroll = {
   },
 
   scrollTo: function (id, callback) {
-    var settings = {
+    const settings = {
       duration: 1000,
       easing: {
         outQuint: function (x, t, b, c, d) {
@@ -126,28 +126,28 @@ const smoothScroll = {
         }
       }
     };
-    var percentage;
-    var startTime;
-    var node = document.getElementById(id);
-    var nodeTop = node.offsetTop;
-    console.log(nodeTop);
-    var nodeHeight = node.offsetHeight;
-    var body = document.body;
-    var html = document.documentElement;
-    var height = Math.max(
+    let percentage;
+    let startTime;
+    let node = document.getElementById(id);
+    let nodeTop = node.offsetTop;
+    let nodeHeight = node.offsetHeight;
+    let body = document.body;
+    let html = document.documentElement;
+    let height = Math.max(
       body.scrollHeight,
       body.offsetHeight,
       html.clientHeight,
       html.scrollHeight,
       html.offsetHeight
     );
-    var windowHeight = window.innerHeight
-    var offset = window.pageYOffset;
-    var delta = nodeTop - offset;
-    var bottomScrollableY = height - windowHeight;
-    var targetY = (bottomScrollableY < delta) ?
-      bottomScrollableY - (height - nodeTop - nodeHeight + offset):
-      delta;
+    let windowHeight = window.innerHeight
+    let offset = window.pageYOffset;
+    let delta = nodeTop - offset;
+    let bottomScrollableY = height - windowHeight;
+    //let targetY = (bottomScrollableY < delta) ?
+    //  bottomScrollableY - (height - nodeTop - nodeHeight + offset):
+    //  delta;
+    let targetY = delta;
 
     startTime = Date.now();
     percentage = 0;
@@ -156,9 +156,9 @@ const smoothScroll = {
       clearInterval(this.timer);
     }
 
-    function step () {
-      var yScroll;
-      var elapsed = Date.now() - startTime;
+    function step() {
+      let yScroll;
+      let elapsed = Date.now() - startTime;
 
       if (elapsed > settings.duration) {
         clearTimeout(this.timer);
@@ -178,7 +178,6 @@ const smoothScroll = {
         this.timer = setTimeout(step, 10);
       }
     }
-
     this.timer = setTimeout(step, 10);
   }
 };

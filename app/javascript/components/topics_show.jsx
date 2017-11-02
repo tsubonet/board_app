@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import Link from './link';
 import Messages from "./messages";
 import AddLink from "./add_link";
-import { formatDate, formatPostString, sendPost } from "./utils";
+import { formatDate, formatPostString, sendPost, smoothScroll } from "./utils";
 
 export default class TopicsShow extends React.Component {
 
@@ -30,6 +30,12 @@ export default class TopicsShow extends React.Component {
 
   componentWillMount() {
     this.user_id = typeof localStorage !== 'undefined' ? localStorage.user_id: '';
+  }
+
+  componentDidMount() {
+    this.refs.comment_form.addEventListener('click', () => {
+      smoothScroll.scrollTo('comment-form');
+    })
   }
 
   handleCommentContentChange(e) {
@@ -129,7 +135,7 @@ export default class TopicsShow extends React.Component {
                 }
               })()}
             </p>
-            <p className="text-center marT20 marB20"><a className="btn btn-primary" href="#comment-form">この質問に回答する</a></p>
+            <p className="text-center marT20 marB20"><a className="btn btn-primary" ref="comment_form">この質問に回答する</a></p>
             <div className="panel panel-default">
               <div className="panel-heading">
                 <strong><i className='icon-check-sign'></i>&nbsp;みんなの回答&nbsp;<span id="comment-count">{this.state.topic.comments.length}</span>件</strong>
