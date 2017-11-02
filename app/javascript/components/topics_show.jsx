@@ -147,8 +147,8 @@ export default class TopicsShow extends React.Component {
                           }
                         </ul>
                         <p className="pre-line">{comment.content}</p>
-                        <div class="reply-show-btn text-right">
-                          <a href="javascript:void(0);" class="btn btn-default btn-sm">この回答に対してコメントする</a>
+                        <div className="reply-show-btn text-right">
+                          <a href="javascript:void(0);" className="btn btn-default btn-sm">この回答に対してコメントする</a>
                         </div>
                         <hr />
                       </div>
