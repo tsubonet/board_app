@@ -9,13 +9,14 @@ export default class Header extends React.Component {
     this.state = {
       spView: false,
       isOpen: false,
+      drawerHeight: '',
     }
   }
 
   componentDidMount() {
-    this.judgeView();
+    this.calcDrawerHeight();
     window.addEventListener('resize', () => {
-      this.judgeView();
+      this.calcDrawerHeight();
     });
   }
 
@@ -25,9 +26,26 @@ export default class Header extends React.Component {
     })
   }
 
-  judgeView() {
+  calcDrawerHeight() {
     const flag = (window.innerWidth < 768)? true: false;
     this.setState({spView: flag });
+
+    if (flag) {
+      //################################################
+      const toggleDrawer = this.refs.toggle_drawer;
+      // #box のコピーを作る
+      const copyBox = toggleDrawer.cloneNode(true);
+      // #toggleDrawer の親ノードに挿入
+      toggleDrawer.parentNode.appendChild(copyBox);
+      // ひとまずみえなくする
+      copyBox.style.cssText = "display:block; height:auto; visibility:hidden; " ;
+      // コピーの高さを調べる
+      const copyBoxH = copyBox.offsetHeight;
+      // コピーした要素を削除する
+      toggleDrawer.parentNode.removeChild(copyBox);
+      //################################################
+      this.setState({drawerHeight: copyBoxH});
+    }
   }
 
   toggleDrawer() {
@@ -37,8 +55,9 @@ export default class Header extends React.Component {
 
   render() {
     const openStyle = {
-      display: 'block'
-    }
+      height: this.state.drawerHeight,
+      visibility: "visible",
+    };
     return (
       <header className="navbar navbar-default navbar-fixed-top">
         <div className="container">
@@ -50,7 +69,7 @@ export default class Header extends React.Component {
               <span className="icon-bar"></span>
             </button>
           </div>
-          <div className="collapse navbar-collapse target" style={this.state.isOpen? openStyle: null}>
+          <div className="collapse navbar-collapse target toggle-drawer" ref="toggle_drawer" style={this.state.isOpen? openStyle: null}>
             <ul className="nav navbar-nav">
               <li><Link href='/topics/new'><i className="icon-comment"></i>&nbsp;質問する</Link></li>
               <li><Link href='/?order=new'><i className="icon-user"></i>&nbsp;回答募集&nbsp;<span className="badge">{this.props.noCommentsCount}</span></Link></li>
