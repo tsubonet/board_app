@@ -35,6 +35,7 @@ export default class TopicsShow extends React.Component {
   componentDidMount() {
     this.refs.comment_form.addEventListener('click', () => {
       smoothScroll.scrollTo('comment-form');
+      this.refs.comment_textarea.focus();
     })
   }
 
@@ -179,7 +180,7 @@ export default class TopicsShow extends React.Component {
               <div className="panel-body">
                 <form onSubmit={this.handleSubmit}>
                   <div className="form-group">
-                    <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" value={this.state.commentContent} onChange={this.handleCommentContentChange}></textarea>
+                    <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" ref="comment_textarea" value={this.state.commentContent} onChange={this.handleCommentContentChange}></textarea>
                     <AddLink
                       content={this.state.content}
                       selectPos={this.state.selectPos}
