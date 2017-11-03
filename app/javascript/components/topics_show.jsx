@@ -73,6 +73,7 @@ export default class TopicsShow extends React.Component {
         topic.comments.push(data.comment);
         this.setState({
           topic: topic,
+          commentContent: '',
           messages: {
             status: 'success',
             txt: data.txt,
