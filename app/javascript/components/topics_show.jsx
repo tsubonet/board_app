@@ -32,7 +32,6 @@ export default class TopicsShow extends React.Component {
   scrollToCommentBox(e) {
     smoothScroll.scrollTo('comment-form');
     this.refs.comment_textarea.focus();
-
     const commentId = e.target.getAttribute('data-comment-id');
     if (!commentId) return;
     const formattedCommentID = `[@${commentId}]\n`;
@@ -62,6 +61,7 @@ export default class TopicsShow extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+
     let data = {
       user: localStorage.user_id,
       topic_id: this.state.topic.id,
@@ -69,7 +69,6 @@ export default class TopicsShow extends React.Component {
     }
     sendPost('/comments', data)
     .then((data) => {
-      window.scrollTo(0, 0);
       if (data.status === 'success') {
         let topic = Object.assign({}, this.state.topic);
         topic.comments.push(data.comment);
@@ -78,6 +77,7 @@ export default class TopicsShow extends React.Component {
           content: '',
         });
       }
+      window.scrollTo(0, 0);
       this.setState({
         messages: {
           status: data.status,

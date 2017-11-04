@@ -91,7 +91,7 @@ export default class TopicsNew extends React.Component {
           messages: {
             status: 'error',
             txt: data.txt,
-          }
+          },
         });
       }
     })
