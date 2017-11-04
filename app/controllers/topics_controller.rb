@@ -66,7 +66,7 @@ class TopicsController < ApplicationController
   def show
     topic = Topic.find(params[:id])
     topic.record_timestamps = false
-    topic.update( view_count: topic.view_count + 1 )
+    topic.update(view_count: topic.view_count + 1)
     render_for_react(
       props: {
         topic: topic.as_json(:include => [{:comments => {:include => :replies}}, :tags]),

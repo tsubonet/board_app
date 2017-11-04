@@ -18,10 +18,7 @@ class CommentsController < ApplicationController
     end
     render json: response_data
   end
-
-
-
-
+  
   private
 
     def comment_params

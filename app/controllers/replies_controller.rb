@@ -19,9 +19,6 @@ class RepliesController < ApplicationController
     render json: response_data
   end
 
-
-
-
   private
 
     def reply_params

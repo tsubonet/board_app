@@ -94,7 +94,7 @@ export default class TopicsShow extends React.Component {
       if (data.status === 'success') {
         let topic = Object.assign({}, this.state.topic);
         if (commentId === null) {
-          Object.assign(data.comment, { replies: [] });
+          Object.assign(data.comment, {replies: []});
           topic.comments.push(data.comment);
         } else {
           const comments = topic.comments.map((v) => {
@@ -230,11 +230,9 @@ export default class TopicsShow extends React.Component {
 
                           </div>
                         </div>
-
                         <div className="reply-show-btn text-right">
                           <button className="btn btn-default btn-sm" data-comment-id={comment.id} onClick={this.scrollToCommentBox}>この回答に対してコメントする</button>
                         </div>
-
                         <hr />
                       </div>
                     )
