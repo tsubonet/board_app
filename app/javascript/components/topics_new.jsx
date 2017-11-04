@@ -73,8 +73,8 @@ export default class TopicsNew extends React.Component {
     let data = {
       user    : localStorage.user_id,
       gender  : this.refs.gender.value.trim(),
-      title   : this.state.title,
-      content : this.state.content,
+      title   : this.state.title.trim(),
+      content : this.state.content.trim(),
       tag_ids : this.state.tagIds,
     }
     sendPost('/topics', data)

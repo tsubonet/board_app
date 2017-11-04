@@ -61,17 +61,50 @@ export default class TopicsShow extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    let data = {};
+    let url  = '';
+    let content = this.state.content;
+    let commentId = null;
+    const commentIds = content.match(/\[@(\d+)\]/g);
 
-    let data = {
-      user: localStorage.user_id,
-      topic_id: this.state.topic.id,
-      content : this.state.content,
+    if (commentIds !== null) {
+      commentId = commentIds[0].replace(/\[@(\d+)\]/, "$1");
+      commentIds.forEach((v) => {
+        content = content.replace(v, '');
+      });
     }
-    sendPost('/comments', data)
+
+    if (commentId === null) {
+      data = {
+        user: localStorage.user_id,
+        topic_id: this.state.topic.id,
+        content: content.trim(),
+      };
+      url = '/comments';
+    } else {
+      data = {
+        user: localStorage.user_id,
+        comment_id: commentId,
+        content: content.trim(),
+      };
+      url = '/replies';
+    }
+
+    sendPost(url, data)
     .then((data) => {
       if (data.status === 'success') {
         let topic = Object.assign({}, this.state.topic);
-        topic.comments.push(data.comment);
+        if (commentId === null) {
+          topic.comments.push(data.comment);
+        } else {
+          const comments = topic.comments.map((v) => {
+            if (v.id === parseInt(commentId)){
+              v.replies.push(data.reply);
+            }
+            return v;
+          });
+          topic.comments = comments;
+        }
         this.setState({
           topic: topic,
           content: '',
