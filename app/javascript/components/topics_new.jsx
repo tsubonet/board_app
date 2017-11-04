@@ -23,11 +23,11 @@ export default class TopicsNew extends React.Component {
       selectPos: '',
       tagIds: [],
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleTagChange = this.handleTagChange.bind(this);
-    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleSubmit        = this.handleSubmit.bind(this);
+    this.handleTagChange     = this.handleTagChange.bind(this);
+    this.handleTitleChange   = this.handleTitleChange.bind(this);
     this.handleContentChange = this.handleContentChange.bind(this);
-    this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
+    this.handleLinkSubmit    = this.handleLinkSubmit.bind(this);
   }
 
   handleLinkSubmit(linkString) {
