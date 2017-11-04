@@ -122,8 +122,8 @@ export default class TopicsShow extends React.Component {
 
 
   render() {
-    const updated_at = formatDate(new Date(this.state.topic.updated_at), 'YYYY-MM-DD hh:mm');
-    const formatted_content = formatPostString(this.state.topic.content);
+    const topicUpdatedAt = formatDate(new Date(this.state.topic.updated_at), 'YYYY-MM-DD hh:mm');
+    const topicFormattedContent = formatPostString(this.state.topic.content);
     return (
       <div>
         <Helmet>
@@ -141,14 +141,14 @@ export default class TopicsShow extends React.Component {
                   return (<li className="glay"><strong><i className="icon-female"></i>&nbsp;女性</strong></li>);
                 }
               })()}
-              <li className="glay"><strong><i className="icon-time"></i>&nbsp;{updated_at}</strong></li>
+              <li className="glay"><strong><i className="icon-time"></i>&nbsp;{topicUpdatedAt}</strong></li>
               <li className="glay"><strong className="text-right"><i className="icon-eye-open"></i>&nbsp;view&nbsp;:&nbsp;{this.state.topic.view_count}</strong></li>
               <li className="right"><div className="btn btn-default topic-delete-btn" data-topic-id="#"><i className="icon-remove-sign"></i>&nbsp;この質問を削除する</div></li>
             </ul>
           </div>
           <div className="panel-body">
             <h1 className="h1-detail"><i className="icon-comment"></i>&nbsp;{this.state.topic.title}</h1>
-            <p className="pre-line" dangerouslySetInnerHTML={{ __html: formatted_content }}></p>
+            <p className="pre-line" dangerouslySetInnerHTML={{ __html: topicFormattedContent }}></p>
             <p className="glay">
               {(() => {
                 if (this.state.topic.tags.length) {
@@ -174,20 +174,67 @@ export default class TopicsShow extends React.Component {
               {(() => {
                 if (this.state.topic.comments.length) {
                   return this.state.topic.comments.map((comment, i) => {
-                    const created_at = formatDate(new Date(comment.created_at), 'YYYY-MM-DD hh:mm');
+                    const commentCreatedAt = formatDate(new Date(comment.created_at), 'YYYY-MM-DD hh:mm');
+                    const commentFormattedContent = formatPostString(comment.content);
                     return (
                       <div key={comment.id}>
                         <ul className="list-inline glay">
                           <li><i className="icon-user"></i> { comment.user === this.state.topic.user? 'トピ主': comment.user }さんからの回答</li>
-                          <li><i className="icon-time"></i> { created_at }</li>
+                          <li><i className="icon-time"></i> { commentCreatedAt }</li>
                           {
                             //comment.user === this.user_id ? <li><a href="javascript:void(0)" className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li> : ''
                           }
                         </ul>
-                        <p className="pre-line">{comment.content}</p>
+                        <p className="pre-line" dangerouslySetInnerHTML={{ __html: commentFormattedContent }}></p>
+
+                        <div className="reply-area-wrap">
+                          <div className="reply-area">
+                          {(() => {
+                            if (comment.replies.length) {
+                              return comment.replies.map((reply, i) => {
+                                const replyCreatedAt = formatDate(new Date(reply.created_at), 'YYYY-MM-DD hh:mm');
+                                const replyFormattedContent = formatPostString(reply.content);
+                                return (
+                                  <div key={reply.id} className="reply-item">
+                                    <ul className="list-inline glay">
+                                      <li><i className="icon-user"></i> {reply.user}さんからのコメント</li>
+                                      <li><i className="icon-time"></i> {replyCreatedAt}</li>
+                                    </ul>
+                                    <p className="pre-line" dangerouslySetInnerHTML={{ __html: replyFormattedContent }}></p>
+                                  </div>
+                                )
+                              });
+                            }
+                          })()}
+
+                              {
+                              // <div id="reply-<?php echo h($reply['id']); ?>" className="reply-item">
+                              //     <ul className="list-inline" style="color: #999999;">
+                              //         <li><i className="icon-user"></i>
+                              //         <?php
+                              //         if(h($reply['commenter']) == h($topic['Topic']['questioner'])){
+                              //             echo "トピ主";
+                              //         }elseif(h($reply['commenter']) == h($comment['commenter'])){
+                              //             echo "コメ主";
+                              //         } else { echo h($reply['commenter']); }
+                              //         ?>さんからのコメント</li>
+                              //         <li><i className="icon-time"></i> <?php echo h($reply['created']) ?></li>
+                              //
+                              //         <?php if($user_id == h($reply['commenter'])){ ?>
+                              //         <li><a href="javascript:void(0)" className="reply-delete-btn" data-reply-id="<?php echo h($reply['id']); ?>"><i className="icon-remove-sign"></i> 削除</a></li>
+                              //         <?php } ?>
+                              //     </ul>
+                              //     <p><?php echo nl2br(h($reply['body'])) ?></p>
+                              // </div>
+                              }
+
+                          </div>
+                        </div>
+
                         <div className="reply-show-btn text-right">
                           <button className="btn btn-default btn-sm" data-comment-id={comment.id} onClick={this.scrollToCommentBox}>この回答に対してコメントする</button>
                         </div>
+
                         <hr />
                       </div>
                     )
