@@ -54,7 +54,7 @@ export default class TopicsShow extends React.Component {
     const after   = content.substr(pos, len);
     content = before + linkString + after;
     this.setState({
-      commentContent: content
+      commentContent: content,
     });
   }
 
@@ -74,22 +74,15 @@ export default class TopicsShow extends React.Component {
         this.setState({
           topic: topic,
           commentContent: '',
-          messages: {
-            status: 'success',
-            txt: data.txt,
-          }
-        });
-      } else {
-        this.setState({
-          messages: {
-            status: 'error',
-            txt: data.txt,
-          }
         });
       }
+      this.setState({
+        messages: {
+          status: data.status,
+          txt: data.txt,
+        },
+      });
     })
-    .catch((response) => {
-    });
   }
 
 
@@ -158,7 +151,7 @@ export default class TopicsShow extends React.Component {
                         </ul>
                         <p className="pre-line">{comment.content}</p>
                         <div className="reply-show-btn text-right">
-                          <a href="javascript:void(0);" className="btn btn-default btn-sm">この回答に対してコメントする</a>
+                          <button className="btn btn-default btn-sm" data-comment-id={comment.id} ref="comment_form">この回答に対してコメントする</button>
                         </div>
                         <hr />
                       </div>

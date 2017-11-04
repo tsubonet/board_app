@@ -38,12 +38,14 @@ export default class TopicsNew extends React.Component {
     const after   = content.substr(pos, len);
     content = before + linkString + after;
     this.setState({
-      content: content
+      content: content,
     });
   }
 
   handleTitleChange(e) {
-    this.setState({ title: e.target.value });
+    this.setState({
+      title: e.target.value,
+    });
   }
 
   handleContentChange(e) {
@@ -55,15 +57,15 @@ export default class TopicsNew extends React.Component {
 
   handleTagChange(e) {
     let tagIds = Object.assign([], this.state.tagIds);
-    if(e.target.checked) {
-      // add
+    if(e.target.checked) { // add
       tagIds.push(e.target.value);
-    } else {
-      // delete
+    } else { // delete
       const index = tagIds.indexOf(e.target.value);
       tagIds.splice(index, 1);
     }
-    this.setState({tagIds: tagIds});
+    this.setState({
+      tagIds: tagIds,
+    });
   }
 
   handleSubmit(e) {
@@ -82,7 +84,7 @@ export default class TopicsNew extends React.Component {
           messages: {
             status: 'success',
             txt: data.txt
-          }
+          },
         });
       } else {
         this.setState({
@@ -93,8 +95,6 @@ export default class TopicsNew extends React.Component {
         });
       }
     })
-    .catch((response) => {
-    });
   }
 
   render() {

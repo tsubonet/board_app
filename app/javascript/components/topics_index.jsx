@@ -25,7 +25,7 @@ export default class TopicsIndex extends React.Component {
         messages: {
           status: history.state.messages.status,
           txt: history.state.messages.txt,
-        }
+        },
       });
     }
   }
