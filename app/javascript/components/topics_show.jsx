@@ -94,6 +94,7 @@ export default class TopicsShow extends React.Component {
       if (data.status === 'success') {
         let topic = Object.assign({}, this.state.topic);
         if (commentId === null) {
+          Object.assign(data.comment, { replies: [] });
           topic.comments.push(data.comment);
         } else {
           const comments = topic.comments.map((v) => {
