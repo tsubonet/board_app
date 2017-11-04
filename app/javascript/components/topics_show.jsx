@@ -16,47 +16,47 @@ export default class TopicsShow extends React.Component {
     super(props);
     this.state = {
       topic: this.props.topic,
-      commentContent: '',
+      content: '',
       commentSelectPos: '',
       messages: {
         status: '',
         txt: [],
       },
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCommentContentChange = this.handleCommentContentChange.bind(this);
-    this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
-    this.scrollToCommentBox = this.scrollToCommentBox.bind(this);
+    this.handleSubmit        = this.handleSubmit.bind(this);
+    this.handleContentChange = this.handleContentChange.bind(this);
+    this.handleLinkSubmit    = this.handleLinkSubmit.bind(this);
+    this.scrollToCommentBox  = this.scrollToCommentBox.bind(this);
   }
 
-  componentWillMount() {
-    this.user_id = typeof localStorage !== 'undefined' ? localStorage.user_id: '';
-  }
-
-  componentDidMount() {
-  }
-
-  scrollToCommentBox() {
+  scrollToCommentBox(e) {
     smoothScroll.scrollTo('comment-form');
     this.refs.comment_textarea.focus();
+
+    const commentId = e.target.getAttribute('data-comment-id');
+    if (!commentId) return;
+    const formattedCommentID = `[@${commentId}]\n`;
+    this.setState((prevState, props) => {
+      return { content: formattedCommentID + prevState.content };
+    });
   }
 
-  handleCommentContentChange(e) {
+  handleContentChange(e) {
     this.setState({
-      commentContent: e.target.value,
+      content: e.target.value,
       commentSelectPos: e.target.selectionStart,
     });
   }
 
   handleLinkSubmit(linkString) {
-    let content   = this.state.commentContent;
+    let content   = this.state.content;
     const len     = content.length;
     const pos     = this.state.selectPos;
     const before  = content.substr(0, pos);
     const after   = content.substr(pos, len);
     content = before + linkString + after;
     this.setState({
-      commentContent: content,
+      content: content,
     });
   }
 
@@ -65,7 +65,7 @@ export default class TopicsShow extends React.Component {
     let data = {
       user: localStorage.user_id,
       topic_id: this.state.topic.id,
-      content : this.state.commentContent,
+      content : this.state.content,
     }
     sendPost('/comments', data)
     .then((data) => {
@@ -75,7 +75,7 @@ export default class TopicsShow extends React.Component {
         topic.comments.push(data.comment);
         this.setState({
           topic: topic,
-          commentContent: '',
+          content: '',
         });
       }
       this.setState({
@@ -176,7 +176,7 @@ export default class TopicsShow extends React.Component {
               <div className="panel-body">
                 <form onSubmit={this.handleSubmit}>
                   <div className="form-group">
-                    <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" ref="comment_textarea" value={this.state.commentContent} onChange={this.handleCommentContentChange}></textarea>
+                    <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" ref="comment_textarea" value={this.state.content} onChange={this.handleContentChange}></textarea>
                     <AddLink
                       content={this.state.content}
                       selectPos={this.state.selectPos}
