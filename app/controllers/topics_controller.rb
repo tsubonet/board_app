@@ -102,7 +102,7 @@ class TopicsController < ApplicationController
 
       if params[:query].present?
         {
-          model: Topic.includes(:comments).where("topics.title like :keyword or topics.content like :keyword or comments.content like :keyword", {keyword: "%#{params[:query]}%"}).references(:comments),
+          model: Topic.includes(:comments => :replies).where("topics.title like :keyword or topics.content like :keyword or comments.content like :keyword or replies.content like :keyword", {keyword: "%#{params[:query]}%"}).references(:comments, :replies),
           filter: 'search',
           query: params[:query],
         }
