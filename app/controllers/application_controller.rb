@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def no_comments_count
-    Topic.where('comments_count = ?', '0').count
+    Topic.no_comment.count
   end
 
   def tags
@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ranking_topics
-    Topic.unscoped.where('created_at > ?', 1.hours.ago).order('view_count DESC').limit(5)
+    Topic.unscoped.ranking_weekly.limit(5)
   end
 
   def common_props
