@@ -66,7 +66,6 @@ export default class TopicsShow extends React.Component {
     let content = this.state.content;
     let commentId = null;
     const commentIds = content.match(/\[@(\d+)\]/g);
-
     if (commentIds !== null) {
       commentId = commentIds[0].replace(/\[@(\d+)\]/, "$1");
       commentIds.forEach((v) => {
