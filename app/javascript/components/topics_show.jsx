@@ -26,6 +26,7 @@ export default class TopicsShow extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCommentContentChange = this.handleCommentContentChange.bind(this);
     this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
+    this.scrollToCommentBox = this.scrollToCommentBox.bind(this);
   }
 
   componentWillMount() {
@@ -33,10 +34,11 @@ export default class TopicsShow extends React.Component {
   }
 
   componentDidMount() {
-    this.refs.comment_form.addEventListener('click', () => {
-      smoothScroll.scrollTo('comment-form');
-      this.refs.comment_textarea.focus();
-    })
+  }
+
+  scrollToCommentBox() {
+    smoothScroll.scrollTo('comment-form');
+    this.refs.comment_textarea.focus();
   }
 
   handleCommentContentChange(e) {
@@ -130,7 +132,7 @@ export default class TopicsShow extends React.Component {
                 }
               })()}
             </p>
-            <p className="text-center marT20 marB20"><a className="btn btn-primary" ref="comment_form">この質問に回答する</a></p>
+            <p className="text-center marT20 marB20"><a className="btn btn-primary" onClick={this.scrollToCommentBox}>この質問に回答する</a></p>
             <div className="panel panel-default">
               <div className="panel-heading">
                 <strong><i className='icon-check-sign'></i>&nbsp;みんなの回答&nbsp;<span id="comment-count">{this.state.topic.comments.length}</span>件</strong>
@@ -146,12 +148,12 @@ export default class TopicsShow extends React.Component {
                           <li><i className="icon-user"></i> { comment.user === this.state.topic.user? 'トピ主': comment.user }さんからの回答</li>
                           <li><i className="icon-time"></i> { created_at }</li>
                           {
-                            comment.user === this.user_id ? <li><a href="javascript:void(0)" className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li> : ''
+                            //comment.user === this.user_id ? <li><a href="javascript:void(0)" className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li> : ''
                           }
                         </ul>
                         <p className="pre-line">{comment.content}</p>
                         <div className="reply-show-btn text-right">
-                          <button className="btn btn-default btn-sm" data-comment-id={comment.id} ref="comment_form">この回答に対してコメントする</button>
+                          <button className="btn btn-default btn-sm" data-comment-id={comment.id} onClick={this.scrollToCommentBox}>この回答に対してコメントする</button>
                         </div>
                         <hr />
                       </div>
