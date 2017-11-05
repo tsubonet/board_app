@@ -29,9 +29,9 @@ export default class SideBar extends React.Component {
     return (
       <div>
         <div className="panel panel-primary">
-          <div className="panel-heading"><strong><i className='icon-check-sign'></i> SexeSとは <i className="icon-question"></i></strong></div>
+          <div className="panel-heading"><strong><i className='icon-check-sign'></i> 性のお悩み相談室とは <i className="icon-question"></i></strong></div>
           <div className="panel-body">
-            相談しにくい性の悩みを解決する匿名Q&amp;Aサービスです。<br />
+            人に相談しにくい性の悩みを解決する完全匿名Q&amp;Aサービスです。<br />
             <div className="text-center marT10"><Link href='/topics/new' className="btn btn-primary"><i className="icon-comment"></i> 質問する</Link></div>
           </div>
         </div>

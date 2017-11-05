@@ -1,5 +1,7 @@
 class User < ApplicationRecord
 
+  has_many :topics, dependent: :destroy
+
   def self.find_or_create_from_auth(auth)
     provider  = auth[:provider]
     uid       = auth[:uid]
@@ -9,6 +11,7 @@ class User < ApplicationRecord
     self.find_or_create_by(provider: provider, uid: uid) do |user|
       user.nickname  = nickname
       user.image_url = image_url
+      user.name      = ((0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a).sample(8).join
     end
   end
 
