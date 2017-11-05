@@ -252,19 +252,34 @@ export default class TopicsShow extends React.Component {
                 <strong><i className='icon-check-sign'></i>&nbsp;回答する</strong>
               </div>
               <div className="panel-body">
-                <form onSubmit={this.handleSubmit}>
-                  <div className="form-group">
-                    <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" ref="comment_textarea" value={this.state.content} onChange={this.handleContentChange}></textarea>
-                    <AddLink
-                      content={this.state.content}
-                      selectPos={this.state.selectPos}
-                      onLinkSubmit={this.handleLinkSubmit}
-                    />
-                  </div>
-                  <div className="form-group text-center">
-                    <input className="btn btn-primary comment-btn" type="submit" value="この質問に回答する" />
-                  </div>
-                </form>
+                {(() => {
+                  if (this.props.currentUser === null) {
+                    return (
+                      <div>
+                        <p>Twitterアカウントでログイン後、質問投稿画面に遷移します。<br />なお、Twitterのアカウント情報がログイン以外で使用されることは一切ございません。<br />（タイムラインに流れること等はありません）</p>
+                        <div className="text-center">
+                          <a href="/auth/twitter" className="btn btn-primary btn-lg"><i className="icon-twitter"></i> Twitterでログイン</a>
+                        </div>
+                      </div>
+                    )
+                  } else {
+                    return (
+                      <form onSubmit={this.handleSubmit}>
+                        <div className="form-group">
+                          <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" ref="comment_textarea" value={this.state.content} onChange={this.handleContentChange}></textarea>
+                          <AddLink
+                            content={this.state.content}
+                            selectPos={this.state.selectPos}
+                            onLinkSubmit={this.handleLinkSubmit}
+                          />
+                        </div>
+                        <div className="form-group text-center">
+                          <input className="btn btn-primary comment-btn" type="submit" value="この質問に回答する" />
+                        </div>
+                      </form>
+                    )
+                  }
+                })()}
               </div>
             </div>
           </div>

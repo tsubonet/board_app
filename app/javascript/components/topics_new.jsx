@@ -107,41 +107,56 @@ export default class TopicsNew extends React.Component {
         <div className="panel panel-default">
           <div className="panel-heading"><strong><i className='icon-check-sign'></i>&nbsp;性の悩みについて質問する</strong></div>
           <div className="panel-body">
-            <form onSubmit={this.handleSubmit}>
-              <div className="form-group">
-                <i className='icon-pencil'></i>&nbsp;<label htmlFor="form-gender">性別</label>&nbsp;<span className="label label-primary">必須</span>
-                <select className="form-control" id="form-gender" ref="gender">
-                  <option value="male">男性</option>
-                  <option value="female">女性</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <i className='icon-pencil'></i>&nbsp;<label htmlFor="form-title">タイトル</label>&nbsp;<span className="label label-primary">必須</span>&nbsp;<span className="label label-primary">全角50文字まで</span>
-                <input type="text" className="form-control" placeholder="タイトルを入力して下さい" id="form-title" value={this.state.title} onChange={this.handleTitleChange} />
-              </div>
-              <div className="form-group relative">
-                <i className='icon-pencil'></i>&nbsp;<label htmlFor="form-content">質問内容</label>&nbsp;<span className="label label-primary">必須</span>&nbsp;<span className="label label-primary">全角1000文字まで</span>
-                <textarea className="form-control" placeholder="質問内容を入力して下さい" rows="5" id="form-content" value={this.state.content} onChange={this.handleContentChange}></textarea>
-                <AddLink
-                  content={this.state.content}
-                  selectPos={this.state.selectPos}
-                  onLinkSubmit={this.handleLinkSubmit}
-                />
-              </div>
-              <div className="form-group">
-                <div><i className="icon-pencil"></i>&nbsp;<label htmlFor="TagTag">カテゴリー</label>&nbsp;<span className="label label-default">任意</span>&nbsp;<span className="label label-default">複数可</span></div>
-                {this.props.tags.map((tag, i) => {
-                  return (
-                    <div className="checkbox wrap-checkbox" key={tag.id}>
-                      <label><input type="checkbox" value={tag.id} onChange={this.handleTagChange} />&nbsp;{tag.name}</label>
+            {(() => {
+              if (this.props.currentUser === null) {
+                return (
+                  <div>
+                    <p>Twitterアカウントでログイン後、質問投稿画面に遷移します。<br />なお、Twitterのアカウント情報がログイン以外で使用されることは一切ございません。<br />（タイムラインに流れること等はありません）</p>
+                    <div className="text-center">
+                      <a href="/auth/twitter" className="btn btn-primary btn-lg"><i className="icon-twitter"></i> Twitterでログイン</a>
                     </div>
-                  );
-                })}
-              </div>
-              <div className="form-group text-center">
-                <input className="btn btn-primary btn-lg" type="submit" value="質問する" />
-              </div>
-            </form>
+                  </div>
+                )
+              } else {
+                return (
+                  <form onSubmit={this.handleSubmit}>
+                    <div className="form-group">
+                      <i className='icon-pencil'></i>&nbsp;<label htmlFor="form-gender">性別</label>&nbsp;<span className="label label-primary">必須</span>
+                      <select className="form-control" id="form-gender" ref="gender">
+                        <option value="male">男性</option>
+                        <option value="female">女性</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <i className='icon-pencil'></i>&nbsp;<label htmlFor="form-title">タイトル</label>&nbsp;<span className="label label-primary">必須</span>&nbsp;<span className="label label-primary">全角50文字まで</span>
+                      <input type="text" className="form-control" placeholder="タイトルを入力して下さい" id="form-title" value={this.state.title} onChange={this.handleTitleChange} />
+                    </div>
+                    <div className="form-group relative">
+                      <i className='icon-pencil'></i>&nbsp;<label htmlFor="form-content">質問内容</label>&nbsp;<span className="label label-primary">必須</span>&nbsp;<span className="label label-primary">全角1000文字まで</span>
+                      <textarea className="form-control" placeholder="質問内容を入力して下さい" rows="5" id="form-content" value={this.state.content} onChange={this.handleContentChange}></textarea>
+                      <AddLink
+                        content={this.state.content}
+                        selectPos={this.state.selectPos}
+                        onLinkSubmit={this.handleLinkSubmit}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <div><i className="icon-pencil"></i>&nbsp;<label htmlFor="TagTag">カテゴリー</label>&nbsp;<span className="label label-default">任意</span>&nbsp;<span className="label label-default">複数可</span></div>
+                      {this.props.tags.map((tag, i) => {
+                        return (
+                          <div className="checkbox wrap-checkbox" key={tag.id}>
+                            <label><input type="checkbox" value={tag.id} onChange={this.handleTagChange} />&nbsp;{tag.name}</label>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="form-group text-center">
+                      <input className="btn btn-primary btn-lg" type="submit" value="質問する" />
+                    </div>
+                  </form>
+                )
+              }
+            })()}
           </div>
         </div>
       </div>
