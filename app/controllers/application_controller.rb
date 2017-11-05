@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  before_action :store_location
+
   private
 
   def action_path
@@ -8,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    session[:user_id]
+    User.find_by(id: session[:user_id])
   end
 
   def no_comments_count
@@ -23,13 +25,19 @@ class ApplicationController < ActionController::Base
     Topic.unscoped.ranking_weekly.limit(5)
   end
 
+  def store_location
+    if request.get? && current_user.nil?
+      session[:forwarding_url] = request.url
+    end
+  end
+
   def common_props
     {
       actionPath: action_path,
-      noCommentsCount: no_comments_count,
-      tags: tags,
-      rankingTopics: ranking_topics,
       currentUser: current_user,
+      noCommentsCount: no_comments_count,
+      rankingTopics: ranking_topics,
+      tags: tags,
     }
   end
 
