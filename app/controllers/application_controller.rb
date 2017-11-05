@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
     "#{controller_path}##{action_name}"
   end
 
+  def current_user
+    session[:user_id]
+  end
+
   def no_comments_count
     Topic.no_comment.count
   end
@@ -25,7 +29,7 @@ class ApplicationController < ActionController::Base
       noCommentsCount: no_comments_count,
       tags: tags,
       rankingTopics: ranking_topics,
-      #currentUser: current_user,
+      currentUser: current_user,
     }
   end
 
