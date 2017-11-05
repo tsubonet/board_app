@@ -75,14 +75,14 @@ export default class TopicsShow extends React.Component {
 
     if (commentId === null) {
       data = {
-        user: localStorage.user_id,
+        user_id: this.props.currentUser.id,
         topic_id: this.state.topic.id,
         content: content.trim(),
       };
       url = '/comments';
     } else {
       data = {
-        user: localStorage.user_id,
+        user_id: this.props.currentUser.id,
         comment_id: commentId,
         content: content.trim(),
       };
@@ -133,7 +133,7 @@ export default class TopicsShow extends React.Component {
         <div className="panel panel-default">
           <div className="panel-heading">
             <ul className="list-inline clearfix marB0">
-              <li><strong><i className="icon-user"></i>&nbsp;{this.state.topic.user}さんの質問</strong></li>
+              <li><strong><i className="icon-user"></i>&nbsp;{this.state.topic.user.name}さんの質問</strong></li>
               {(() => {
                 if (this.state.topic.gender === 'male') {
                   return (<li className="glay"><strong><i className="icon-male"></i>&nbsp;男性</strong></li>);
@@ -179,7 +179,7 @@ export default class TopicsShow extends React.Component {
                     return (
                       <div key={comment.id}>
                         <ul className="list-inline glay">
-                          <li><i className="icon-user"></i> { comment.user === this.state.topic.user? 'トピ主': comment.user }さんからの回答</li>
+                          <li><i className="icon-user"></i> { comment.user.name === this.state.topic.user.name? 'トピ主': comment.user.name }さんからの回答</li>
                           <li><i className="icon-time"></i> { commentCreatedAt }</li>
                           {
                             //comment.user === this.user_id ? <li><a href="javascript:void(0)" className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li> : ''
@@ -197,7 +197,7 @@ export default class TopicsShow extends React.Component {
                                 return (
                                   <div key={reply.id} className="reply-item">
                                     <ul className="list-inline glay">
-                                      <li><i className="icon-user"></i> {reply.user}さんからのコメント</li>
+                                      <li><i className="icon-user"></i> {reply.user.name}さんからのコメント</li>
                                       <li><i className="icon-time"></i> {replyCreatedAt}</li>
                                     </ul>
                                     <p className="pre-line" dangerouslySetInnerHTML={{ __html: replyFormattedContent }}></p>

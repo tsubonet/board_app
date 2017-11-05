@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 30.times do |i|
-  Topic.create(user: "ABCDEFGH", title: "タイトル #{i}", content: "本文 #{i}", gender: "man" )
+  Topic.create(user_id: 1, title: "タイトル #{i}", content: "本文 #{i}", gender: "man" )
 end
 
 

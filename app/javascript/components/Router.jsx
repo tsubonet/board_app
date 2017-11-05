@@ -38,7 +38,6 @@ export default class Router extends React.Component {
     window.addEventListener("popstate", () => {
       this.transitTo(document.location.href, { pushState: false });
     });
-    setUserId();
   }
 
   onLinkClick(event) {

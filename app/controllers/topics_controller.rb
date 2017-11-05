@@ -69,7 +69,7 @@ class TopicsController < ApplicationController
     topic.update(view_count: topic.view_count + 1)
     render_for_react(
       props: {
-        topic: topic.as_json(:include => [{:comments => {:include => :replies}}, :tags]),
+        topic: topic.as_json(:include => [{:comments => {:include => :replies}}, :tags, :user]),
       },
     )
   end
@@ -127,7 +127,7 @@ class TopicsController < ApplicationController
 
 
     def topic_params
-      params.permit(:user, :gender, :title, :content, { :tag_ids => [] })
+      params.permit(:user_id, :gender, :title, :content, { :tag_ids => [] })
     end
 
 

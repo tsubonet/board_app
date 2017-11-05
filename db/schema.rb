@@ -16,18 +16,22 @@ ActiveRecord::Schema.define(version: 20171105055905) do
     t.string "content"
     t.string "user"
     t.integer "topic_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["topic_id"], name: "index_comments_on_topic_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "replies", force: :cascade do |t|
     t.string "content"
     t.string "user"
     t.integer "comment_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["comment_id"], name: "index_replies_on_comment_id"
+    t.index ["user_id"], name: "index_replies_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -53,8 +57,10 @@ ActiveRecord::Schema.define(version: 20171105055905) do
     t.string "user"
     t.integer "comments_count", default: 0, null: false
     t.integer "view_count", default: 0, null: false
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_topics_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

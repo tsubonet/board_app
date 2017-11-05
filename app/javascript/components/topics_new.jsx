@@ -71,7 +71,7 @@ export default class TopicsNew extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     let data = {
-      user    : localStorage.user_id,
+      user_id : this.props.currentUser.id,
       gender  : this.refs.gender.value.trim(),
       title   : this.state.title.trim(),
       content : this.state.content.trim(),
