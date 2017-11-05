@@ -143,7 +143,13 @@ export default class TopicsShow extends React.Component {
               })()}
               <li className="glay"><strong><i className="icon-time"></i>&nbsp;{topicUpdatedAt}</strong></li>
               <li className="glay"><strong className="text-right"><i className="icon-eye-open"></i>&nbsp;view&nbsp;:&nbsp;{this.state.topic.view_count}</strong></li>
-              <li className="right"><div className="btn btn-default topic-delete-btn" data-topic-id="#"><i className="icon-remove-sign"></i>&nbsp;この質問を削除する</div></li>
+              {(() => {
+                if (this.state.topic.user.id === this.props.currentUser.id) {
+                  return (
+                    <li className="right"><div className="btn btn-default topic-delete-btn"><i className="icon-remove-sign"></i>&nbsp;この質問を削除する</div></li>
+                  )
+                }
+              })()}
             </ul>
           </div>
           <div className="panel-body">
@@ -181,12 +187,15 @@ export default class TopicsShow extends React.Component {
                         <ul className="list-inline glay">
                           <li><i className="icon-user"></i> { comment.user.name === this.state.topic.user.name? 'トピ主': comment.user.name }さんからの回答</li>
                           <li><i className="icon-time"></i> { commentCreatedAt }</li>
-                          {
-                            //comment.user === this.user_id ? <li><a href="javascript:void(0)" className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li> : ''
-                          }
+                          {(() => {
+                            if (comment.user.id === this.props.currentUser.id) {
+                              return (
+                                <li><a className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li>
+                              )
+                            }
+                          })()}
                         </ul>
                         <p className="pre-line" dangerouslySetInnerHTML={{ __html: commentFormattedContent }}></p>
-
                         <div className="reply-area-wrap">
                           <div className="reply-area">
                           {(() => {
@@ -197,8 +206,15 @@ export default class TopicsShow extends React.Component {
                                 return (
                                   <div key={reply.id} className="reply-item">
                                     <ul className="list-inline glay">
-                                      <li><i className="icon-user"></i> {reply.user.name}さんからのコメント</li>
+                                      <li><i className="icon-user"></i> { reply.user.name === this.state.topic.user.name? 'トピ主': reply.user.name }さんからのコメント</li>
                                       <li><i className="icon-time"></i> {replyCreatedAt}</li>
+                                      {(() => {
+                                        if (reply.user.id === this.props.currentUser.id) {
+                                          return (
+                                            <li><a className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li>
+                                          )
+                                        }
+                                      })()}
                                     </ul>
                                     <p className="pre-line" dangerouslySetInnerHTML={{ __html: replyFormattedContent }}></p>
                                   </div>
@@ -206,32 +222,10 @@ export default class TopicsShow extends React.Component {
                               });
                             }
                           })()}
-
-                              {
-                              // <div id="reply-<?php echo h($reply['id']); ?>" className="reply-item">
-                              //     <ul className="list-inline" style="color: #999999;">
-                              //         <li><i className="icon-user"></i>
-                              //         <?php
-                              //         if(h($reply['commenter']) == h($topic['Topic']['questioner'])){
-                              //             echo "トピ主";
-                              //         }elseif(h($reply['commenter']) == h($comment['commenter'])){
-                              //             echo "コメ主";
-                              //         } else { echo h($reply['commenter']); }
-                              //         ?>さんからのコメント</li>
-                              //         <li><i className="icon-time"></i> <?php echo h($reply['created']) ?></li>
-                              //
-                              //         <?php if($user_id == h($reply['commenter'])){ ?>
-                              //         <li><a href="javascript:void(0)" className="reply-delete-btn" data-reply-id="<?php echo h($reply['id']); ?>"><i className="icon-remove-sign"></i> 削除</a></li>
-                              //         <?php } ?>
-                              //     </ul>
-                              //     <p><?php echo nl2br(h($reply['body'])) ?></p>
-                              // </div>
-                              }
-
                           </div>
                         </div>
                         <div className="reply-show-btn text-right">
-                          <button className="btn btn-default btn-sm" data-comment-id={comment.id} onClick={this.scrollToCommentBox}>この回答に対してコメントする</button>
+                          <button className="btn btn-default btn-sm" data-comment-id={comment.id} onClick={this.scrollToCommentBox}><i className="icon-reply"></i> この回答に対してコメントする</button>
                         </div>
                         <hr />
                       </div>
@@ -245,7 +239,6 @@ export default class TopicsShow extends React.Component {
               })()}
               </div>
             </div>
-
 
             <div className="panel panel-default comment-form" id="comment-form">
               <div className="panel-heading">
