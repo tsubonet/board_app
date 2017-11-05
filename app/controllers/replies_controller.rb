@@ -8,12 +8,12 @@ class RepliesController < ApplicationController
       response_data = {
         reply: reply,
         status: 'success',
-        txt: ['回答を投稿しました！']
+        txt: ['回答を投稿しました！'],
       }
     else
       response_data = {
         status: 'error',
-        txt: reply.errors.full_messages
+        txt: reply.errors.full_messages,
       }
     end
     render json: response_data

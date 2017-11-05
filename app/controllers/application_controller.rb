@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def store_location
-    if request.get? && current_user.nil?
+    if request.get? && request.url.match(/\/auth\//).nil? && current_user.nil?
       session[:forwarding_url] = request.url
     end
   end
