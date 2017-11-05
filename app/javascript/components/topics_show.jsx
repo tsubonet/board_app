@@ -174,9 +174,9 @@ export default class TopicsShow extends React.Component {
             <p className="text-center marT20 marB20"><a className="btn btn-primary" onClick={this.scrollToCommentBox}>この質問に回答する</a></p>
             <div className="panel panel-default">
               <div className="panel-heading">
-                <strong><i className='icon-check-sign'></i>&nbsp;みんなの回答&nbsp;<span id="comment-count">{this.state.topic.comments.length}</span>件</strong>
+                <strong><i className='icon-check-sign'></i>&nbsp;みんなの回答&nbsp;<span>{this.state.topic.comments.length}</span>件</strong>
               </div>
-              <div className="panel-body" id="comment-area">
+              <div className="panel-body">
               {(() => {
                 if (this.state.topic.comments.length) {
                   return this.state.topic.comments.map((comment, i) => {
@@ -240,7 +240,7 @@ export default class TopicsShow extends React.Component {
               </div>
             </div>
 
-            <div className="panel panel-default comment-form" id="comment-form">
+            <div className="panel panel-default" id="comment-form">
               <div className="panel-heading">
                 <strong><i className='icon-check-sign'></i>&nbsp;回答する</strong>
               </div>
