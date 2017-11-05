@@ -19,6 +19,20 @@ class RepliesController < ApplicationController
     render json: response_data
   end
 
+
+  # DELETE /comments/1
+  # DELETE /comments/1.json
+  def destroy
+    reply = Reply.find(params[:id])
+    if reply.destroy
+      response_data = {
+        messages: ['回答を削除しました']
+      }
+      render json: response_data, status: :ok
+    end
+  end
+
+
   private
 
     def reply_params

@@ -19,6 +19,20 @@ class CommentsController < ApplicationController
     render json: response_data
   end
 
+
+  # DELETE /comments/1
+  # DELETE /comments/1.json
+  def destroy
+    comment = Comment.find(params[:id])
+    if comment.destroy
+      response_data = {
+        messages: ['質問を削除しました']
+      }
+      render json: response_data, status: :ok
+    end
+  end
+
+
   private
 
     def comment_params

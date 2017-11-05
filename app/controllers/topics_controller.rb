@@ -75,6 +75,19 @@ class TopicsController < ApplicationController
   end
 
 
+  # DELETE /topics/1
+  # DELETE /topics/1.json
+  def destroy
+    topic = Topic.find(params[:id])
+    if topic.destroy
+      response_data = {
+        messages: ['質問を削除しました']
+      }
+      render json: response_data, status: :ok
+    end
+  end
+
+
   # GET /topics/ranking_weekly.json
   def ranking_weekly
     ranking_topics = Topic.unscoped.ranking_weekly.limit(5)
