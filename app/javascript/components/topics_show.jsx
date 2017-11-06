@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import Link from './link';
 import Messages from "./messages";
 import AddLink from "./add_link";
-import { formatDate, formatPostString, sendPost, smoothScroll } from "./utils";
+import { formatDate, formatPostString, sendPost, sendDelete, smoothScroll } from "./utils";
 
 export default class TopicsShow extends React.Component {
 
@@ -24,9 +24,24 @@ export default class TopicsShow extends React.Component {
       },
     };
     this.handleSubmit        = this.handleSubmit.bind(this);
-    this.handleContentChange = this.handleContentChange.bind(this);
-    this.handleLinkSubmit    = this.handleLinkSubmit.bind(this);
+    this.handleChangeContent = this.handleChangeContent.bind(this);
+    this.handleInsertLink    = this.handleInsertLink.bind(this);
     this.scrollToCommentBox  = this.scrollToCommentBox.bind(this);
+    this.handleDeleteTopic   = this.handleDeleteTopic.bind(this);
+  }
+
+  handleDeleteTopic() {
+    sendDelete(`/topics/${this.state.topic.id}`)
+    .then((data) => {
+      if (data.status === 'success') {
+        this.context.transitTo('/', { pushState: true }, {
+          messages: {
+            status: 'success',
+            txt: data.txt
+          },
+        });
+      }
+    });
   }
 
   scrollToCommentBox(e) {
@@ -40,14 +55,14 @@ export default class TopicsShow extends React.Component {
     });
   }
 
-  handleContentChange(e) {
+  handleChangeContent(e) {
     this.setState({
       content: e.target.value,
       commentSelectPos: e.target.selectionStart,
     });
   }
 
-  handleLinkSubmit(linkString) {
+  handleInsertLink(linkString) {
     let content   = this.state.content;
     const len     = content.length;
     const pos     = this.state.selectPos;
@@ -72,7 +87,6 @@ export default class TopicsShow extends React.Component {
         content = content.replace(v, '');
       });
     }
-
     if (commentId === null) {
       data = {
         user_id: this.props.currentUser.id,
@@ -88,7 +102,6 @@ export default class TopicsShow extends React.Component {
       };
       url = '/replies';
     }
-
     sendPost(url, data)
     .then((data) => {
       if (data.status === 'success') {
@@ -146,7 +159,7 @@ export default class TopicsShow extends React.Component {
               {(() => {
                 if (this.state.topic.user.id === this.props.currentUser.id) {
                   return (
-                    <li className="right"><div className="btn btn-default topic-delete-btn"><i className="icon-remove-sign"></i>&nbsp;この質問を削除する</div></li>
+                    <li className="right"><div className="btn btn-default topic-delete-btn" onClick={this.handleDeleteTopic}><i className="icon-remove-sign"></i>&nbsp;この質問を削除する</div></li>
                   )
                 }
               })()}
@@ -259,11 +272,11 @@ export default class TopicsShow extends React.Component {
                     return (
                       <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
-                          <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" ref="comment_textarea" value={this.state.content} onChange={this.handleContentChange}></textarea>
+                          <textarea className="form-control" placeholder="回答を入力して下さい" rows="5" ref="comment_textarea" value={this.state.content} onChange={this.handleChangeContent}></textarea>
                           <AddLink
                             content={this.state.content}
                             selectPos={this.state.selectPos}
-                            onLinkSubmit={this.handleLinkSubmit}
+                            onLinkSubmit={this.handleInsertLink}
                           />
                         </div>
                         <div className="form-group text-center">

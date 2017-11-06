@@ -74,6 +74,16 @@ const sendGet = (url) => {
   }).then(response => response.data);
 }
 
+const sendDelete = (url) => {
+  return axios.delete(url, {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': document.getElementsByName('csrf-token').item(0).content,
+    },
+  }).then(response => response.data);
+}
+
 const modalWindow = {
   styles: {
     overlay: {
@@ -183,4 +193,4 @@ const smoothScroll = {
 };
 
 
-export { setUserId, formatDate, formatPostString, smoothScroll, modalWindow, sendPost, sendGet };
+export { formatDate, formatPostString, smoothScroll, modalWindow, sendPost, sendGet, sendDelete };
