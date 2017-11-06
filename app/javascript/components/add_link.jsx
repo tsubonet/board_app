@@ -1,5 +1,5 @@
 import React from 'react';
-import {  modalWindow } from "./utils";
+import { modalWindow, formatPostString } from "./utils";
 
 export default class AddLink extends React.Component {
 
@@ -25,8 +25,8 @@ export default class AddLink extends React.Component {
 
   handleSubmitModal() {
     this.handleCloseModal();
-    let linkText = this.refs.link_text.value;
-    let linkUrl  = this.refs.link_url.value;
+    let linkText = formatPostString(this.refs.link_text.value);
+    let linkUrl  = formatPostString(this.refs.link_url.value);
     if (!linkUrl || linkUrl.indexOf('http') === -1) return;
     if (!linkText) linkText = linkUrl;
     const linkString = `[${linkText}](${linkUrl})`;
