@@ -26,7 +26,8 @@ class CommentsController < ApplicationController
     comment = Comment.find(params[:id])
     if comment.destroy
       response_data = {
-        messages: ['質問を削除しました']
+        status: 'success',
+        txt: ['回答を削除しました'],
       }
       render json: response_data, status: :ok
     end

@@ -20,13 +20,14 @@ class RepliesController < ApplicationController
   end
 
 
-  # DELETE /comments/1
-  # DELETE /comments/1.json
+  # DELETE /replies/1
+  # DELETE /replies/1.json
   def destroy
     reply = Reply.find(params[:id])
     if reply.destroy
       response_data = {
-        messages: ['回答を削除しました']
+        status: 'success',
+        txt: ['回答を削除しました'],
       }
       render json: response_data, status: :ok
     end

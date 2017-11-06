@@ -28,6 +28,14 @@ export default class TopicsShow extends React.Component {
     this.handleInsertLink    = this.handleInsertLink.bind(this);
     this.scrollToCommentBox  = this.scrollToCommentBox.bind(this);
     this.handleDeleteTopic   = this.handleDeleteTopic.bind(this);
+    this.handleDeleteComment = this.handleDeleteComment.bind(this);
+    this.handleDeleteReply   = this.handleDeleteReply.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      topic: nextProps.topic,
+    });
   }
 
   handleDeleteTopic() {
@@ -36,8 +44,40 @@ export default class TopicsShow extends React.Component {
       if (data.status === 'success') {
         this.context.transitTo('/', { pushState: true }, {
           messages: {
-            status: 'success',
+            status: data.status,
             txt: data.txt
+          },
+        });
+      }
+    });
+  }
+
+  handleDeleteComment(e) {
+    const commentId = e.target.getAttribute('data-comment-id');
+    sendDelete(`/comments/${commentId}`)
+    .then((data) => {
+      if (data.status === 'success') {
+        this.context.transitTo(location.href, { pushState: true });
+        this.setState({
+          messages: {
+            status: data.status,
+            txt: data.txt,
+          },
+        });
+      }
+    });
+  }
+
+  handleDeleteReply(e) {
+    const replyId = e.target.getAttribute('data-reply-id');
+    sendDelete(`/replies/${replyId}`)
+    .then((data) => {
+      if (data.status === 'success') {
+        this.context.transitTo(location.href, { pushState: true });
+        this.setState({
+          messages: {
+            status: data.status,
+            txt: data.txt,
           },
         });
       }
@@ -203,7 +243,7 @@ export default class TopicsShow extends React.Component {
                           {(() => {
                             if (comment.user.id === this.props.currentUser.id) {
                               return (
-                                <li><a className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li>
+                                <li><a className="comment-delete-btn" onClick={this.handleDeleteComment} data-comment-id={comment.id}><i className="icon-remove-sign"></i> 削除</a></li>
                               )
                             }
                           })()}
@@ -224,7 +264,7 @@ export default class TopicsShow extends React.Component {
                                       {(() => {
                                         if (reply.user.id === this.props.currentUser.id) {
                                           return (
-                                            <li><a className="comment-delete-btn"><i className="icon-remove-sign"></i> 削除</a></li>
+                                            <li><a className="comment-delete-btn" onClick={this.handleDeleteReply} data-reply-id={reply.id}><i className="icon-remove-sign"></i> 削除</a></li>
                                           )
                                         }
                                       })()}
