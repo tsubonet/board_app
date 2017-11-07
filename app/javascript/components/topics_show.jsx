@@ -197,7 +197,7 @@ export default class TopicsShow extends React.Component {
               <li className="glay"><strong><i className="icon-time"></i>&nbsp;{topicUpdatedAt}</strong></li>
               <li className="glay"><strong className="text-right"><i className="icon-eye-open"></i>&nbsp;view&nbsp;:&nbsp;{this.state.topic.view_count}</strong></li>
               {(() => {
-                if (this.state.topic.user.id === this.props.currentUser.id) {
+                if (this.props.currentUser !== null && this.state.topic.user.id === this.props.currentUser.id) {
                   return (
                     <li className="right"><div className="btn btn-default topic-delete-btn" onClick={this.handleDeleteTopic}><i className="icon-remove-sign"></i>&nbsp;この質問を削除する</div></li>
                   )
@@ -241,7 +241,7 @@ export default class TopicsShow extends React.Component {
                           <li><i className="icon-user"></i> { comment.user.name === this.state.topic.user.name? 'トピ主': comment.user.name }さんからの回答</li>
                           <li><i className="icon-time"></i> { commentCreatedAt }</li>
                           {(() => {
-                            if (comment.user.id === this.props.currentUser.id) {
+                            if (this.props.currentUser !== null && comment.user.id === this.props.currentUser.id) {
                               return (
                                 <li><a className="comment-delete-btn" onClick={this.handleDeleteComment} data-comment-id={comment.id}><i className="icon-remove-sign"></i> 削除</a></li>
                               )
@@ -262,7 +262,7 @@ export default class TopicsShow extends React.Component {
                                       <li><i className="icon-user"></i> { reply.user.name === this.state.topic.user.name? 'トピ主': reply.user.name }さんからのコメント</li>
                                       <li><i className="icon-time"></i> {replyCreatedAt}</li>
                                       {(() => {
-                                        if (reply.user.id === this.props.currentUser.id) {
+                                        if (this.props.currentUser !== null && reply.user.id === this.props.currentUser.id) {
                                           return (
                                             <li><a className="comment-delete-btn" onClick={this.handleDeleteReply} data-reply-id={reply.id}><i className="icon-remove-sign"></i> 削除</a></li>
                                           )
