@@ -111,7 +111,7 @@ export default class TopicsNew extends React.Component {
               if (this.props.currentUser === null) {
                 return (
                   <div>
-                    <p>Twitterアカウントでログイン後、質問投稿画面に遷移します。<br />なお、Twitterのアカウント情報がログイン以外で使用されることは一切ございません。<br />（タイムラインに流れること等はありません）</p>
+                    <p>Twitterアカウントでログイン後、質問投稿画面に遷移します。<br />なお、Twitterのアカウント情報がログイン以外で使用されることは一切ございません。<br />（許可無くSNSへ投稿することはありません。）</p>
                     <div className="text-center">
                       <a href="/auth/twitter" className="btn btn-primary btn-lg"><i className="icon-twitter"></i> Twitterでログイン</a>
                     </div>
