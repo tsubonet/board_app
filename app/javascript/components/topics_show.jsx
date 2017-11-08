@@ -209,6 +209,7 @@ export default class TopicsShow extends React.Component {
           <div className="panel-body">
             <h1 className="h1-detail"><i className="icon-comment"></i>&nbsp;{this.state.topic.title}</h1>
             <p className="pre-line" dangerouslySetInnerHTML={{ __html: topicFormattedContent }}></p>
+            <p><button className="btn btn-default"><i className="icon-thumbs-up-alt"></i> {this.state.topic.likes.length}</button></p>
             <p className="glay">
               {(() => {
                 if (this.state.topic.tags.length) {

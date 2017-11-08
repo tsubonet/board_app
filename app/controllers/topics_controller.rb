@@ -69,7 +69,7 @@ class TopicsController < ApplicationController
     topic.update(views_count: topic.views_count + 1)
     render_for_react(
       props: {
-        topic: topic.as_json(:include => [{:comments => {:include => :replies}}, :tags]),
+        topic: topic.as_json(:include => [{:comments => {:include => :replies}}, :tags, :likes]),
       },
     )
   end
