@@ -86,6 +86,7 @@ export default class TopicsShow extends React.Component {
 
   scrollToCommentBox(e) {
     smoothScroll.scrollTo('comment-form');
+    if (this.props.currentUser === null) return;
     this.refs.comment_textarea.focus();
     const commentId = e.target.getAttribute('data-comment-id');
     if (!commentId) return;
