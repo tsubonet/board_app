@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20171105055905) do
   create_table "comments", force: :cascade do |t|
     t.string "content"
     t.string "user"
+    t.integer "likes_count", default: 0, null: false
     t.integer "topic_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -26,6 +27,7 @@ ActiveRecord::Schema.define(version: 20171105055905) do
   create_table "replies", force: :cascade do |t|
     t.string "content"
     t.string "user"
+    t.integer "likes_count", default: 0, null: false
     t.integer "comment_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -56,7 +58,8 @@ ActiveRecord::Schema.define(version: 20171105055905) do
     t.string "gender"
     t.string "user"
     t.integer "comments_count", default: 0, null: false
-    t.integer "view_count", default: 0, null: false
+    t.integer "likes_count", default: 0, null: false
+    t.integer "views_count", default: 0, null: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

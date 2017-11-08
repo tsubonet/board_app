@@ -45,7 +45,7 @@ export default class Topic extends React.Component {
           <p className="list-group-item-text">{this.props.topic.content}</p>
           <ul className="list-group-item-text list-inline detail-element">
             <li><small><i className="icon-comments"></i>&nbsp;回答&nbsp;:&nbsp;{this.props.topic.comments_count}</small></li>
-            <li><small><i className="icon-eye-open"></i>&nbsp;view&nbsp;:&nbsp;{this.props.topic.view_count}</small></li>
+            <li><small><i className="icon-eye-open"></i>&nbsp;views&nbsp;:&nbsp;{this.props.topic.views_count}</small></li>
             {(() => {
               if (this.props.topic.gender === 'male') {
                 return (<li><small><i className="icon-male"></i>&nbsp;男性</small></li>);

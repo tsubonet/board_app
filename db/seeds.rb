@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.create(provider: 'twitter', uid: 138662959, nickname: "test", image_url: "test", name: "dummyuser" )
+
 30.times do |i|
   Topic.create(user_id: 1, title: "タイトル #{i}", content: "本文 #{i}", gender: "man" )
 end

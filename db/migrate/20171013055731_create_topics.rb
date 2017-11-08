@@ -6,7 +6,8 @@ class CreateTopics < ActiveRecord::Migration[5.1]
       t.string :gender
       t.string :user
       t.integer :comments_count, default: 0, null: false
-      t.integer :view_count, default: 0, null: false
+      t.integer :likes_count, default: 0, null: false
+      t.integer :views_count, default: 0, null: false
       t.references :user, foreign_key: true
 
       t.timestamps
