@@ -6,11 +6,33 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create(provider: 'twitter', uid: 138662959, nickname: "test", image_url: "test", name: "dummyuser" )
 
-30.times do |i|
-  Topic.create(user_id: 1, title: "タイトル #{i}", content: "本文 #{i}", gender: "man" )
+3.times do |i|
+  i += 1
+  user = User.create(
+    provider: 'twitter',
+    uid: 138662959,
+    nickname: "user#{i}",
+    image_url: "test",
+    name: "user#{i}"
+  )
+
+  3.times do |j|
+    j += 1
+    Topic.create(
+      title: "タイトル #{j}",
+      content: "本文 #{j}",
+      gender: "man",
+      user_id: user.id
+    )
+
+    Like.create(
+      topic_id: i,
+      user_id: j
+    )
+  end
 end
+
 
 
 Tag.create([
