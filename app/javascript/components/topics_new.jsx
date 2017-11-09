@@ -101,7 +101,7 @@ export default class TopicsNew extends React.Component {
     return (
       <div>
         <Helmet>
-          <title>New</title>
+          <title>性の悩みについて質問する - 性のお悩み相談室</title>
         </Helmet>
         <Messages messages={this.state.messages} />
         <div className="panel panel-default">

@@ -323,7 +323,7 @@ export default class TopicsShow extends React.Component {
     return (
       <div>
         <Helmet>
-          <title>Show</title>
+          <title>{this.state.topic.title} - 性のお悩み相談室</title>
         </Helmet>
         <Messages messages={this.state.messages} />
         <div className="panel panel-default">

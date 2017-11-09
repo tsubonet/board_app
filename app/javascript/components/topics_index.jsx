@@ -67,7 +67,7 @@ export default class TopicsIndex extends React.Component {
     return (
       <div>
         <Helmet>
-          <title>Index</title>
+          <title>{heading} - 性のお悩み相談室</title>
         </Helmet>
         <Messages messages={this.state.messages} />
         <div className="panel panel-default">
