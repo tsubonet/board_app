@@ -44,7 +44,6 @@ export default class TopicsShow extends React.Component {
     });
   }
 
-
   handleLikeCreateTopic() {
     const data = {
       user_id: this.props.currentUser.id,
@@ -84,7 +83,7 @@ export default class TopicsShow extends React.Component {
 
   handleLikeCreateReply(e) {
     const commentId = e.currentTarget.getAttribute('data-comment-id');
-    const replyId = e.currentTarget.getAttribute('data-reply-id');
+    const replyId   = e.currentTarget.getAttribute('data-reply-id');
     const data = {
       user_id: this.props.currentUser.id,
       reply_id: replyId,
@@ -122,7 +121,7 @@ export default class TopicsShow extends React.Component {
   }
 
   handleLikeDestroyComment(e) {
-    const likeId = e.currentTarget.getAttribute('data-like-id');
+    const likeId    = e.currentTarget.getAttribute('data-like-id');
     const commentId = e.currentTarget.getAttribute('data-comment-id');
     sendDelete(`/likes/${likeId}`)
     .then((data) => {
@@ -142,9 +141,9 @@ export default class TopicsShow extends React.Component {
   }
 
   handleLikeDestroyReply(e) {
-    const likeId = e.currentTarget.getAttribute('data-like-id');
+    const likeId    = e.currentTarget.getAttribute('data-like-id');
     const commentId = e.currentTarget.getAttribute('data-comment-id');
-    const replyId = e.currentTarget.getAttribute('data-reply-id');
+    const replyId   = e.currentTarget.getAttribute('data-reply-id');
     sendDelete(`/likes/${likeId}`)
     .then((data) => {
       let topic = Object.assign({}, this.state.topic);
@@ -184,8 +183,13 @@ export default class TopicsShow extends React.Component {
     sendDelete(`/comments/${commentId}`)
     .then((data) => {
       if (data.status === 'success') {
-        this.context.transitTo(location.href, { pushState: true });
+        let topic = Object.assign({}, this.state.topic);
+        const index = topic.comments.findIndex((comment) => {
+          return comment.id === data.comment.id;
+        });
+        topic.comments.splice(index, 1);
         this.setState({
+          topic: topic,
           messages: {
             status: data.status,
             txt: data.txt,
@@ -196,12 +200,22 @@ export default class TopicsShow extends React.Component {
   }
 
   handleDeleteReply(e) {
-    const replyId = e.target.getAttribute('data-reply-id');
+    const replyId   = e.target.getAttribute('data-reply-id');
+    const commentId = e.target.getAttribute('data-comment-id');
     sendDelete(`/replies/${replyId}`)
     .then((data) => {
       if (data.status === 'success') {
-        this.context.transitTo(location.href, { pushState: true });
+        //this.context.transitTo(location.href, { pushState: true });
+        let topic = Object.assign({}, this.state.topic);
+        const commentIndex = topic.comments.findIndex((comment) => {
+          return comment.id === parseInt(commentId);
+        });
+        const index = topic.comments[commentIndex].replies.findIndex((reply) => {
+          return reply.id === parseInt(replyId);
+        });
+        topic.comments[commentIndex].replies.splice(index, 1);
         this.setState({
+          topic: topic,
           messages: {
             status: data.status,
             txt: data.txt,
@@ -425,7 +439,7 @@ export default class TopicsShow extends React.Component {
                                       {(() => {
                                         if (this.props.currentUser !== null && reply.user.id === this.props.currentUser.id) {
                                           return (
-                                            <li><a className="comment-delete-btn" onClick={this.handleDeleteReply} data-reply-id={reply.id}><i className="icon-remove-sign"></i> 削除</a></li>
+                                            <li><a className="comment-delete-btn" onClick={this.handleDeleteReply} data-reply-id={reply.id} data-comment-id={comment.id}><i className="icon-remove-sign"></i> 削除</a></li>
                                           )
                                         }
                                       })()}
