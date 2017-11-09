@@ -30,11 +30,41 @@ export default class TopicsShow extends React.Component {
     this.handleDeleteTopic   = this.handleDeleteTopic.bind(this);
     this.handleDeleteComment = this.handleDeleteComment.bind(this);
     this.handleDeleteReply   = this.handleDeleteReply.bind(this);
+    this.handleLikeCreate    = this.handleLikeCreate.bind(this);
+    this.handleLikeDestroy   = this.handleLikeDestroy.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       topic: nextProps.topic,
+    });
+  }
+
+  handleLikeCreate() {
+    const data = {
+      topic_id: this.state.topic.id,
+      user_id: this.props.currentUser.id
+    }
+    sendPost(`/likes`, data)
+    .then((data) => {
+      let topic = Object.assign({}, this.state.topic);
+      topic.likes.push(data.like);
+      this.setState({
+        topic: topic,
+      });
+    });
+  }
+
+  handleLikeDestroy(e) {
+    const likeId = e.target.getAttribute('data-like-id');
+    sendDelete(`/likes/${likeId}`)
+    .then((data) => {
+      let topic = Object.assign({}, this.state.topic);
+      const index = topic.likes.indexOf(data.like);
+      topic.likes.splice(index, 1);
+      this.setState({
+        topic: topic,
+      });
     });
   }
 
@@ -209,7 +239,22 @@ export default class TopicsShow extends React.Component {
           <div className="panel-body">
             <h1 className="h1-detail"><i className="icon-comment"></i>&nbsp;{this.state.topic.title}</h1>
             <p className="pre-line" dangerouslySetInnerHTML={{ __html: topicFormattedContent }}></p>
-            <p><button className="btn btn-default"><i className="icon-thumbs-up-alt"></i> {this.state.topic.likes.length}</button></p>
+            <p>
+              {(() => {
+                if (this.props.currentUser === null) {
+                  return <a className="btn btn-default" href="/auth/twitter"><i className="icon-thumbs-up-alt"></i> {this.state.topic.likes.length}</a>;
+                } else {
+                  const existLike = this.state.topic.likes.find((like) => {
+                    return like.user_id === this.props.currentUser.id;
+                  });
+                  if (existLike) {
+                    return <button className="btn btn-info" onClick={this.handleLikeDestroy} data-like-id={existLike.id}><i className="icon-thumbs-up"></i> {this.state.topic.likes.length}</button>;
+                  } else {
+                    return <button className="btn btn-default" onClick={this.handleLikeCreate}><i className="icon-thumbs-up-alt"></i> {this.state.topic.likes.length}</button>;
+                  }
+                }
+              })()}
+            </p>
             <p className="glay">
               {(() => {
                 if (this.state.topic.tags.length) {
