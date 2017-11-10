@@ -33,12 +33,6 @@ export default class TopicsShow extends React.Component {
     this.handleDeleteReply   = this.handleDeleteReply.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      topic: nextProps.topic,
-    });
-  }
-
   handleDeleteTopic() {
     sendDelete(`/topics/${this.state.topic.id}`)
     .then((data) => {
@@ -87,8 +81,7 @@ export default class TopicsShow extends React.Component {
         const index = topic.comments[commentIndex].replies.findIndex((reply) => {
           return reply.id === parseInt(replyId);
         });
-        topic.comments[commentIndex].r
-        eplies.splice(index, 1);
+        topic.comments[commentIndex].replies.splice(index, 1);
         this.setState({
           topic: topic,
           messages: {
