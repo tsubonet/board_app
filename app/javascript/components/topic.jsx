@@ -53,6 +53,7 @@ export default class Topic extends React.Component {
                 return (<li><small><i className="icon-female"></i>&nbsp;女性</small></li>);
               }
             })()}
+            <li><small><i className="icon-thumbs-up-alt"></i>&nbsp;{this.props.topic.likes.length}</small></li>
             <li><small><i className="icon-time"></i>&nbsp;{time_diff}</small></li>
           </ul>
           <div className="entry-arrow"><i className="icon-double-angle-right"></i></div>
