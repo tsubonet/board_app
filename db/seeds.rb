@@ -27,8 +27,9 @@
     )
 
     Like.create(
-      topic_id: i,
-      user_id: j
+      post_id: i,
+      user_id: j,
+      status: "topic",
     )
   end
 end

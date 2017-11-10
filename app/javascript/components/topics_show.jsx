@@ -47,7 +47,8 @@ export default class TopicsShow extends React.Component {
   handleLikeCreateTopic() {
     const data = {
       user_id: this.props.currentUser.id,
-      topic_id: this.state.topic.id,
+      post_id: this.state.topic.id,
+      status: 'topic',
     };
     sendPost(`/likes`, data)
     .then((data) => {
@@ -63,7 +64,8 @@ export default class TopicsShow extends React.Component {
     const commentId = e.currentTarget.getAttribute('data-comment-id');
     const data = {
       user_id: this.props.currentUser.id,
-      comment_id: commentId,
+      post_id: commentId,
+      status: 'comment',
     };
     sendPost(`/likes`, data)
     .then((data) => {
@@ -86,7 +88,8 @@ export default class TopicsShow extends React.Component {
     const replyId   = e.currentTarget.getAttribute('data-reply-id');
     const data = {
       user_id: this.props.currentUser.id,
-      reply_id: replyId,
+      post_id: replyId,
+      status: 'reply',
     };
     sendPost(`/likes`, data)
     .then((data) => {

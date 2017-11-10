@@ -4,8 +4,7 @@ class Topic < ApplicationRecord
   has_many :comments, dependent: :destroy
   belongs_to :user
 
-  has_many :likes, dependent: :destroy
-  has_many :liked_users, through: :likes, source: :user
+  has_many :likes, -> { where(status: 'topic') }, foreign_key: :post_id, dependent: :destroy
 
   default_scope           -> { order(updated_at: :desc) }
   scope :ranking_weekly,  -> { where('created_at > ?', 1.weeks.ago).order(views_count: :desc) }
