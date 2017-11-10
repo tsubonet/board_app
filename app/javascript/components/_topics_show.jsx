@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet";
 import Link from './link';
 import Messages from "./messages";
 import AddLink from "./add_link";
-import LinkButton from "./like_button";
 import { formatDate, formatPostString, sendPost, sendDelete, smoothScroll } from "./utils";
 
 export default class TopicsShow extends React.Component {
@@ -31,11 +30,140 @@ export default class TopicsShow extends React.Component {
     this.handleDeleteTopic   = this.handleDeleteTopic.bind(this);
     this.handleDeleteComment = this.handleDeleteComment.bind(this);
     this.handleDeleteReply   = this.handleDeleteReply.bind(this);
+    this.handleLikeCreateTopic   = this.handleLikeCreateTopic.bind(this);
+    this.handleLikeCreateComment = this.handleLikeCreateComment.bind(this);
+    this.handleLikeCreateReply   = this.handleLikeCreateReply.bind(this);
+    this.handleLikeDestroyTopic   = this.handleLikeDestroyTopic.bind(this);
+    this.handleLikeDestroyComment = this.handleLikeDestroyComment.bind(this);
+    this.handleLikeDestroyReply   = this.handleLikeDestroyReply.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       topic: nextProps.topic,
+    });
+  }
+
+  handleLikeCreateTopic() {
+    const data = {
+      user_id: this.props.currentUser.id,
+      post_id: this.state.topic.id,
+      status: 'topic',
+    };
+    sendPost(`/likes`, data)
+    .then((data) => {
+      let topic = Object.assign({}, this.state.topic);
+      topic.likes.push(data.like);
+      this.setState({
+        topic: topic,
+      });
+    });
+  }
+
+  handleLikeCreateComment(e) {
+    const commentId = e.currentTarget.getAttribute('data-comment-id');
+    const data = {
+      user_id: this.props.currentUser.id,
+      post_id: commentId,
+      status: 'comment',
+    };
+    sendPost(`/likes`, data)
+    .then((data) => {
+      let topic = Object.assign({}, this.state.topic);
+      const comments = topic.comments.map((v) => {
+        if (v.id === parseInt(commentId)){
+          v.likes.push(data.like);
+        }
+        return v;
+      });
+      topic.comments = comments;
+      this.setState({
+        topic: topic,
+      });
+    });
+  }
+
+  handleLikeCreateReply(e) {
+    const commentId = e.currentTarget.getAttribute('data-comment-id');
+    const replyId   = e.currentTarget.getAttribute('data-reply-id');
+    const data = {
+      user_id: this.props.currentUser.id,
+      post_id: replyId,
+      status: 'reply',
+    };
+    sendPost(`/likes`, data)
+    .then((data) => {
+      let topic = Object.assign({}, this.state.topic);
+      const index = topic.comments.findIndex((comment) => {
+        return comment.id === parseInt(commentId);
+      });
+      const replies = topic.comments[index].replies.map((v) => {
+        if (v.id === parseInt(replyId)){
+          v.likes.push(data.like);
+        }
+        return v;
+      });
+      topic.comments[index].replies = replies;
+      this.setState({
+        topic: topic,
+      });
+    });
+  }
+
+  handleLikeDestroyTopic(e) {
+    const likeId = e.currentTarget.getAttribute('data-like-id');
+    sendDelete(`/likes/${likeId}`)
+    .then((data) => {
+      let topic = Object.assign({}, this.state.topic);
+      const index = topic.likes.indexOf(data.like);
+      topic.likes.splice(index, 1);
+      this.setState({
+        topic: topic,
+      });
+    });
+  }
+
+  handleLikeDestroyComment(e) {
+    const likeId    = e.currentTarget.getAttribute('data-like-id');
+    const commentId = e.currentTarget.getAttribute('data-comment-id');
+    sendDelete(`/likes/${likeId}`)
+    .then((data) => {
+      let topic = Object.assign({}, this.state.topic);
+      const comments = topic.comments.map((v) => {
+        if (v.id === parseInt(commentId)){
+          const index = v.likes.indexOf(data.like);
+          v.likes.splice(index, 1);
+        }
+        return v;
+      });
+      topic.comments = comments;
+      this.setState({
+        topic: topic,
+      });
+    });
+  }
+
+  handleLikeDestroyReply(e) {
+    const likeId    = e.currentTarget.getAttribute('data-like-id');
+    const commentId = e.currentTarget.getAttribute('data-comment-id');
+    const replyId   = e.currentTarget.getAttribute('data-reply-id');
+    sendDelete(`/likes/${likeId}`)
+    .then((data) => {
+      let topic = Object.assign({}, this.state.topic);
+      const commentIndex = topic.comments.findIndex((comment) => {
+        return comment.id === parseInt(commentId);
+      });
+      const replies = topic.comments[commentIndex].replies.map((v) => {
+        if (v.id === parseInt(replyId)){
+          const index = v.likes.indexOf(data.like);
+          v.likes.splice(index, 1);
+        }
+        return v;
+      });
+      topic.comments[commentIndex].replies = replies;
+      this.setState({
+        topic: topic,
+      });
     });
   }
 
@@ -80,6 +208,7 @@ export default class TopicsShow extends React.Component {
     sendDelete(`/replies/${replyId}`)
     .then((data) => {
       if (data.status === 'success') {
+        //this.context.transitTo(location.href, { pushState: true });
         let topic = Object.assign({}, this.state.topic);
         const commentIndex = topic.comments.findIndex((comment) => {
           return comment.id === parseInt(commentId);
@@ -87,8 +216,7 @@ export default class TopicsShow extends React.Component {
         const index = topic.comments[commentIndex].replies.findIndex((reply) => {
           return reply.id === parseInt(replyId);
         });
-        topic.comments[commentIndex].r
-        eplies.splice(index, 1);
+        topic.comments[commentIndex].replies.splice(index, 1);
         this.setState({
           topic: topic,
           messages: {
@@ -226,11 +354,22 @@ export default class TopicsShow extends React.Component {
           <div className="panel-body">
             <h1 className="h1-detail"><i className="icon-comment"></i>&nbsp;{this.state.topic.title}</h1>
             <p className="pre-line" dangerouslySetInnerHTML={{ __html: topicFormattedContent }}></p>
-            <LinkButton
-              status = "topic"
-              model = {this.state.topic}
-              currentUser = {this.props.currentUser}
-            />
+            <p>
+              {(() => {
+                if (this.props.currentUser === null) {
+                  return <a className="btn btn-default" href="/auth/twitter"><i className="icon-thumbs-up-alt"></i> {this.state.topic.likes.length}</a>;
+                } else {
+                  const existLike = this.state.topic.likes.find((like) => {
+                    return like.user_id === this.props.currentUser.id;
+                  });
+                  if (existLike) {
+                    return <button className="btn btn-info" onClick={this.handleLikeDestroyTopic} data-like-id={existLike.id}><i className="icon-thumbs-up"></i> {this.state.topic.likes.length}</button>;
+                  } else {
+                    return <button className="btn btn-default" onClick={this.handleLikeCreateTopic}><i className="icon-thumbs-up-alt"></i> {this.state.topic.likes.length}</button>;
+                  }
+                }
+              })()}
+            </p>
             <p className="glay">
               {(() => {
                 if (this.state.topic.tags.length) {
@@ -272,11 +411,22 @@ export default class TopicsShow extends React.Component {
                           })()}
                         </ul>
                         <p className="pre-line" dangerouslySetInnerHTML={{ __html: commentFormattedContent }}></p>
-                        <LinkButton
-                          status = "comment"
-                          model = {comment}
-                          currentUser = {this.props.currentUser}
-                        />
+                        <p>
+                          {(() => {
+                            if (this.props.currentUser === null) {
+                              return <a className="btn btn-default" href="/auth/twitter"><i className="icon-thumbs-up-alt"></i> {comment.likes.length}</a>;
+                            } else {
+                              const existLike = comment.likes.find((like) => {
+                                return like.user_id === this.props.currentUser.id;
+                              });
+                              if (existLike) {
+                                return <button className="btn btn-info" onClick={this.handleLikeDestroyComment} data-comment-id={comment.id} data-like-id={existLike.id}><i className="icon-thumbs-up"></i> {comment.likes.length}</button>;
+                              } else {
+                                return <button className="btn btn-default" onClick={this.handleLikeCreateComment} data-comment-id={comment.id}><i className="icon-thumbs-up-alt"></i> {comment.likes.length}</button>;
+                              }
+                            }
+                          })()}
+                        </p>
                         <div className="reply-area-wrap">
                           <div className="reply-area">
                           {(() => {
@@ -298,11 +448,22 @@ export default class TopicsShow extends React.Component {
                                       })()}
                                     </ul>
                                     <p className="pre-line" dangerouslySetInnerHTML={{ __html: replyFormattedContent }}></p>
-                                    <LinkButton
-                                      status = "reply"
-                                      model = {reply}
-                                      currentUser = {this.props.currentUser}
-                                    />
+                                    <p>
+                                      {(() => {
+                                        if (this.props.currentUser === null) {
+                                          return <a className="btn btn-default" href="/auth/twitter"><i className="icon-thumbs-up-alt"></i> {reply.likes.length}</a>;
+                                        } else {
+                                          const existLike = reply.likes.find((like) => {
+                                            return like.user_id === this.props.currentUser.id;
+                                          });
+                                          if (existLike) {
+                                            return <button className="btn btn-info" onClick={this.handleLikeDestroyReply} data-comment-id={comment.id} data-reply-id={reply.id} data-like-id={existLike.id}><i className="icon-thumbs-up"></i> {reply.likes.length}</button>;
+                                          } else {
+                                            return <button className="btn btn-default" onClick={this.handleLikeCreateReply} data-comment-id={comment.id} data-reply-id={reply.id}><i className="icon-thumbs-up-alt"></i> {reply.likes.length}</button>;
+                                          }
+                                        }
+                                      })()}
+                                    </p>
                                   </div>
                                 )
                               });
