@@ -143,6 +143,11 @@ class TopicsController < ApplicationController
           filter: 'tag',
           query: params[:tag],
         }
+      elsif params[:order] == 'mine' && !current_user.nil?
+        {
+          model: current_user.topics,
+          filter: 'mine',
+        }
       elsif params[:order] == 'new'
         {
           model: Topic.no_comment,
