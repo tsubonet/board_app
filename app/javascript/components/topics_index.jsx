@@ -55,6 +55,10 @@ export default class TopicsIndex extends React.Component {
       param = `&tag=${this.props.query}`;
       heading = `カテゴリー「${tag.name}」の投稿一覧 ${tag.topic_tags_count}件`;
 
+    } else if (this.props.filter == 'mine') {
+      param = `&order=mine`;
+      heading = `あなたの投稿一覧`;
+
     } else if (this.props.filter == 'new') {
       param = `&order=new`;
       heading = `回答募集中の投稿一覧 ${this.props.noCommentsCount}件`;
