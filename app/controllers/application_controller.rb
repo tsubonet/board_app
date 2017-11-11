@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ranking_topics
-    Topic.unscoped.ranking_weekly.includes(:user).limit(5)
+    Topic.ranking_weekly.includes(:user).limit(5)
   end
 
   def store_location

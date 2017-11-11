@@ -1,9 +1,7 @@
 class User < ApplicationRecord
-
   has_many :topics, dependent: :destroy
-
   has_many :likes, dependent: :destroy
-  has_many :liked_topics, through: :likes, source: :topic
+  #has_many :liked_topics, through: :likes, source: :topic
 
   def self.find_or_create_from_auth(auth)
     provider  = auth[:provider]

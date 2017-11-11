@@ -108,21 +108,21 @@ class TopicsController < ApplicationController
 
   # GET /topics/ranking_weekly.json
   def ranking_weekly
-    ranking_topics = Topic.unscoped.ranking_weekly.limit(5)
+    ranking_topics = Topic.ranking_weekly.limit(5)
     render json: ranking_topics, status: :ok
   end
 
 
   # GET /topics/ranking_monthly.json
   def ranking_monthly
-    ranking_topics = Topic.unscoped.ranking_monthly.limit(5)
+    ranking_topics = Topic.ranking_monthly.limit(5)
     render json: ranking_topics, status: :ok
   end
 
 
   # GET /topics/ranking_all.json
   def ranking_all
-    ranking_topics = Topic.unscoped.ranking_all.limit(5)
+    ranking_topics = Topic.ranking_all.limit(5)
     render json: ranking_topics, status: :ok
   end
 
