@@ -70,7 +70,11 @@ section > .container {
     transition: all 0.2s ease-out;
   }
 }
-
+@media (min-width: 768px) {
+  .nav>li.sp-only {
+    display: none;
+  }
+}
 
 /* navbar */
 .navbar-default .navbar-brand,
