@@ -99,7 +99,7 @@ class TopicsController < ApplicationController
     if topic.destroy
       response_data = {
         status: 'success',
-        txt: ['質問を削除しました'],
+        txt: ['質問を削除しました！'],
       }
       render json: response_data, status: :ok
     end

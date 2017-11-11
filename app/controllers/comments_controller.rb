@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
       response_data = {
         comment: comment,
         status: 'success',
-        txt: ['回答を削除しました'],
+        txt: ['回答を削除しました！'],
       }
       render json: response_data
     end

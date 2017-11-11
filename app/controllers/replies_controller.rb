@@ -28,7 +28,7 @@ class RepliesController < ApplicationController
       response_data = {
         reply: reply,
         status: 'success',
-        txt: ['回答を削除しました'],
+        txt: ['回答を削除しました！'],
       }
       render json: response_data
     end
