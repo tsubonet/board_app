@@ -19,7 +19,7 @@ class TopicsController < ApplicationController
 
     render_for_react(
       props: {
-        topics: target[:model].page(current_page).per(page_per).as_json(:include => :likes),
+        topics: target[:model].includes([:user, :likes]).page(current_page).per(page_per).as_json(:include => :likes),
         filter: target[:filter],
         query: target[:query],
         pager: {
