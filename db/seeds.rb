@@ -26,11 +26,11 @@
       user_id: user.id
     )
 
-    Like.create(
-      post_id: i,
-      user_id: j,
-      status: "topic",
-    )
+    # Like.create(
+    #   post_id: i,
+    #   user_id: j,
+    #   status: "topic",
+    # )
   end
 end
 
