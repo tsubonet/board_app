@@ -219,10 +219,13 @@ header .input-group {
 /* ************** add style ************* */
 .wrap-checkbox {
   display: inline-block;
-  margin-right: 5px;
+  margin-right: 15px;
   margin-top: 0px;
   margin-bottom: 0px;
   &+.checkbox { margin-top: 0px; }
+  input[type="checkbox"] {
+    margin-left: -15px;
+  }
 }
 
 /* ************** detail style ************* */

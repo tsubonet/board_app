@@ -346,7 +346,7 @@ export default class TopicsShow extends React.Component {
                           />
                         </div>
                         <div className="form-group text-center">
-                          <input className="btn btn-primary comment-btn" type="submit" value="この質問に回答する" />
+                          <input className="btn btn-primary comment-btn" type="submit" value="投稿する" />
                         </div>
                       </form>
                     )
