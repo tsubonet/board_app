@@ -83,12 +83,12 @@ export default class Header extends React.Component {
           <div className="collapse navbar-collapse target toggle-drawer" ref="toggle_drawer" style={this.state.isOpen? openStyle: null}>
             <ul className="nav navbar-nav">
               <li className="sp-only"><Link href='/topics/new'><i className="icon-comment"></i>&nbsp;質問する</Link></li>
+              <li><Link href='/?order=new'><i className="icon-comment"></i>&nbsp;回答募集&nbsp;<span className="badge">{this.props.noCommentsCount}</span></Link></li>
               {(() => {
                 if (this.props.currentUser !== null) {
-                  return <li><Link href='/?order=mine'><i className="icon-comment"></i>&nbsp;あなたの投稿</Link></li>;
+                  return <li><Link href='/?order=mine'><i className="icon-user"></i>「{this.props.currentUser.name}」さん</Link></li>;
                 }
               })()}
-              <li><Link href='/?order=new'><i className="icon-user"></i>&nbsp;回答募集&nbsp;<span className="badge">{this.props.noCommentsCount}</span></Link></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li>

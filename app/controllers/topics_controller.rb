@@ -145,7 +145,8 @@ class TopicsController < ApplicationController
         }
       elsif params[:order] == 'mine' && !current_user.nil?
         {
-          model: current_user.topics,
+          #model: current_user.topics,
+          model: Topic.includes(:comments => :replies).where("topics.user_id = :id or comments.user_id = :id or replies.user_id = :id", {id: current_user.id}).references(:comments, :replies),
           filter: 'mine',
         }
       elsif params[:order] == 'new'
