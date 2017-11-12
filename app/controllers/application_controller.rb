@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def no_comments_count
-    Topic.no_comment.count
+    Topic.no_comments.count
   end
 
   def tags

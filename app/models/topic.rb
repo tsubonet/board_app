@@ -11,7 +11,7 @@ class Topic < ApplicationRecord
   scope :ranking_weekly,  -> { unscoped.where('created_at > ?', 1.weeks.ago).order(impressions_count: :desc) }
   scope :ranking_monthly, -> { unscoped.where('created_at > ?', 1.month.ago).order(impressions_count: :desc) }
   scope :ranking_all,     -> { unscoped.order(impressions_count: :desc) }
-  scope :no_comment,      -> { where('comments_count = ?', '0') }
+  scope :no_comments,      -> { where('comments_count = ?', '0') }
 
   validates :gender, presence: true
   validates :title, presence: true, length: { maximum: 50 }

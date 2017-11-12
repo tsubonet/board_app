@@ -150,7 +150,7 @@ class TopicsController < ApplicationController
         }
       elsif params[:order] == 'new'
         {
-          model: Topic.no_comment,
+          model: Topic.no_comments,
           filter: 'new',
         }
       else
