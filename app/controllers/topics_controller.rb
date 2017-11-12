@@ -64,7 +64,7 @@ class TopicsController < ApplicationController
   # GET /topics/1
   # GET /topics/1.json
   def show
-    topic = Topic.find(params[:id])
+    topic = Topic.includes([:user, :likes, {:comments => [{:replies => [:likes, :user]}, :likes, :user]}]).find(params[:id])
     topic.record_timestamps = false
     topic.update(views_count: topic.views_count + 1)
     render_for_react(
@@ -130,7 +130,6 @@ class TopicsController < ApplicationController
   private
 
     def filter_topic
-
       if params[:query].present?
         {
           model: Topic.includes(:comments => :replies).where("topics.title like :keyword or topics.content like :keyword or comments.content like :keyword or replies.content like :keyword", {keyword: "%#{params[:query]}%"}).references(:comments, :replies),
@@ -162,9 +161,8 @@ class TopicsController < ApplicationController
       end
     end
 
-
     def topic_params
-      params.permit(:user_id, :gender, :title, :content, { :tag_ids => [] })
+      params.permit(:user_id, :gender, :title, :content, {:tag_ids => []})
     end
 
 
