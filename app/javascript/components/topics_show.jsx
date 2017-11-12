@@ -206,7 +206,7 @@ export default class TopicsShow extends React.Component {
                 }
               })()}
               <li className="glay"><strong><i className="icon-time"></i>&nbsp;{topicUpdatedAt}</strong></li>
-              <li className="glay"><strong className="text-right"><i className="icon-eye-open"></i>&nbsp;views&nbsp;:&nbsp;{this.state.topic.views_count}</strong></li>
+              <li className="glay"><strong className="text-right"><i className="icon-eye-open"></i>&nbsp;views&nbsp;:&nbsp;{this.state.topic.impressions_count}</strong></li>
               {(() => {
                 if (this.props.currentUser !== null && this.state.topic.user.id === this.props.currentUser.id) {
                   return (

@@ -1,5 +1,7 @@
 class TopicsController < ApplicationController
 
+  impressionist :actions => [:show]
+
   # GET /topics
   # GET /topics.json
   def index
@@ -65,8 +67,6 @@ class TopicsController < ApplicationController
   # GET /topics/1.json
   def show
     topic = Topic.includes([:user, :likes, {:comments => [{:replies => [:likes, :user]}, :likes, :user]}]).find(params[:id])
-    topic.record_timestamps = false
-    topic.update(views_count: topic.views_count + 1)
     render_for_react(
       props: {
         topic: topic.as_json(:include => [

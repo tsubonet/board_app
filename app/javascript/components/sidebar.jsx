@@ -71,7 +71,7 @@ export default class SideBar extends React.Component {
                   <p className="list-group-item-text">{topic.content}</p>
                   <ul className="list-group-item-text list-inline side-element">
                     <li><small><i className="icon-comments"></i> 回答 : {topic.comments_count}</small></li>
-                    <li><small><i className="icon-eye-open"></i> views : {topic.views_count}</small></li>
+                    <li><small><i className="icon-eye-open"></i> views : {topic.impressions_count}</small></li>
                     {(() => {
                       if (topic.gender === 'male') {
                         return (<li><small><i className="icon-male"></i>&nbsp;男性</small></li>);
