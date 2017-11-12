@@ -95,7 +95,7 @@ const modalWindow = {
       left: '0',
       right: '0',
       width: '100%',
-      zIndex: '1',
+      zIndex: '10000',
     },
     contentWrapper: {
       display: 'flex',
