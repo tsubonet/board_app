@@ -33,6 +33,12 @@ export default class TopicsShow extends React.Component {
     this.handleDeleteReply   = this.handleDeleteReply.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      topic: nextProps.topic,
+    });
+  }
+
   handleDeleteTopic() {
     sendDelete(`/topics/${this.state.topic.id}`)
     .then((data) => {
