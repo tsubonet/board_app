@@ -108,14 +108,30 @@ class TopicsController < ApplicationController
 
   # GET /topics/ranking_weekly.json
   def ranking_weekly
-    ranking_topics = Topic.ranking_weekly.includes(:user).limit(5)
+    #ranking_topics = Topic.ranking_weekly.includes(:user).limit(5)
+    ranking_hash = Impression.where("created_at >= ?", 1.hours.ago).group(:impressionable_id).order('count_all desc').limit(5).count
+    ids = ranking_hash.keys
+    ranking_topics = Topic.includes(:user).where(:id => ids)
+    ranking_topics = ids.map {|id| ranking_topics.detect {|topic| topic.id == id } }
+    ranking_topics = ranking_topics.map.with_index do |topic, index|
+      topic.impressions_count = ranking_hash[ids[index]]
+      topic
+    end
     render json: ranking_topics, status: :ok
   end
 
 
   # GET /topics/ranking_monthly.json
   def ranking_monthly
-    ranking_topics = Topic.ranking_monthly.includes(:user).limit(5)
+    #ranking_topics = Topic.ranking_monthly.includes(:user).limit(5)
+    ranking_hash = Impression.where("created_at >= ?", 1.months.ago).group(:impressionable_id).order('count_all desc').limit(5).count
+    ids = ranking_hash.keys
+    ranking_topics = Topic.includes(:user).where(:id => ids)
+    ranking_topics = ids.map {|id| ranking_topics.detect {|topic| topic.id == id } }
+    ranking_topics = ranking_topics.map.with_index do |topic, index|
+      topic.impressions_count = ranking_hash[ids[index]]
+      topic
+    end
     render json: ranking_topics, status: :ok
   end
 

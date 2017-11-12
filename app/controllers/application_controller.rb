@@ -22,7 +22,15 @@ class ApplicationController < ActionController::Base
   end
 
   def ranking_topics
-    Topic.ranking_weekly.includes(:user).limit(5)
+    #Topic.ranking_weekly.includes(:user).limit(5)
+    ranking_hash = Impression.where("created_at >= ?", 1.hours.ago).group(:impressionable_id).order('count_all desc').limit(5).count
+    ids = ranking_hash.keys
+    ranking_topics = Topic.includes(:user).where(:id => ids)
+    ranking_topics = ids.map {|id| ranking_topics.detect {|topic| topic.id == id } }
+    ranking_topics = ranking_topics.map.with_index do |topic, index|
+      topic.impressions_count = ranking_hash[ids[index]]
+      topic
+    end
   end
 
   def store_location
