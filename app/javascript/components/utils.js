@@ -108,14 +108,14 @@ const modalWindow = {
       bottom: '0',
       width: '70%',
       margin: 'auto',
-      zIndex: '3',
+      zIndex: '30000',
     },
     content: {
       width: '100%',
       maxWidth: '1140px',
       padding: '15px 30px',
       background: '#fff',
-      zIndex: '2',
+      zIndex: '20000',
     },
   },
 };
