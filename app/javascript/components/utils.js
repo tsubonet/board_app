@@ -98,9 +98,7 @@ const modalWindow = {
       zIndex: '10000',
     },
     contentWrapper: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
+      display: 'table',
       position: 'fixed',
       left: '0',
       right: '0',
