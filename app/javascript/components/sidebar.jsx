@@ -14,6 +14,12 @@ export default class SideBar extends React.Component {
     this.switchTab = this.switchTab.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      rankingTopics: nextProps.rankingTopics,
+    });
+  }
+
   switchTab(e) {
     e.preventDefault();
     const target = e.target.getAttribute('data-role');
