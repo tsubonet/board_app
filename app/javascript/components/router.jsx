@@ -20,7 +20,6 @@ export default class Router extends React.Component {
 
   constructor(...args) {
     super(...args);
-    console.log(this.props);
     this.state = {
       rootProps: this.props,
     };
