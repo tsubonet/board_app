@@ -73,7 +73,7 @@ export default class Header extends React.Component {
       <header className="navbar navbar-default navbar-fixed-top">
         <div className="container">
           <div className="navbar-header">
-            <Link href='/' className="navbar-brand"><i className="icon-male"></i><i className="icon-female"></i> 性のお悩み相談室X </Link>
+            <Link href='/' className="navbar-brand"><i className="icon-male"></i><i className="icon-female"></i> 性のお悩み相談室 </Link>
             <button className="navbar-toggle" onClick={this.toggleDrawer}>
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
