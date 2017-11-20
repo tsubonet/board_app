@@ -13,12 +13,21 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users/current
+  # POST /users/current.json
+  def current
+    session[:user_id] = params[:user_id]
+    response_data = {
+      status: 'success',
+      currentUser: current_user,
+    }
+    render json: response_data, status: :ok
+  end
 
   private
 
     def topic_params
       params.permit(:user_id, :gender, :title, :content, {:tag_ids => []})
     end
-
 
 end

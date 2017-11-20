@@ -4,12 +4,17 @@ import { sendPost, sendDelete } from "./utils";
 
 export default class AdminIndex extends React.Component {
 
+  static contextTypes = {
+    transitTo: PropTypes.func,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       users: this.props.users,
     };
     this.handleUserDelete = this.handleUserDelete.bind(this);
+    this.handleChangeUser = this.handleChangeUser.bind(this);
   }
 
   handleUserDelete(e) {
@@ -24,6 +29,16 @@ export default class AdminIndex extends React.Component {
           users: users,
         });
       }
+    });
+  }
+
+  handleChangeUser(e) {
+    e.preventDefault();
+    sendPost('/users/current', {
+      user_id : this.refs.user_id.value,
+    })
+    .then((data) => {
+      this.context.transitTo('/admin', { pushState: true });
     });
   }
 
@@ -62,6 +77,25 @@ export default class AdminIndex extends React.Component {
               })()}
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h1><i className='icon-check-sign'></i> カレントユーザー変更</h1>
+          </div>
+          <div className="panel-body">
+            {(() => {
+              if (this.props.currentUser) {
+                return <p>カレントユーザーID:{this.props.currentUser.id}</p>;
+              } else {
+                return <p>カレントユーザーID:ログアウト状態</p>;
+              }
+            })()}
+            <form onSubmit={this.handleChangeUser}>
+              <input className="form-control" type="text" ref='user_id' required />
+              <button type="submit" className="btn btn-primary">Submit</button>
+            </form>
           </div>
         </div>
       </div>
