@@ -11,27 +11,27 @@
   i += 1
   user = User.create(
     provider: 'twitter',
-    uid: 138662959,
-    nickname: "user#{i}",
-    image_url: "test",
-    name: "user#{i}"
+    uid: 138662958 + i, #138662959
+    nickname: "#{((0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a).sample(8).join}#{i}",
+    image_url: "dummy",
+    name: "#{((0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a).sample(8).join}#{i}"
   )
 
-  3.times do |j|
-    j += 1
-    Topic.create(
-      title: "タイトル #{j}",
-      content: "本文 #{j}",
-      gender: "man",
-      user_id: user.id
-    )
-
-    # Like.create(
-    #   post_id: i,
-    #   user_id: j,
-    #   status: "topic",
-    # )
-  end
+  # 3.times do |j|
+  #   j += 1
+  #   Topic.create(
+  #     title: "タイトル #{j}",
+  #     content: "本文 #{j}",
+  #     gender: "man",
+  #     user_id: user.id
+  #   )
+  #
+  #   # Like.create(
+  #   #   post_id: i,
+  #   #   user_id: j,
+  #   #   status: "topic",
+  #   # )
+  # end
 end
 
 
