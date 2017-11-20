@@ -13,8 +13,24 @@ export default class AdminIndex extends React.Component {
     this.state = {
       users: this.props.users,
     };
+    this.handleUserCreate = this.handleUserCreate.bind(this);
     this.handleUserDelete = this.handleUserDelete.bind(this);
     this.handleChangeUser = this.handleChangeUser.bind(this);
+  }
+
+  handleUserCreate() {
+    const data = {
+      uid : this.refs.user_uid.value,
+      name : this.refs.user_name.value,
+    }
+    sendPost('/users', data)
+    .then((data) => {
+      let users = Object.assign([], this.state.users);
+      users.push(data.user);
+      this.setState({
+        users: users,
+      });
+    });
   }
 
   handleUserDelete(e) {
@@ -54,7 +70,7 @@ export default class AdminIndex extends React.Component {
             <table className="table table-striped">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>id</th>
                   <th>uid</th>
                   <th>name</th>
                   <th>delete</th>
@@ -75,6 +91,12 @@ export default class AdminIndex extends React.Component {
                   });
                 }
               })()}
+              <tr>
+                <td></td>
+                <td><input type="text" className="form-control" ref='user_uid' /></td>
+                <td><input type="text" className="form-control" ref='user_name' /></td>
+                <td><button className="btn btn-primary" onClick={this.handleUserCreate}>追加</button></td>
+              </tr>
               </tbody>
             </table>
           </div>
