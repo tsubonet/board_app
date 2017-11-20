@@ -56,10 +56,9 @@ export default class AdminIndex extends React.Component {
       user_id : this.refs.user_id.value,
     })
     .then((data) => {
-      this.context.transitTo('/admin', { pushState: true });
+      this.context.transitTo('/', { pushState: true });
     });
   }
-
 
   render() {
     return (
@@ -103,7 +102,6 @@ export default class AdminIndex extends React.Component {
             </table>
           </div>
         </div>
-
         <div className="panel panel-default">
           <div className="panel-heading">
             <h1><i className='icon-check-sign'></i> カレントユーザー変更</h1>
