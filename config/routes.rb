@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root :to                      => 'topics#index'
   get 'auth/:provider/callback' => 'sessions#create'
   get '/logout'                 => 'sessions#destroy'
+  get '/admin'                  => 'admin#index'
 
   resources :topics do
     collection do

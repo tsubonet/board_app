@@ -8,6 +8,7 @@ import Footer from './footer';
 import TopicsIndex from './topics_index';
 import TopicsNew from './topics_new';
 import TopicsShow from './topics_show';
+import AdminIndex from './admin_index';
 import { sendGet, setUserId } from "./utils";
 
 export default class Router extends React.Component {
@@ -71,6 +72,8 @@ export default class Router extends React.Component {
         return TopicsNew;
       case "topics#show":
         return TopicsShow;
+      case "admin#index":
+        return AdminIndex;
     }
   }
 
