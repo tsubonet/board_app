@@ -12,16 +12,28 @@ export default class AdminIndex extends React.Component {
     this.handleUserDelete = this.handleUserDelete.bind(this);
   }
 
-  handleUserDelete() {
-
+  handleUserDelete(e) {
+    const userId = e.target.getAttribute('data-user-id');
+    sendDelete(`/users/${userId}`)
+    .then((data) => {
+      if (data.status === 'success') {
+        let users = Object.assign([], this.state.users);
+        const index = users.indexOf(data.user);
+        users.splice(index, 1);
+        this.setState({
+          users: users,
+        });
+      }
+    });
   }
+
 
   render() {
     return (
       <div>
         <div className="panel panel-default">
           <div className="panel-heading">
-            <h1><i className='icon-check-sign'></i>ユーザー一覧</h1>
+            <h1><i className='icon-check-sign'></i> ユーザー一覧</h1>
           </div>
           <div className="panel-body">
             <table className="table table-striped">
@@ -42,12 +54,10 @@ export default class AdminIndex extends React.Component {
                         <td>{user.id}</td>
                         <td>{user.uid}</td>
                         <td>{user.name}</td>
-                        <td><button className="btn btn-primary" onClick={this.handleUserDelete}>削除</button></td>
+                        <td><button className="btn btn-primary" onClick={this.handleUserDelete} data-user-id={user.id}>削除</button></td>
                       </tr>
                     );
                   });
-                } else {
-                  return (<p className="list-group-item">検索ワードに一致する記事はありません。</p>);
                 }
               })()}
               </tbody>
