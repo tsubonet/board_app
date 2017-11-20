@@ -39,7 +39,9 @@ export default class AdminIndex extends React.Component {
     .then((data) => {
       if (data.status === 'success') {
         let users = Object.assign([], this.state.users);
-        const index = users.indexOf(data.user);
+        const index = users.findIndex((user) => {
+          return user.id === data.user.id;
+        });
         users.splice(index, 1);
         this.setState({
           users: users,
