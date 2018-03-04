@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171112015406) do
+ActiveRecord::Schema.define(version: 20180304034700) do
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "content"
+    t.text "content"
     t.string "user"
     t.bigint "topic_id"
     t.bigint "user_id"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20171112015406) do
   end
 
   create_table "replies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "content"
+    t.text "content"
     t.string "user"
     t.bigint "comment_id"
     t.bigint "user_id"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 20171112015406) do
 
   create_table "topics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "title"
-    t.string "content"
+    t.text "content"
     t.string "gender"
     t.string "user"
     t.integer "comments_count", default: 0, null: false
